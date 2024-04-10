@@ -6,6 +6,7 @@ export const authentification = (
     res: Response,
     next: NextFunction
 ) => {
+    /*
     const header = req.headers.authorization;
     if (!header) {
         return res.status(401).json({ message: "Unauthorized" });
@@ -19,5 +20,6 @@ export const authentification = (
         return res.status(401).json({ message: "Unauthorized" });
     }
     //req["currentUser"] = decode;
+    */
     next();
 };
