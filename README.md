@@ -1,3 +1,9 @@
+## Modification de structure apportée
+La structure du dossier ressemblant à un monorepo hébergant plusieurs projets indépendants les uns des autres, il peut être intéréssant d'utiliser pnpm-workplace afin de faciliter la gestion et la lecture du projet.
+
+Exemple d'utilisation : https://www.brockherion.dev/blog/posts/setting-up-a-monorepo-with-pnpm-and-typescript/
+
+
 # BasicMS
 
 Bienvenue sur le test technique BasicMS (Node.js).
