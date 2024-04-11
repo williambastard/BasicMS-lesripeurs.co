@@ -1,10 +1,9 @@
 import http from "http";
 import express from "express";
 
+//import { authRouter } from "./routes/auth.routes";
 import { userRouter } from "./routes/user.routes";
 import { defaultRouter } from "./routes/default.routes";
-import { generateForgotPasswordJWT, verifyToken } from "./middleware/gatewayMiddleware";
-
 const HOST = "http://127.0.0.10";
 const PORT = "8082";
 
@@ -17,10 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
 
-app.use("/user", verifyToken);
+//app.use("/user", authRouter);
 app.use("/user", userRouter);
 app.use("*", defaultRouter);
-
 
 httpServer.listen(PORT, async () => {
     console.log(`API Gateway en écoute sur ${HOST}:${PORT} 🎉`);
