@@ -7,7 +7,7 @@ export class UserController {
             .json({ message: "User created successfully" });
     }
     static async getUsers(req: Request, res: Response) {
-        return res.status(200).json({ message: "User was get successfully" });
+        return res.status(200).json({ message: "User was get successfully", session: res.locals.session });
     }
     static async updateUser(req: Request, res: Response) {
         res.status(200).json({ message: "udpdated" });

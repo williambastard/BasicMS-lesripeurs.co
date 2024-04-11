@@ -1,0 +1,4 @@
+GET http://127.0.0.10:8083/user/getUserById/1
+Cache-Control: max-age=604800
+Age: 100
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4MjQ2MjEsImV4cCI6MTcxMjgyODIyMX0.crNSGqT_7vnwEf952wRHNXRrtrt-I-42-9IMQZiw5vw

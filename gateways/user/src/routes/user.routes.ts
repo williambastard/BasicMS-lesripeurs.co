@@ -1,48 +1,23 @@
 import { Router } from "express";
+import httpProxy from "http-proxy";
 
-import { authentification } from "../middleware/authentification";
-import { authorization } from "../middleware/authorization";
-import { UserController } from "../controllers/user.controllers";
-import { UserAuthController } from "../controllers/auth.controller";
+const API_SERVICE = "user";
+const API_PROCOTOL = "http://";
+const API_USER_HOST = "127.0.0.10:8083";
 
+const apiProxy = httpProxy.createProxyServer();
 const router = Router();
 
+router.all("*", (req, res, next) => {
 
-router.get(
-    '/getUserById/:id',
-    authentification,
-    authorization(["admin"]),
-    UserController.getUsers
-);
-router.get(
-    '/getUserByName/:name',
-    authentification,
-    authorization(["admin"]),
-    UserController.getUsers
-);
-router.get(
-    '/getUserByEmail/:email',
-    authentification,
-    authorization(["admin"]),
-    UserController.getUsers
-);
+    const API_USER_ENDPOINTS = `${API_PROCOTOL}${API_USER_HOST}${API_SERVICE}${req.url}`;
+    console.log(API_USER_ENDPOINTS);
 
-router.post("/login", UserAuthController.login);
-router.post("/signup", UserController.signup);
-
-
-router.put(
-    "/update/:id",
-    authentification,
-    authorization(["user", "admin"]),
-    UserController.updateUser
-);
-
-router.delete(
-    "/delete/:id",
-    authentification,
-    authorization(["admin"]),
-    UserController.deleteUser
-);
+    apiProxy.web(req, res, { target: API_USER_ENDPOINTS }, function (apiProxyError) {
+        if (apiProxyError) {
+            res.status(500).json({ message: "Error encoured by MS User", error: apiProxyError })
+        }
+    });
+});
 
 export { router as userRouter };

@@ -28,6 +28,6 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
         res.locals.session = decoded;
         next();
     } catch (error) {
-        res.status(401).json({ message: "Token error", error: error });
+        res.status(401).json({ message: "Token error", error: error, newToken: generateForgotPasswordJWT("test") });
     }
 };

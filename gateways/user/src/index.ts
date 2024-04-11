@@ -18,20 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 /* Gestion  des routes de l'application */
 
 app.use("/user", verifyToken);
-
 app.use("/user", userRouter);
-/*
-// Set up an HTTP Get listener at /protected. The request can only access it if they have a valid JWT token
-app.get("/protected", (req, res, next) => {
-    // The auth middleware protects this route and sets res.locals.session which can be accessed here
-    const session = res.locals.session;
-    console.log(generateForgotPasswordJWT("test"));
-    res.status(200).json({ message: `Your username is`, session: res.locals });
-});
-*/
 app.use("*", defaultRouter);
 
 
 httpServer.listen(PORT, async () => {
-    console.log(`SERVEUR HTTP À L'ECOUTE SUR ${HOST}:${PORT} 🎉`);
+    console.log(`API Gateway en écoute sur ${HOST}:${PORT} 🎉`);
 });
