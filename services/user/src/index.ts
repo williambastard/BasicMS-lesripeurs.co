@@ -2,7 +2,6 @@ import http from "http";
 import express from "express";
 
 import { userRouter } from "./routes/user.routes";
-import { authRouter } from "./routes/auth.routes";
 import { defaultRouter } from "./routes/default.routes";
 
 const HOST = "http://127.0.0.10";

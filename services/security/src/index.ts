@@ -1,7 +1,7 @@
 import http from "http";
 import express from "express";
 
-import { authRouter } from "./routes/auth.routes";
+import { authentification } from "./middleware/authentification";
 
 const HOST = "http://127.0.0.10";
 const PORT = "8084";
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
-app.use(authRouter);
+app.use(authentification);
 
 
 httpServer.listen(PORT, async () => {

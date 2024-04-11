@@ -17,7 +17,7 @@ router.all("*", async (req, res, next) => {
     };
     const response = await fetch(`${API_PROCOTOL}${API_USER_HOST}/${API_SERVICE}${req.url}`, options).then(responses => responses.json());
 
-    res.status(200).json();
+    res.status(200).json(response);
 });
 
 export { router as userRouter };

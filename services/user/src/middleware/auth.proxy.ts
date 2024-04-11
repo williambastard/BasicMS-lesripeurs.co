@@ -10,6 +10,8 @@ export const AuthProxy = async (
     res: Response,
     next: NextFunction
 ) => {
+    const MS_SECURITY_URL = `${API_PROCOTOL}${API_USER_HOST}/${API_SERVICE}${req.url}`;
+
     const headers: HeadersInit = new Headers();
     headers.set('Content-Type', 'application/json');
     headers.set('Authorization', req.get("Authorization") ?? "".toString());
@@ -17,15 +19,12 @@ export const AuthProxy = async (
         headers: headers,
         method: req.method
     };
-    const response = await fetch(
-        `${API_PROCOTOL}${API_USER_HOST}/${API_SERVICE}${req.url}`,
-        options
-    ).then(responses => responses.json());
-
-    if (response.status !== 200) {
-        res.json(response)
-        next(response);
-    }
+    const response = await fetch(`${MS_SECURITY_URL}`, options)
+        .then(responses => responses.json())
+        .catch(error => {
+            res.json(error)
+            next(error);
+        });
+    console.log(response);
     next();
-
 };
