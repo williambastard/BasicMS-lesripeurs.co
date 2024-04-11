@@ -1,29 +1,23 @@
 import { Router } from "express";
 
-import { authentification } from "../middleware/authentification";
-import { authorization } from "../middleware/authorization";
-import { UserController } from "../controllers/user.controllers";
-import { AuthController } from "../controllers/auth.controller";
+const API_SERVICE = "user";
+const API_PROCOTOL = "http://";
+const API_USER_HOST = "127.0.0.10:8083";
 
 const router = Router();
 
-router.get(
-    "/users",
-    authentification,
-    authorization(["admin"]),
-    UserController.getUsers
-);
-router.post("/login", AuthController.login);
-router.put(
-    "/update/:id",
-    authentification,
-    authorization(["user", "admin"]),
-    UserController.updateUser
-);
-router.delete(
-    "/delete/:id",
-    authentification,
-    authorization(["admin"]),
-    UserController.deleteUser
-);
+router.all("*", async (req, res, next) => {
+    const headers: HeadersInit = new Headers();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Authorization', req.get("Authorization") ?? "".toString());
+
+    const options = {
+        headers: headers,
+        method: req.method
+    };
+    const response = await fetch(`${API_PROCOTOL}${API_USER_HOST}/${API_SERVICE}${req.url}`, options).then(responses => responses.json());
+
+    res.status(200).json(response);
+});
+
 export { router as userRouter };
