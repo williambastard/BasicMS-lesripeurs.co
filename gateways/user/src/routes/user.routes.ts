@@ -1,23 +1,44 @@
 import { Router } from "express";
+import { ApiObject } from "../interfaces/api_response.interface";
 
-const API_SERVICE = "user";
-const API_PROCOTOL = "http://";
-const API_USER_HOST = "127.0.0.10:8083";
+import ApiResponseParser from "../helpers/api_response.parser";
 
 const router = Router();
 
 router.all("*", async (req, res, next) => {
-    const headers: HeadersInit = new Headers();
-    headers.set('Content-Type', 'application/json');
-    headers.set('Authorization', req.get("Authorization") ?? "".toString());
-
+    let ApiObject: ApiObject = { statusCode: 500, message: "Error from Gateway User : Internal server error" };
+    const MS_USER_URL = "http:/127.0.0.10:8083/user";
     const options = {
-        headers: headers,
-        method: req.method
+        headers: {
+            'Authorization': req.get('Authorization') ?? '',
+            'Content-Type': 'application/json'
+        },
+        method: req.method,
     };
-    const response = await fetch(`${API_PROCOTOL}${API_USER_HOST}/${API_SERVICE}${req.url}`, options).then(responses => responses.json());
 
-    res.status(200).json(response);
+    try {
+        const response = await fetch(`${MS_USER_URL}${req.url}`, options)
+        const _ms_user_response = await response.json();
+        const _ms_user_data = _ms_user_response?.data ?? false;
+        const _ms_user_session = _ms_user_data?.session ?? false;
+
+        if (!response.ok) {
+            ApiObject.statusCode = response.status;
+            ApiObject.details = _ms_user_response;
+        }
+        if (!_ms_user_session) {
+            ApiObject = { statusCode: response.status, message: "Undefined jsonResponse.session in MS User", details: _ms_user_response };
+        }
+        if (_ms_user_session && response.ok) {
+            res.locals.session = _ms_user_session;
+        }
+
+
+    }
+    catch (UncaughtException) {
+        ApiObject = { statusCode: 500, message: "UncaughtException Exception", details: UncaughtException };
+    }
+    return ApiResponseParser.response(res, ApiObject);
 });
 
 export { router as userRouter };
