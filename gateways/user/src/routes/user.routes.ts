@@ -27,8 +27,6 @@ router.get(
     UserController.getUsers
 );
 
-
-
 router.post("/login", UserAuthController.login);
 router.post("/signup", UserController.signup);
 
