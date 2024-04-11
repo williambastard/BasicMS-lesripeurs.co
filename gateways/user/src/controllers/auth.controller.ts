@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-export class AuthController {
+export class UserAuthController {
     static async login(req: Request, res: Response) {
         try {
             return res.status(200).json({ message: "Login successful" });
