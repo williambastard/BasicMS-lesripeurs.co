@@ -26,7 +26,7 @@ export const authentification = (
     try {
         const decoded = jwt.verify(token?.split(" ")[1], _jwtSecretSalt);
         res.locals.session = decoded;
-        res.status(201).json({ status: "success", message: "Token valid", request_url: req.url, request_type: req.method });
+        res.status(200).json({ status: "success", message: "Token valid", request_url: req.url, request_type: req.method });
     } catch (error) {
         res.status(401).json({ status: "error", message: "Token error", error: error, newToken: generateToken("test") });
     }

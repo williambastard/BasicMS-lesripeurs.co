@@ -1,7 +1,6 @@
 import http from "http";
 import express from "express";
 
-//import { authRouter } from "./routes/auth.routes";
 import { userRouter } from "./routes/user.routes";
 import { defaultRouter } from "./routes/default.routes";
 const HOST = "http://127.0.0.10";
@@ -15,8 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
-
-//app.use("/user", authRouter);
 app.use("/user", userRouter);
 app.use("*", defaultRouter);
 

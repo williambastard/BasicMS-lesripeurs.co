@@ -17,7 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
 
-app.use("/user", authRouter);
 app.use("/user", userRouter);
 app.use("*", defaultRouter);
 

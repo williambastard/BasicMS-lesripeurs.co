@@ -8,16 +8,21 @@ const API_USER_HOST = "127.0.0.10:8084";
 const apiProxy = httpProxy.createProxyServer();
 const router = Router();
 
-router.all("*", (req, res, next) => {
-    req.url = `${API_PROCOTOL}${API_USER_HOST}/${API_SERVICE}${req.url}`;
+router.all("*", async (req, res, next) => {
+    const headers: HeadersInit = new Headers();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Authorization', req.get("Authorization") ?? "".toString());
 
-    apiProxy.web(req, res, { target: `${API_PROCOTOL}${API_USER_HOST}` }, function (apiProxyError) {
-        if (apiProxyError) {
-            res.status(500).json({ message: "Error encoured by MS User Auth", error: apiProxyError })
-            next(apiProxyError);
-        }
-        console.log("test");
-    });
+    const options = {
+        headers: headers,
+        method: req.method
+    };
+    const response = await fetch(`${API_PROCOTOL}${API_USER_HOST}/${API_SERVICE}${req.url}`, options).then(res => res.json());/*
+    if (!response.ok) {
+        res.status(500).json(response)
+        next(response);
+    }*/
+    next();
 
 });
 
