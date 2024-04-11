@@ -2,6 +2,7 @@ version: '3.8'
 
 x-common-node-variables: &common-node-variables
   NODE_ENV: development
+  MS_SECURITY_USER_URL: "http://127.0.0.10:8084/user"
 
 services:
   # -------------------------------------------------------------------------

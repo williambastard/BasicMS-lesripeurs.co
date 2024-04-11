@@ -1,21 +1,21 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+/*
+import ResponseParser from "../helpers/responseParser";
 
 export class UserAuthController {
-    static async login(req: Request, res: Response) {
+    static async login(req: Request, res: Response, next: NextFunction) {
         try {
-            return res.status(200).json({ message: "Login successful" });
+            new ResponseParser(req, res, next).response(200, "User was successfully loged !", res.locals.session);
         } catch (error) {
-            console.error(error);
-            return res.status(500).json({ message: "Internal server error" });
+            new ResponseParser(req, res, next).response(500, "Internal server error");
         }
     }
 
-    static async getProfile(req: Request, res: Response) {
+    static async getProfile(req: Request, res: Response, next: NextFunction) {
         try {
-            return res.status(200).json({ message: "Login successful" });
+            new ResponseParser(req, res, next).response(200, "User was successfully finded !", res.locals.session);
         } catch (error) {
-            console.error(error);
-            return res.status(500).json({ message: "Internal server error" });
+            new ResponseParser(req, res, next).response(500, "Internal server error");
         }
     }
-}
+}*/

@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { UserController } from "../../../../services/user/src/controllers/user.controllers";
-import { UserAuthController } from "../../../../services/user/src/controllers/auth.controller";
+//import { UserAuthController } from "../../../../services/user/src/controllers/auth.controller";
 import { AuthProxy } from "../middleware/auth.proxy";
 
 const router = Router();
@@ -23,8 +23,8 @@ router.get(
     UserController.getUsers
 );
 
-router.post("/login", UserAuthController.login);
-router.post("/signup", UserController.signup);
+//router.post("/login", UserAuthController.login);
+//router.post("/signup", UserController.signup);
 
 
 router.put(
