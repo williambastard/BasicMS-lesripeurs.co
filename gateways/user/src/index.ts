@@ -29,5 +29,5 @@ app.use("/user", userRouterDelete);
 app.use("*", defaultRouter);
 
 httpServer.listen(PORT, async () => {
-    console.log(`API Gateway en écoute sur http://localhost:${PORT} 🎉`);
+    console.log(`API Gateway en écoute sur http://user.gateway.riptest:${PORT} 🎉`);
 });

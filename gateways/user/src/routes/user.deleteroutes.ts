@@ -7,21 +7,19 @@ import ApiResponseParser from "../interfaces/api_response.parser";
 
 
 let ApiObject: ApiObject = { statusCode: 500, message: "Error from Gateway User : Internal server error" };
-let _fetchOptions = new fetchOptions("GET");
 
 const router = Router();
 
 
 router.delete("*", async function (req, res, next) {
 
-    _fetchOptions.setHeader('Authorization', req.get('Authorization') ?? '');
+    let _fetchOptions = new fetchOptions(req.method);
+    _fetchOptions.setHeader('token', req.get('token') ?? '');
     _fetchOptions.setHeader('ms-user-method', 'GET');
     _fetchOptions.setHeader('ms-target-service', 'user');
     _fetchOptions.setHeader('ms-target-protocol', 'http');
-    _fetchOptions.setHeader('ms-target-host', 'localhost:8383');
+    _fetchOptions.setHeader('ms-target-host', 'user.service.riptest:8383');
     _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
-    _fetchOptions.setMethod(req.method);
-
 
     try {
         const response = await fetch(`${_fetchOptions.getTarget()}`, _fetchOptions)

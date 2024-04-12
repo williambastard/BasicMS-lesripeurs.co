@@ -1,23 +1,23 @@
 ###
 # Récupérer le client d'ID n°1
-GET http://localhost:8383/user/getUserById/1
+GET http://user.service.riptest:8383/user/getUserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4OTU2OTUsImV4cCI6MTcxMjg5OTI5NX0.S-_ioav9qel_3Qxg12_fkctc4JckM4cbq5OX9P2EP2E
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 ###
 # Supprimer le client d'ID n°1
-DELETE http://localhost:8383/user/deleteuserById/1
+DELETE http://user.service.riptest:8383/user/deleteuserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4OTUzODMsImV4cCI6MTcxMjg5ODk4M30.G1Wn_PNupMiIIWH15EnDD5EuMcCXshGC_hZoiD5nPz4
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 
 
 ###
 # Créer un nouveau client
-POST http://localhost:8383/user/user/signup
+POST http://user.service.riptest:8383/user/user/signup
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4OTUzODMsImV4cCI6MTcxMjg5ODk4M30.G1Wn_PNupMiIIWH15EnDD5EuMcCXshGC_hZoiD5nPz4
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 
 {
     "account": {
@@ -35,10 +35,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 ###
 # Remplace les données d'un client
-PUT http://localhost:8383/user/update
+PUT http://user.service.riptest:8383/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4OTUzODMsImV4cCI6MTcxMjg5ODk4M30.G1Wn_PNupMiIIWH15EnDD5EuMcCXshGC_hZoiD5nPz4
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 
 {
     "account": {
@@ -57,10 +57,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 ###
 # Remplace partiellement les données d'un client
-PATCH http://localhost:8383/user/update
+PATCH http://user.service.riptest:8383/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4OTUzODMsImV4cCI6MTcxMjg5ODk4M30.G1Wn_PNupMiIIWH15EnDD5EuMcCXshGC_hZoiD5nPz4
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 
 {
     "account": {

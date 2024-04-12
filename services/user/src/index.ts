@@ -20,5 +20,5 @@ app.use("/", defaultRouter);
 
 
 httpServer.listen(PORT, async () => {
-    console.log(`API MS user en écoute sur http://localhost:${PORT} 🎉`);
+    console.log(`API MS user en écoute sur http://user.service.riptest:${PORT} 🎉`);
 });

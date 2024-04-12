@@ -1,24 +1,23 @@
 ###
 # Récupérer le client d'ID n°1
-GET http://localhost:8282/user/getUserById/1
+GET http://user.gateway.riptest:8282/user/getUserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4OTYxMjgsImV4cCI6MTcxMjg5OTcyOH0.jfK6T4lQSwMkdURYRxUn98sv519soybD6aSWlN2wb3c
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 
 ###
 # Supprimer le client d'ID n°1
-DELETE http://localhost:8282/user/deleteuserById/1
+DELETE http://user.gateway.riptest:8282/user/deleteuserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
-
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 
 ###
 # Créer un nouveau client
-POST http://localhost:8282/user/signup
+POST http://user.gateway.riptest:8282/user/signup
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 
 {
     "account": {
@@ -36,10 +35,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 ###
 # Remplace les données d'un client
-PUT http://localhost:8282/user/update
+PUT http://user.gateway.riptest:8282/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
 
 
 {
@@ -59,10 +58,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 ###
 # Remplace partiellement les données d'un client
-PATCH http://localhost:8282/user/update
+PATCH http://user.gateway.riptest:8282/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
 
 
 {
