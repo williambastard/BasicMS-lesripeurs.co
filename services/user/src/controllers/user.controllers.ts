@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import ApiResponseParser from "../helpers/api_response.parser";
+import ApiResponseParser from "../interfaces/api_response.parser";
 
 export class UserController {
     static async signup(req: Request, res: Response, next: NextFunction) {

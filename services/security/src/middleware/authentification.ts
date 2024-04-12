@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ApiObject } from "../interfaces/api_response.interface";
-import ApiResponseParser from "../helpers/api_response.parser";
+import ApiResponseParser from "../interfaces/api_response.parser";
 
 import * as jwt from "jsonwebtoken";
 const _jwtSecretSalt = "DEFAULTSALTRIPEURSCOM_@@03#";  // Retrieve the environment variable 
@@ -30,5 +30,5 @@ export const authentification = (
     } catch (error) {
         ApiObject = { statusCode: 498, message: "Token given is invalid", details: { newToken: generateToken(), error } };
     }
-    return res.status(ApiObject.statusCode).json(ApiResponseParser.response(ApiObject));
+    ApiResponseParser.response(res, ApiObject);
 };

@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import { UserController } from "../../../../services/user/src/controllers/user.controllers";
-//import { UserAuthController } from "../../../../services/user/src/controllers/auth.controller";
+import { UserController } from "../controllers/user.controllers";
+//import { UserAuthController } from "../controllers/controllers/auth.controller";
 import { AuthProxy } from "../middleware/auth.proxy";
 
 const router = Router();

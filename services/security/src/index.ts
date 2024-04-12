@@ -3,8 +3,7 @@ import express from "express";
 
 import { authentification } from "./middleware/authentification";
 
-const HOST = "http://127.0.0.10";
-const PORT = "8084";
+const PORT = "8484";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -18,5 +17,5 @@ app.use(authentification);
 
 
 httpServer.listen(PORT, async () => {
-    console.log(`API MS user en écoute sur ${HOST}:${PORT} 🎉`);
+    console.log(`API MS user en écoute sur http://localhost:${PORT} 🎉`);
 });

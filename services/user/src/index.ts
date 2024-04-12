@@ -4,8 +4,7 @@ import express from "express";
 import { userRouter } from "./routes/user.routes";
 import { defaultRouter } from "./routes/default.routes";
 
-const HOST = "http://127.0.0.10";
-const PORT = "8083";
+const PORT = "8383";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -17,9 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 /* Gestion  des routes de l'application */
 
 app.use("/user", userRouter);
-app.use("*", defaultRouter);
+app.use("/", defaultRouter);
 
 
 httpServer.listen(PORT, async () => {
-    console.log(`API MS user en écoute sur ${HOST}:${PORT} 🎉`);
+    console.log(`API MS user en écoute sur http://localhost:${PORT} 🎉`);
 });
