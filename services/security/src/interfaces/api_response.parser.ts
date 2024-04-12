@@ -1,5 +1,5 @@
-import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import { ApiResponse, ApiObject } from "./api_response.interface";
+import { Response } from "express";
+import { ApiResponse } from "./api_response.interface";
 
 export default abstract class ApiResponseParser {
     static response(res: Response, ApiObject: ApiResponse) {
