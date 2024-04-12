@@ -14,8 +14,8 @@ services:
       POSTGRES_DB: riptest
     volumes:
       - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
-    # ports:
-    #   - 5432:5432
+    ports:
+      - 5432:5432
   # -------------------------------------------------------------------------
   user.service.riptest:
     container_name: user.service.riptest
@@ -28,8 +28,11 @@ services:
       <<: *common-node-variables
     depends_on:
       - postgres.db.riptest
-    # ports:
-    #   - 8081:80
+    ports:
+      - 8383:8383
+    networks:
+      - internet-network
+      - gateway-network
   # -------------------------------------------------------------------------
   security.service.riptest:
     container_name: security.service.riptest
@@ -40,8 +43,10 @@ services:
       - ./services/security/src:/usr/src/app/src
     environment:
       <<: *common-node-variables
-    # ports:
-    #   - 8082:80
+    ports:
+      - 8484:8484
+    networks:
+      - gateway-network
   # -------------------------------------------------------------------------
   user.gateway.riptest:
     container_name: user.gateway.riptest
@@ -53,5 +58,16 @@ services:
     environment:
       <<: *common-node-variables
     ports:
-      - 8080:80
+      - 8282:8282
+    networks:
+      - gateway-network
   # -------------------------------------------------------------------------
+
+networks:
+  internet-network:
+    name: internet-network
+    driver: bridge
+
+  gateway-network:
+    name: gateway-network
+    driver: bridge

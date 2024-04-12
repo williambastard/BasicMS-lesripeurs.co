@@ -1,0 +1,12 @@
+###
+# Génerer un nouveau Token de test
+GET http://security.service.riptest:8484/generateTestToken
+Cache-Control: max-age=604800
+Content-Type: application/json
+
+###
+# Génerer un nouveau Token
+POST http://security.service.riptest:8484/verifyToken
+Cache-Control: max-age=604800
+Content-Type: application/json
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
