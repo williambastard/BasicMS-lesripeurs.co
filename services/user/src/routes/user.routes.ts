@@ -1,41 +1,46 @@
 import { Router } from "express";
 
-import { UserController } from "../../../../services/user/src/controllers/user.controllers";
-//import { UserAuthController } from "../../../../services/user/src/controllers/auth.controller";
-import { AuthProxy } from "../middleware/auth.proxy";
+import { UserController } from "../controllers/user.controllers";
+//import { UserAuthController } from "../controllers/controllers/auth.controller";
+import { SecurityMicroSevice } from "../middleware/security_micro_service.middleware";
 
 const router = Router();
 
+//router.post("/login", UserAuthController.login);
+//router.post("/signup", UserController.signup);
+
 router.get(
     '/getUserById/:id',
-    AuthProxy,
+    SecurityMicroSevice,
     UserController.getUsers
 );
 
 router.get(
     '/getUserByName/:name',
-    AuthProxy,
+    SecurityMicroSevice,
     UserController.getUsers
 );
 router.get(
     '/getUserByEmail/:email',
-    AuthProxy,
+    SecurityMicroSevice,
     UserController.getUsers
 );
 
-//router.post("/login", UserAuthController.login);
-//router.post("/signup", UserController.signup);
-
-
 router.put(
     "/update/:id",
-    AuthProxy,
+    SecurityMicroSevice,
+    UserController.updateUser
+);
+
+router.patch(
+    "/update/:id",
+    SecurityMicroSevice,
     UserController.updateUser
 );
 
 router.delete(
     "/delete/:id",
-    AuthProxy,
+    SecurityMicroSevice,
     UserController.deleteUser
 );
 

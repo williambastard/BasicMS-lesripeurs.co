@@ -1,4 +1,0 @@
-GET http://127.0.0.10:8084/
-Cache-Control: max-age=604800
-Age: 100
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4NDIwMjAsImV4cCI6MTcxMjg0NTYyMH0.8Pe0Rjagq-t9j2vACjcpJnjKh1lEYGtmGV6PEODdbvM
