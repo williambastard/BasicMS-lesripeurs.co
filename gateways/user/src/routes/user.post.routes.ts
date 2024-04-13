@@ -8,7 +8,7 @@ const router = Router();
 router.post("*", async function (req, res, next) {
 
     let _apiConstructor = new ApiContructor.Constructor(res);
-    let _apiResponse = {};
+    let _apiResponse = ApiContructor.default._HTTP_500;
 
     let _fetchOptions = new fetchOptions(req.method);
     _fetchOptions.setHeader('token', req.get('token') ?? '');

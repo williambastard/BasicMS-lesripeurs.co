@@ -7,10 +7,10 @@ import ApiInterface from "../api_parser/api_interface";
 const router = Router();
 
 router.get("*", async function (req, res, next) {
-    let _apiResponse = {}
     let _apiConstructor = new ApiContructor.Constructor(res);
-
+    let _apiResponse = ApiContructor.default._HTTP_500;
     let _fetchOptions = new fetchOptions(req.method);
+
     _fetchOptions.setHeader('token', req.get('token') ?? '');
     _fetchOptions.setHeader('ms-user-method', 'GET');
     _fetchOptions.setHeader('ms-target-service', 'user');

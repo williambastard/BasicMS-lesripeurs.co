@@ -1,18 +1,17 @@
 
 import { NextFunction, Request, Response } from "express";
-import { ApiObject } from "../interfaces/api_response.interface";
 import fetchOptions from "../interfaces/fetch_options.interface";
-import ApiResponseParser from "../interfaces/api_response.parser";
-
-let ApiObject: ApiObject = { statusCode: 500, message: "Error from MS User : Internal server error" };
-
+import * as ApiContructor from "../api_parser/api_parser";
+import ApiInterface from "../api_parser/api_interface";
 
 export const authentication = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    let onFailure = false;
+    let _apiConstructor = new ApiContructor.Constructor(res);
+    let _apiResponse = ApiContructor.default._HTTP_500;
+
     let _fetchOptions = new fetchOptions(req.method);
     _fetchOptions.setHeader('ms-security-method', req.method);
     _fetchOptions.setHeader('ms-target-service', 'authentication');
@@ -30,18 +29,31 @@ export const authentication = async (
         const _ms_security_message = _ms_security_response!.message ?? "Undefined jsonResponse.token in MS Security";
 
         if (!_ms_security_token) {
-            ApiObject = { statusCode: response.status, message: _ms_security_message, details: _ms_security_response };
-            onFailure = true;
+            _apiResponse = {
+                statusCode: response.status,
+                message: _ms_security_message,
+                details: _ms_security_response
+            };
         }
-
-        ApiObject = { statusCode: response.status, message: "User connected with success !", data: { token: _ms_security_token }, details: { session: res.locals.session, } };
-
+        _apiResponse = {
+            statusCode: response.status,
+            message: "User connected with success !",
+            token: _ms_security_token, data: {
+                token: _ms_security_token
+            },
+            details: {
+                session: res.locals.session,
+            }
+        };
     }
     catch (UncaughtException) {
-        ApiObject = { statusCode: 500, message: "UncaughtException Exception", details: UncaughtException };
-        onFailure = !onFailure;
+        _apiResponse = {
+            statusCode: 500,
+            message: "UncaughtException Exception",
+            details: UncaughtException
+        };
     }
-    return ApiResponseParser.response(res, ApiObject);
+    return _apiConstructor.setResponse(_apiResponse as ApiInterface).sendResponse()
 };
 
 export const tokenValidator = async (
@@ -49,6 +61,9 @@ export const tokenValidator = async (
     res: Response,
     next: NextFunction
 ) => {
+    let _apiConstructor = new ApiContructor.Constructor(res);
+    let _apiResponse = ApiContructor.default._HTTP_500;
+
     let onFailure = false;
     let _fetchOptions = new fetchOptions(req.method);
     _fetchOptions.setHeader('token', req.get('token') ?? '');
@@ -69,20 +84,33 @@ export const tokenValidator = async (
 
 
         if (!response.ok) {
-            ApiObject.statusCode = response.status;
-            ApiObject.details = _ms_security_response;
+            _apiResponse = {
+                statusCode: response.status,
+                message: "Internal server error",
+                details: _ms_security_response
+            };
             onFailure = true;
         }
         if (!_ms_security_session) {
-            ApiObject = { statusCode: response.status, message: _ms_security_message, details: _ms_security_details };
+            _apiResponse = {
+                statusCode: response.status,
+                message: _ms_security_message,
+                details: _ms_security_details
+            };
             onFailure = true;
         }
-        res.locals.session = { session: _ms_security_session };
+        res.locals.session = {
+            session: _ms_security_session
+        };
 
     }
     catch (UncaughtException) {
-        ApiObject = { statusCode: 500, message: "UncaughtException Exception", details: UncaughtException };
+        _apiResponse = {
+            statusCode: 500,
+            message: "UncaughtException Exception",
+            details: UncaughtException
+        };
         onFailure = !onFailure;
     }
-    return (onFailure) ? ApiResponseParser.response(res, ApiObject) : next();
+    return (onFailure) ? _apiConstructor.setResponse(_apiResponse as ApiInterface).sendResponse() : next();
 };

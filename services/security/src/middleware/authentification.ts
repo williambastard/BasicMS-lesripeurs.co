@@ -34,11 +34,11 @@ export const verifyToken = (
     res: Response,
     next: NextFunction
 ) => {
-    const token = req.header('Token');
     let _apiConstructor = new ApiContructor.Constructor(res);
-    let _apiResponse = {};
+    let _apiResponse = ApiContructor.default._HTTP_500;
 
     try {
+        const token = req.header('Token') ?? "";
         const decodedToken = jwt.verify(token!, _jwtSecretSalt);
         res.locals.session = decodedToken;
 
