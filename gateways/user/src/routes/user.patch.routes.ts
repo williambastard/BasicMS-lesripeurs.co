@@ -1,48 +1,27 @@
 import { Router } from "express";
-import { ApiObject } from "../interfaces/api_response.interface";
-
-import fetchOptions from "../interfaces/fetch_options.interface";
-import ApiResponseParser from "../interfaces/api_response.parser";
-
-
-
-let ApiObject: ApiObject = { statusCode: 500, message: "Error from Gateway User : Internal server error" };
-
+import * as ApiContructor from "../api_parser/api_parser";
+import ApiInterface from "../api_parser/api_interface";
 const router = Router();
 
-
-router.patch("*", async function (req, res, next) {
-    let _fetchOptions = new fetchOptions(req.method);
-    _fetchOptions.setHeader('token', req.get('token') ?? '');
-    _fetchOptions.setHeader('ms-user-method', 'GET');
-    _fetchOptions.setHeader('ms-target-service', 'user');
-    _fetchOptions.setHeader('ms-target-protocol', 'http');
-    _fetchOptions.setHeader('ms-target-host', 'user.service.riptest:8383');
-    _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
-
-
-    try {
-        const response = await fetch(`${_fetchOptions.getTarget()}`, _fetchOptions)
-        const _ms_user_response = await response.json();
-        const _ms_user_data = _ms_user_response!.data ?? false;
-        const _ms_user_session = _ms_user_data!.session ?? false;
-
-
-        if (!response.ok) {
-            ApiObject.statusCode = response.status;
-            ApiObject.details = _ms_user_response;
+router.patch("/*", (req, res, next) => {
+    let _apiConstructor = new ApiContructor.Constructor(res);
+    let _apiResponse =
+    {
+        statusCode: 501,
+        message: "Functionality not implemented yet but the system work",
+        data: {
+            url: req.url,
+            headers: req.headers,
+            params: req.params,
+            body: req.body,
+            query: req.query
         }
-        if (!_ms_user_session) {
-            ApiObject = { statusCode: response.status, message: "MS User Fault : Impossible to get the Session with the token given see details section for more informations", details: _ms_user_response };
-        }
-        res.locals.session = _ms_user_session;
-        ApiObject = _ms_user_response;
+    };
 
-    }
-    catch (UncaughtException) {
-        ApiObject = { statusCode: 500, message: "UncaughtException Exception", details: UncaughtException };
-    }
-    return ApiResponseParser.response(res, ApiObject);
-});
+    _apiConstructor
+        .setResponse(_apiResponse as ApiInterface)
+        .sendResponse();
+}
+);
 
-export { router as userRouterPatch };
+export { router as userPatchRouter };

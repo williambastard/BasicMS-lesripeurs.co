@@ -1,12 +1,13 @@
 import { Response } from "express";
 import ApiInterface from "./api_interface";
+import * as ApiConstantes from "./api_constantes";
 
-export default class ApiContructor {
-    _response: Response;
+export class Constructor {
+    _response!: Response;
     _responseAPI?: ApiInterface;
 
     constructor(_response: Response) {
-        Object.assign(this._response, _response)
+        this._response = _response
         return this;
     }
     setResponse(_responseAPI: ApiInterface) {
@@ -17,3 +18,4 @@ export default class ApiContructor {
         return this._response.status(this._responseAPI!.statusCode).json(this._responseAPI);
     }
 }
+export default ApiConstantes;

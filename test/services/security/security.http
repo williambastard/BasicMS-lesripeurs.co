@@ -5,8 +5,8 @@ Cache-Control: max-age=604800
 Content-Type: application/json
 
 ###
-# Génerer un nouveau Token
+# Vérifier la validité d'un Token
 POST http://security.service.riptest:8484/verifyToken
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImVtYWlsIjoidGVzdEB0ZXN0LmZyIiwicGhvbmUiOiIwMDAwIiwibGFzdG5hbWVzIjoiQ09NUFRFIiwiZmlyc3RuYW1lcyI6InRlc3QiLCJwYXNzd29yZCI6InBhc3N3b3JkIiwiY3JlYXRlZEF0IjoiMjAyNC0wNC0xM1QxNzo0Mjo0OC44NDJaIiwiaWF0IjoxNzEzMDM0MjQ5LCJleHAiOjE3MTMwMzc4NDl9.ozm2-fH3Fzf5i6iA94WxkN-BuohR11iUt9HKou-TGec

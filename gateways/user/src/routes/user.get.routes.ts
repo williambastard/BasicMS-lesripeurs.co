@@ -1,16 +1,15 @@
 import { Router } from "express";
-import { ApiObject } from "../interfaces/api_response.interface";
 
 import fetchOptions from "../interfaces/fetch_options.interface";
-import ApiResponseParser from "../interfaces/api_response.parser";
+import * as ApiContructor from "../api_parser/api_parser";
+import ApiInterface from "../api_parser/api_interface";
 
-
-
-let ApiObject: ApiObject = { statusCode: 500, message: "Error from Gateway User : Internal server error" };
 const router = Router();
 
 router.get("*", async function (req, res, next) {
-    
+    let _apiResponse = {}
+    let _apiConstructor = new ApiContructor.Constructor(res);
+
     let _fetchOptions = new fetchOptions(req.method);
     _fetchOptions.setHeader('token', req.get('token') ?? '');
     _fetchOptions.setHeader('ms-user-method', 'GET');
@@ -25,20 +24,30 @@ router.get("*", async function (req, res, next) {
         const _ms_user_session = _ms_user_data!.session ?? false;
 
         if (!response.ok) {
-            ApiObject.statusCode = response.status;
-            ApiObject.details = _ms_user_response;
+            _apiResponse = {
+                statusCode: response.status,
+                message: "Internal server error during response",
+                details: _ms_user_response
+            };
         }
         if (!_ms_user_session) {
-            ApiObject = { statusCode: response.status, message: "MS User Fault : Impossible to get the Session with the token given see details section for more informations", details: _ms_user_response };
+            _apiResponse = {
+                statusCode: response.status,
+                message: "MS User Fault : Impossible to get the Session with the token given see details section for more informations",
+                details: _ms_user_response
+            }
         }
         res.locals.session = _ms_user_session;
-        ApiObject = _ms_user_response;
+        _apiResponse = _ms_user_response;
 
     }
     catch (UncaughtException) {
-        ApiObject = { statusCode: 500, message: "UncaughtException Exception", details: UncaughtException };
+        _apiResponse = { statusCode: 500, message: "UncaughtException Exception", details: UncaughtException };
     }
-    return ApiResponseParser.response(res, ApiObject);
+
+    _apiConstructor
+        .setResponse(_apiResponse as ApiInterface)
+        .sendResponse();
 });
 
-export { router as userRouterGet };
+export { router as userGetRouter };

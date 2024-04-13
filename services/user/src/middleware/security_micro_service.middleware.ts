@@ -4,13 +4,47 @@ import { ApiObject } from "../interfaces/api_response.interface";
 import fetchOptions from "../interfaces/fetch_options.interface";
 import ApiResponseParser from "../interfaces/api_response.parser";
 
-const headers: HeadersInit = new Headers();
-
-
 let ApiObject: ApiObject = { statusCode: 500, message: "Error from MS User : Internal server error" };
 
 
-export const SecurityMicroSevice = async (
+export const authentication = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    let onFailure = false;
+    let _fetchOptions = new fetchOptions(req.method);
+    _fetchOptions.setHeader('ms-security-method', req.method);
+    _fetchOptions.setHeader('ms-target-service', 'authentication');
+    _fetchOptions.setHeader('ms-target-protocol', 'http');
+    _fetchOptions.setHeader('ms-target-host', 'security.service.riptest:8484');
+    _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
+    _fetchOptions.setBody(res.locals.session);
+
+
+    try {
+        const response = await fetch(`${_fetchOptions.getTarget()}`, _fetchOptions)
+        const _ms_security_response = await response.json();
+        const _ms_security_data = _ms_security_response?.data ?? false;
+        const _ms_security_token = _ms_security_data?.token ?? false;
+        const _ms_security_message = _ms_security_response!.message ?? "Undefined jsonResponse.token in MS Security";
+
+        if (!_ms_security_token) {
+            ApiObject = { statusCode: response.status, message: _ms_security_message, details: _ms_security_response };
+            onFailure = true;
+        }
+
+        ApiObject = { statusCode: response.status, message: "User connected with success !", data: { token: _ms_security_token }, details: { session: res.locals.session, } };
+
+    }
+    catch (UncaughtException) {
+        ApiObject = { statusCode: 500, message: "UncaughtException Exception", details: UncaughtException };
+        onFailure = !onFailure;
+    }
+    return ApiResponseParser.response(res, ApiObject);
+};
+
+export const tokenValidator = async (
     req: Request,
     res: Response,
     next: NextFunction

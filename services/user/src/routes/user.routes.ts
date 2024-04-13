@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { UserController } from "../controllers/user.controllers";
 //import { UserAuthController } from "../controllers/controllers/auth.controller";
-import { SecurityMicroSevice } from "../middleware/security_micro_service.middleware";
+import { tokenValidator } from "../middleware/security_micro_service.middleware";
 
 const router = Router();
 
@@ -11,36 +11,36 @@ const router = Router();
 
 router.get(
     '/getUserById/:userId',
-    SecurityMicroSevice,
+    tokenValidator,
     UserController.getUsers
 );
 
 router.get(
     '/getUserByName/:lastnames',
-    SecurityMicroSevice,
+    tokenValidator,
     UserController.getUsers
 );
 router.get(
     '/getUserByEmail/:email',
-    SecurityMicroSevice,
+    tokenValidator,
     UserController.getUsers
 );
 
 router.put(
     "/update/:userId",
-    SecurityMicroSevice,
+    tokenValidator,
     UserController.updateUser
 );
 
 router.patch(
     "/update/:userId",
-    SecurityMicroSevice,
+    tokenValidator,
     UserController.updateUser
 );
 
 router.delete(
     "/deleteuserById/:userId",
-    SecurityMicroSevice,
+    tokenValidator,
     UserController.deleteUser
 );
 
