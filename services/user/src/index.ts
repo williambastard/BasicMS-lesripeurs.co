@@ -3,6 +3,7 @@ import express from "express";
 
 import { userRouter } from "./routes/user.routes";
 import { defaultRouter } from "./routes/default.routes";
+import { testRouter } from "./routes/test.routes";
 
 const PORT = "8383";
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
 
+app.use("/test", testRouter);
 app.use("/user", userRouter);
 app.use("/", defaultRouter);
 

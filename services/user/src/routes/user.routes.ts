@@ -10,13 +10,13 @@ const router = Router();
 //router.post("/signup", UserController.signup);
 
 router.get(
-    '/getUserById/:id',
+    '/getUserById/:userId',
     SecurityMicroSevice,
     UserController.getUsers
 );
 
 router.get(
-    '/getUserByName/:name',
+    '/getUserByName/:lastnames',
     SecurityMicroSevice,
     UserController.getUsers
 );
@@ -27,19 +27,19 @@ router.get(
 );
 
 router.put(
-    "/update/:id",
+    "/update/:userId",
     SecurityMicroSevice,
     UserController.updateUser
 );
 
 router.patch(
-    "/update/:id",
+    "/update/:userId",
     SecurityMicroSevice,
     UserController.updateUser
 );
 
 router.delete(
-    "/delete/:id",
+    "/deleteuserById/:userId",
     SecurityMicroSevice,
     UserController.deleteUser
 );

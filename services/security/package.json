@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./dist/index.js",
-    "build": "tsc",
-    "start-build-watch": "ts-node-dev --poll ./src/index.ts"
+    "dev": "ts-node-dev --poll ./src/index.ts",
+    "prod": "nodemon --legacy-watch --watch src -e tsx,ts --exec 'ts-node' ./src/index.ts"
   },
   "dependencies": {
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "jsonwebtoken": "^9.0.2",
     "express": "^4.19.2",
+    "nodemon": "^3.1.0",
     "node": "^18.20.2"
   },
   "devDependencies": {

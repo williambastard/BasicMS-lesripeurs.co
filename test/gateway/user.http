@@ -10,7 +10,15 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJD
 DELETE http://user.gateway.riptest:8282/user/deleteuserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTMwMjU5NjgsImV4cCI6MTcxMzAyOTU2OH0.4XguIpOdyS8cPVgrtcs47pGVErVJ98RT3nk3nadWICg
+
+###
+# Supprimer le client d'email test@test.fr
+DELETE http://user.gateway.riptest:8282/user/deleteuserById/test@test.fr
+Cache-Control: max-age=604800
+Content-Type: application/json
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+
 
 ###
 # Créer un nouveau client
@@ -20,17 +28,11 @@ Content-Type: application/json
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
 
 {
-    "account": {
-        "firstnames": "william",
-        "lastnames": "BASTARD RABASTE",
-        "street_address1": "15 rue georges gay",
-        "street_address2": "Batiment 11-12",
-        "street_address3": "ETG 2 APT 204",
-        "zipcode": "93130",
-        "city": "Noisy-Le-Sec",
-        "country": "France",
-        "phone": "33650717809"
-    }
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "phone": "33650717809",
+    "email": "test@test.fr",
+    "password": "testpassword123",
 }
 
 ###
@@ -40,20 +42,12 @@ Cache-Control: max-age=604800
 Content-Type: application/json
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
 
-
 {
-    "account": {
-        "uuid": "45646",
-        "firstnames": "william",
-        "lastnames": "BASTARD RABASTE",
-        "street_address1": "15 rue georges gay",
-        "street_address2": "Batiment 11-12",
-        "street_address3": "ETG 2 APT 204",
-        "zipcode": "93130",
-        "city": "Noisy-Le-Sec",
-        "country": "France",
-        "phone": "33650717809"
-    }
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "phone": "33650717809",
+    "email": "test@test.fr",
+    "password": "testpassword123",
 }
 
 ###
@@ -63,18 +57,10 @@ Cache-Control: max-age=604800
 Content-Type: application/json
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
 
-
 {
-    "account": {
-        "uuid": "45646",
-        "firstnames": "william",
-        "lastnames": "BASTARD RABASTE",
-        "street_address1": "15 rue georges gay",
-        "street_address2": "Batiment 11-12",
-        "street_address3": "ETG 2 APT 204",
-        "zipcode": "93130",
-        "city": "Noisy-Le-Sec",
-        "country": "France",
-        "phone": "33650717809"
-    }
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "phone": "33650717809",
+    "email": "test@test.fr",
+    "password": "testpassword123",
 }

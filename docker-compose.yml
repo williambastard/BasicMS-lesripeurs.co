@@ -1,7 +1,7 @@
 version: '3.8'
 
 x-common-node-variables: &common-node-variables
-  NODE_ENV: development
+  NODE_ENV: production
 
 services:
   # -------------------------------------------------------------------------
@@ -16,14 +16,20 @@ services:
       - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
+    networks:
+      - internet-network
+      - gateway-network
   # -------------------------------------------------------------------------
   user.service.riptest:
     container_name: user.service.riptest
     build:
       context: ./services/user
-      dockerfile: development.Dockerfile
+      dockerfile: production.Dockerfile
     volumes:
       - ./services/user/src:/usr/src/app/src
+      - ./services/user/.env:/usr/src/app/.env
+      - ./services/user/migrations:/usr/src/app/migrations
+      - ./services/user/schema.prisma:/usr/src/app/schema.prisma
     environment:
       <<: *common-node-variables
     depends_on:
@@ -31,14 +37,13 @@ services:
     ports:
       - 8383:8383
     networks:
-      - internet-network
       - gateway-network
   # -------------------------------------------------------------------------
   security.service.riptest:
     container_name: security.service.riptest
     build:
       context: ./services/security
-      dockerfile: development.Dockerfile
+      dockerfile: production.Dockerfile
     volumes:
       - ./services/security/src:/usr/src/app/src
     environment:
@@ -52,7 +57,7 @@ services:
     container_name: user.gateway.riptest
     build:
       context: ./gateways/user
-      dockerfile: development.Dockerfile
+      dockerfile: production.Dockerfile
     volumes:
       - ./gateways/user/src:/usr/src/app/src
     environment:
