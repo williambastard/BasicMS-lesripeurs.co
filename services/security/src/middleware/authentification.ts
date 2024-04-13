@@ -9,22 +9,23 @@ let ApiObject: ApiObject = { statusCode: 401, message: "Access denied" };
 /**
  * Express middleware, checks for a valid JSON Web Token and returns 401 Unauthorized if one isn't found.
  */
-export function generateToken(object: Object): string {
+export function tokenGenerator(object: Object): string {
     const defaultOptions: object = {
         expiresIn: '1hr',
     };
     const token = jwt.sign(object, _jwtSecretSalt, defaultOptions);
     return token
 };
-export const generateTestToken = (
+
+export const generateToken = (
     req: Request,
     res: Response
 ) => {
-    ApiObject = { statusCode: 200, message: "Your token is ready, find it in data.token", data: { token: generateToken({ userId: -1, lastnames: "COMPTE DE TEST", firstnames: "Albert" }), request_url: req.url, request_type: req.method } };
+    ApiObject = { statusCode: 200, message: "Your token is ready, find it in data.token", data: { token: tokenGenerator(req.body ?? { userId: -1, lastnames: "COMPTE DE TEST", firstnames: "Albert" }), request_url: req.url, request_type: req.method } };
     ApiResponseParser.response(res, ApiObject);
 };
 
-export const authentification = (
+export const verifyToken = (
     req: Request,
     res: Response,
     next: NextFunction

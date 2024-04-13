@@ -1,7 +1,7 @@
 import http from "http";
 import express from "express";
 
-import { authentification, generateTestToken } from "./middleware/authentification";
+import { verifyToken, generateToken } from "./middleware/authentification";
 
 const PORT = "8484";
 
@@ -13,8 +13,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
-app.use("/generateTestToken", generateTestToken);
-app.use(authentification);
+
+app.use("/authentication", generateToken);
+app.use("/generateTestToken", generateToken);
+app.use(verifyToken);
+
 
 
 httpServer.listen(PORT, async () => {
