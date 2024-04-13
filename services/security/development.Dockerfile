@@ -7,4 +7,4 @@ COPY ./tsconfig.json ./
 RUN npm install
 
 EXPOSE 8383
-CMD ["npm", "run", "start-build-watch"]
+CMD ["npm", "run", "dev"]

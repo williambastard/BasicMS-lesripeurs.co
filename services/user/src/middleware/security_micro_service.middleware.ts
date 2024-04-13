@@ -32,7 +32,7 @@ export const SecurityMicroSevice = async (
         const _ms_security_message = _ms_security_response!.message ?? "Undefined jsonResponse.session in MS Security";
         const _ms_security_details = _ms_security_response!.details ?? _ms_security_response;
         const _ms_security_session = _ms_security_data?.session ?? false;
-        console.log(_ms_security_response)
+
 
         if (!response.ok) {
             ApiObject.statusCode = response.status;

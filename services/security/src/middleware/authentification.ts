@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { ApiObject } from "../interfaces/api_response.interface";
 import ApiResponseParser from "../interfaces/api_response.parser";
-
 import * as jwt from "jsonwebtoken";
+
 const _jwtSecretSalt = "DEFAULTSALTRIPEURSCOM_@@03#";  // Retrieve the environment variable 
 let ApiObject: ApiObject = { statusCode: 401, message: "Access denied" };
 
