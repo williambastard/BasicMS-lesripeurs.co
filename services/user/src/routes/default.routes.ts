@@ -4,9 +4,10 @@ import { Router } from "express";
 const router = Router();
 
 router.all("/:target?/:endpoint?", (req, res, next) => {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_501")
 
+    let _apiConstructor = new ApiParser.ApiConstructor(res);
+    let _apiResponse = ApiParser.ApiJSON.get("HTTP_501")
+    
     _apiResponse.data = {
         url: req.url,
         headers: req.headers,
@@ -20,7 +21,7 @@ router.all("/:target?/:endpoint?", (req, res, next) => {
 
 router.all("/*", (req, res, next) => {
     let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_501");
+    let _apiResponse = ApiParser.ApiJSON.get("HTTP_501");
     _apiResponse.data = {
         url: req.url,
         headers: req.headers,

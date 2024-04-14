@@ -10,6 +10,8 @@ import { defaultRouter } from "./routes/default.routes";
 import { authenticationRouter } from "./routes/authentication.routes";
 
 // Récupérer les interfaces réseau de la machine
+let _IPAdresses: string[] = [];
+
 const _HTTP_PORT = "8282";
 const _HTTPS_PORT = "4442";
 
@@ -20,7 +22,7 @@ const _corsOptions = {
     origin: function (origin: any, callback: any) {
         if (!origin) {
             // Si l'origine n'est pas fournie dans l'en-tête de la requête
-            callback(new Error('Origin not provided'));
+            callback(new Error('Origin not provided for User service'));
         } else {
             // Extraction du hostname de l'origine
             const hostname = new URL(origin).hostname;
@@ -33,9 +35,15 @@ const _corsOptions = {
         }
     },
     actionOnError: (err: any, req: Request, res: Response, next: NextFunction) => {
+        //console.log(req.get('origin'));
         if (err) {
-            console.log(req.hostname);
-            res.status(401).json({ error: err.message });
+            let _apiResponse = ApiParser.ApiJSON.get("HTTP_403");
+            console.log(err);
+            _apiResponse.message = err.toString();
+            _apiResponse.details = { body: req?.body, headers: req.headers };
+
+            let _apiConstructor = new ApiParser.ApiConstructor(res);
+            return _apiConstructor.setResponse(_apiResponse).sendResponse();
         } else {
             next();
         }
@@ -51,21 +59,20 @@ _app.use(express.urlencoded({ extended: true }));
 /* Gestion  des routes de l'application */
 
 _app.use(cors(_corsOptions), _corsOptions.actionOnError);
-_app.use("/authentication", authenticationRouter);
+_app.use("/user/authentication", authenticationRouter);
 _app.use("/user", userRouter);
 _app.use("/", defaultRouter);
 
 
 httpServer.listen(_HTTP_PORT, async () => {
-    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTP_PORT} 🎉`);
-
-    // Parcourir les interfaces pour trouver l'adresse IP
+    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTP_PORT} 🎉`);    // Parcourir les interfaces pour trouver l'adresse IP
     Object.keys(_interfaces).forEach(interfaceName => {
         const interfaceAddresses = _interfaces[interfaceName];
         interfaceAddresses?.forEach(address => {
             if (!address.internal && address.family === 'IPv4') {
-                console.log(`Adresse IP de la machine: ${address.address}`);
+                _IPAdresses.push(address.address);
             }
         });
+        console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
     });
 });

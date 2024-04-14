@@ -7,6 +7,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import { generateToken, verifyToken } from './middleware/authentification';
 
 // Récupérer les interfaces réseau de la machine
+let _IPAdresses: string[] = [];
+
 const _HTTP_PORT = "8181";
 const _HTTPS_PORT = "4441";
 
@@ -32,8 +34,11 @@ const _corsOptions = {
     },
     actionOnError: (err: any, req: Request, res: Response, next: NextFunction) => {
         if (err) {
-            console.log(req.hostname);
-            res.status(401).json({ error: err.message });
+            let _apiResponse = ApiParser.ApiJSON.get("HTTP_403");
+            _apiResponse.message = err.toString();
+
+            let _apiConstructor = new ApiParser.ApiConstructor(res);
+            return _apiConstructor.setResponse(_apiResponse).sendResponse();
         } else {
             next();
         }
@@ -57,14 +62,14 @@ _app.use(verifyToken);
 
 httpServer.listen(_HTTP_PORT, async () => {
     console.log(`API MS user en écoute sur http://security.service.riptest:${_HTTP_PORT} 🎉`);
-
     // Parcourir les interfaces pour trouver l'adresse IP
     Object.keys(_interfaces).forEach(interfaceName => {
         const interfaceAddresses = _interfaces[interfaceName];
         interfaceAddresses?.forEach(address => {
             if (!address.internal && address.family === 'IPv4') {
-                console.log(`Adresse IP de la machine: ${address.address}`);
+                _IPAdresses.push(address.address);
             }
         });
+        console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
     });
 });

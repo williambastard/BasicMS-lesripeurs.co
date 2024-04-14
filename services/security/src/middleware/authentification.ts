@@ -35,7 +35,7 @@ export const verifyToken = (
     next: NextFunction
 ) => {
     let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_500");
+    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
 
     try {
         const token = req.header('Token') ?? "";

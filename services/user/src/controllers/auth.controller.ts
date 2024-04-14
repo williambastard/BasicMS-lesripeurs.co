@@ -11,13 +11,14 @@ export abstract class UserAuthController {
         let _apiResponse = { statusCode: 401, message: "Login failed : Wrong password or email.", data: undefined };
 
         const userLogin = new Authentication({ email: req.body.email, password: req.body.password });
-        const authenticationResult = await AuthenticateHelper.authenticate(userLogin);
+        const authenticationResult = await AuthenticateHelper.authenticate(userLogin)
 
         if (authenticationResult) {
             isSuccess = true;
             res.locals.session = authenticationResult;
             _apiResponse = { statusCode: 200, message: "User was successfully loged in !", data: res.locals.session };
         }
+        
         return isSuccess ? next() : _apiConstructor.setResponse(_apiResponse).sendResponse();
     }
 

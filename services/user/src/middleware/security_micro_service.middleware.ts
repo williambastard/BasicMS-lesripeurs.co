@@ -1,6 +1,5 @@
 
 import { NextFunction, Request, Response } from "express";
-import fetchOptions from "../interfaces/fetch_options.interface";
 import ApiParser from "private_modules";
 
 export const authentication = async (
@@ -9,36 +8,27 @@ export const authentication = async (
     next: NextFunction
 ) => {
     let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_500");
-
-    let _fetchOptions = new fetchOptions(req.method);
-    _fetchOptions.setHeader('ms-security-method', req.method);
-    _fetchOptions.setHeader('ms-target-service', 'authentication');
-    _fetchOptions.setHeader('ms-target-protocol', 'http');
-    _fetchOptions.setHeader('ms-target-host', 'security.service.riptest:8181');
-    _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
-    _fetchOptions.setBody(res.locals.session);
-
+    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
 
     try {
-        const response = await fetch(`${_fetchOptions.getTarget()}`, _fetchOptions)
-        const _ms_security_response = await response.json();
-        const _ms_security_data = _ms_security_response?.data ?? false;
-        const _ms_security_token = _ms_security_data?.token ?? false;
-        const _ms_security_message = _ms_security_response!.message ?? "Undefined jsonResponse.token in MS Security";
+        req.body = res.locals.session;
+        const response = await new ApiParser.Call(req, "security", req.url, 8181).fetch();
+        console.log(response._callresponse);
 
-        if (!_ms_security_token) {
+        if (!response._isOK) {
             _apiResponse = {
-                statusCode: response.status,
-                message: _ms_security_message,
-                details: _ms_security_response
+                statusCode: response._status,
+                message: "Internal server error",
+                details: response._callresponse
             };
         }
+
         _apiResponse = {
-            statusCode: response.status,
+            statusCode: 200,
             message: "User connected with success !",
-            token: _ms_security_token, data: {
-                token: _ms_security_token
+            token: response.getToken(),
+            data: {
+                token: response.getToken()
             },
             details: {
                 session: res.locals.session,
@@ -61,45 +51,32 @@ export const tokenValidator = async (
     next: NextFunction
 ) => {
     let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_500");
-
+    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
     let onFailure = false;
-    let _fetchOptions = new fetchOptions(req.method);
-    _fetchOptions.setHeader('token', req.get('token') ?? '');
-    _fetchOptions.setHeader('ms-security-method', 'GET');
-    _fetchOptions.setHeader('ms-target-service', 'security');
-    _fetchOptions.setHeader('ms-target-protocol', 'http');
-    _fetchOptions.setHeader('ms-target-host', 'security.service.riptest:8181');
-    _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
 
 
     try {
-        const response = await fetch(`${_fetchOptions.getTarget()}`, _fetchOptions)
-        const _ms_security_response = await response.json();
-        const _ms_security_data = _ms_security_response?.data ?? false;
-        const _ms_security_message = _ms_security_response!.message ?? "Undefined jsonResponse.session in MS Security";
-        const _ms_security_details = _ms_security_response!.details ?? _ms_security_response;
-        const _ms_security_session = _ms_security_data?.session ?? false;
+        const response = await new ApiParser.Call(req, "user", req.url, 8282).fetch();
 
 
-        if (!response.ok) {
+        if (!response._isOK) {
             _apiResponse = {
-                statusCode: response.status,
+                statusCode: response._status,
                 message: "Internal server error",
-                details: _ms_security_response
+                details: response._callresponse
             };
             onFailure = true;
         }
-        if (!_ms_security_session) {
+        if (!response._session) {
             _apiResponse = {
-                statusCode: response.status,
-                message: _ms_security_message,
-                details: _ms_security_details
+                statusCode: response._status,
+                message: response._callresponse.message,
+                details: response._callresponse
             };
             onFailure = true;
         }
         res.locals.session = {
-            session: _ms_security_session
+            session: response._session
         };
 
     }
