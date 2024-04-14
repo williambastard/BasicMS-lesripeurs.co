@@ -4,6 +4,20 @@ import express from "express";
 import { userRouter } from "./routes/user.routes";
 import { defaultRouter } from "./routes/default.routes";
 import { authenticationRouter } from "./routes/authentication.routes";
+import * as os from 'os';
+
+// Récupérer les interfaces réseau de la machine
+const interfaces = os.networkInterfaces();
+
+// Parcourir les interfaces pour trouver l'adresse IP
+Object.keys(interfaces).forEach(interfaceName => {
+    const interfaceAddresses = interfaces[interfaceName];
+    interfaceAddresses?.forEach(address => {
+        if (!address.internal && address.family === 'IPv4') {
+            console.log(`Adresse IP de la machine: ${address.address}`);
+        }
+    });
+});
 
 const PORT = "8383";
 

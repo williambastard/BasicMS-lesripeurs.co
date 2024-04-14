@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 x-common-node-variables: &common-node-variables
   NODE_ENV: production
@@ -17,8 +17,7 @@ services:
     ports:
       - 5432:5432
     networks:
-      - internet-network
-      - gateway-network
+      - local-network
   # -------------------------------------------------------------------------
   user.service.riptest:
     container_name: user.service.riptest
@@ -37,7 +36,7 @@ services:
     ports:
       - 8383:8383
     networks:
-      - gateway-network
+      - local-network
   # -------------------------------------------------------------------------
   security.service.riptest:
     container_name: security.service.riptest
@@ -51,7 +50,7 @@ services:
     ports:
       - 8484:8484
     networks:
-      - gateway-network
+      - local-network
   # -------------------------------------------------------------------------
   user.gateway.riptest:
     container_name: user.gateway.riptest
@@ -65,14 +64,23 @@ services:
     ports:
       - 8282:8282
     networks:
+      - local-network
       - gateway-network
   # -------------------------------------------------------------------------
 
 networks:
-  internet-network:
-    name: internet-network
-    driver: bridge
+  local-network:
+    name: local-network
+    driver: none
+    ipam:
+      driver: default
+      config:
+        - subnet: 176.25.25.0/16
 
   gateway-network:
     name: gateway-network
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.25.0/16
