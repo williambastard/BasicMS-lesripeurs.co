@@ -1,3 +1,6 @@
+
+
+
 ###
 # Récupérer le client d'ID n°1
 GET http://user.gateway.riptest:8282/user/getUserById/1
@@ -32,7 +35,7 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJD
     "firstnames": "william",
     "phone": "33650717809",
     "email": "test@test.fr",
-    "password": "testpassword123",
+    "password": "testpassword123"
 }
 
 ###
@@ -47,7 +50,7 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3
     "firstnames": "william",
     "phone": "33650717809",
     "email": "test@test.fr",
-    "password": "testpassword123",
+    "password": "testpassword123"
 }
 
 ###
@@ -62,5 +65,5 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3
     "firstnames": "william",
     "phone": "33650717809",
     "email": "test@test.fr",
-    "password": "testpassword123",
+    "password": "testpassword123"
 }

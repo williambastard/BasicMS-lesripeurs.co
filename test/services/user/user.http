@@ -1,9 +1,12 @@
+
+
 ###
 # Récupérer le client d'ID n°1
 GET http://user.service.riptest:8383/user/getUserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
 Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+
 ###
 # Supprimer le client d'ID n°1
 DELETE http://user.service.riptest:8383/user/deleteuserById/1

@@ -1,5 +1,3 @@
-import { ErrorRequestHandler } from "express";
-
 export interface fetchOptionsInterface {
     headers: Headers;
     method: string;
@@ -28,8 +26,8 @@ export default class fetchOptions implements fetchOptionsInterface {
     setMethod(method: string) {
         this.method = method;
     }
-    setBody(body: any) {
-        this.body = body;
+    setBody(body: object) {
+        this.body = JSON.stringify(body);
     }
 
     getTarget() {

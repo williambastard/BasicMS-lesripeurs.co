@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import Helper from './helper';
 import User from '../models/user';
+import { Authentication } from '../models/authentication';
 
 const prisma = new PrismaClient()
 

@@ -1,16 +1,34 @@
+import ApiParser from "private_modules";
 import { Router } from "express";
-import ApiResponseParser from "../interfaces/api_response.parser";
+
 const router = Router();
 
 router.all("/:target?/:endpoint?", (req, res, next) => {
-    const ApiObject = { statusCode: 501, message: "Functionality not implemented yet but the system work !", data: { url: req.url, headers: req.headers, params: req.params, body: req.body, query: req.query } };
-    return ApiResponseParser.response(res, ApiObject);
+    let _apiConstructor = new ApiParser.ApiConstructor(res);
+    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_501")
+
+    _apiResponse.data = {
+        url: req.url,
+        headers: req.headers,
+        params: req.params,
+        body: req.body,
+        query: req.query
+    }
+    return _apiConstructor.setResponse(_apiResponse).sendResponse();
 }
 );
 
 router.all("/*", (req, res, next) => {
-    const ApiObject = { statusCode: 501, message: "Functionality not implemented yet but the system work", data: { url: req.url, headers: req.headers, params: req.params, body: req.body, query: req.query } };
-    return ApiResponseParser.response(res, ApiObject);
+    let _apiConstructor = new ApiParser.ApiConstructor(res);
+    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_501");
+    _apiResponse.data = {
+        url: req.url,
+        headers: req.headers,
+        params: req.params,
+        body: req.body,
+        query: req.query
+    }
+    return _apiConstructor.setResponse(_apiResponse).sendResponse();
 }
 );
 

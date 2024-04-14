@@ -1,16 +1,29 @@
+import ApiParser from "private_modules";
 import { NextFunction, Request, Response } from "express";
-import ApiResponseParser from "../interfaces/api_response.parser";
+import { Authentication } from "../models/authentication";
+import { AuthenticateHelper } from "../helpers/authenticate.helper";
 
-const ApiObject = { statusCode: 500, message: "Internal server error" };
-
-export class UserAuthController {
+export abstract class UserAuthController {
     static async login(req: Request, res: Response, next: NextFunction) {
-        const ApiObject = { statusCode: 200, message: "User was successfully finded !", data: res.locals.session };
-        return ApiResponseParser.response(res, ApiObject);
+
+        let isSuccess = false;
+        let _apiConstructor = new ApiParser.ApiConstructor(res);
+        let _apiResponse = { statusCode: 401, message: "Login failed : Wrong password or email.", data: undefined };
+
+        const userLogin = new Authentication({ email: req.body.email, password: req.body.password });
+        const authenticationResult = await AuthenticateHelper.authenticate(userLogin);
+
+        if (authenticationResult) {
+            isSuccess = true;
+            res.locals.session = authenticationResult;
+            _apiResponse = { statusCode: 200, message: "User was successfully loged in !", data: res.locals.session };
+        }
+        return isSuccess ? next() : _apiConstructor.setResponse(_apiResponse).sendResponse();
     }
 
     static async getProfile(req: Request, res: Response, next: NextFunction) {
-        const ApiObject = { statusCode: 200, message: "User was successfully finded !", data: res.locals.session };
-        return ApiResponseParser.response(res, ApiObject);
+        let _apiConstructor = new ApiParser.ApiConstructor(res);
+        let _apiResponse = { statusCode: 200, message: "User was successfully finded !", data: res.locals.session };
+        return _apiConstructor.setResponse(_apiResponse).sendResponse();
     }
 }
