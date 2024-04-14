@@ -17,6 +17,8 @@ Dans ce porjet, nous devons isoler le conteneur docker **user.gateway.riptest** 
 
 Les conteneurs dockers **user.service.riptest** et **security.service.riptest** ne doivent pas autoriser les connexions depuis l'internet.
 
+**Restreindre l'accès au public via les headers transmis par le client (navigateur) n'atant pas une méthode sûr et sécurisée, il est préférable de coupler les la sécurité par header ip, helmet et cors à une restriction par pare-feu directement sur la machine hôte des conteneurs.**
+
 Pour appliquer le réseau isolé de manière complète, et rendre impossible aux machines du réseau l'accès aux conteneurs, la machine hôte doit subir quelques modifications de pare-feu afin de restreindre les connexions entrantes et sortantes aux seuls ports 80 et 443 correspondants aux ports de **user.gateway.riptest**.
 
 

@@ -22,7 +22,9 @@ Object.keys(interfaces).forEach(interfaceName => {
         }
     });
 });
-const PORT = "8282";
+
+const HTTP_PORT = "80";
+const HTTPS_PORT = "443";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -40,6 +42,6 @@ app.use("/user", userPatchRouter);
 app.use("/user", userDeleteRouter);
 app.use("*", defaultRouter);
 
-httpServer.listen(PORT, async () => {
-    console.log(`API Gateway en écoute sur http://user.gateway.riptest:${PORT} 🎉`);
+httpServer.listen(HTTP_PORT, async () => {
+    console.log(`API Gateway en écoute sur http://user.gateway.riptest:${HTTP_PORT} 🎉`);
 });

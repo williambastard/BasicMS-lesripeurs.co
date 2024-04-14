@@ -7,5 +7,5 @@ COPY ./tsconfig.json ./
 RUN apk --no-cache add git
 RUN npm install
 
-EXPOSE 80
+EXPOSE 80 443
 CMD ["npm", "run", "prod"]
