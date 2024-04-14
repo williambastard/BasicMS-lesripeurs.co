@@ -17,7 +17,7 @@ Object.keys(interfaces).forEach(interfaceName => {
 
 import { verifyToken, generateToken } from "./middleware/authentification";
 
-const PORT = "8484";
+const PORT = "8181";
 
 const app = express();
 const httpServer = http.createServer(app);

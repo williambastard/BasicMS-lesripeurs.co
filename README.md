@@ -1,7 +1,7 @@
 
 # Configuration de sécurité
 
-Dans ce porjet, nous devons isoler le conteneur docker **user.gateway.riptest** de manière à ce qu'il soit accessible depuis le web (via un nom de domaine par exemple). Il doit également pouvoir communiquer avec les container **user.service.riptest** et **security.service.riptest**.
+Dans ce projet, nous devons isoler le conteneur docker **user.gateway.riptest** de manière à ce qu'il soit accessible depuis le web (via un nom de domaine par exemple). Il doit également pouvoir communiquer avec les container **user.service.riptest** et **security.service.riptest**.
 
 Les conteneurs dockers **user.service.riptest** et **security.service.riptest** ne doivent pas autoriser les connexions depuis l'internet.
 

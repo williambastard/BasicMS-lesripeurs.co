@@ -19,7 +19,7 @@ Object.keys(interfaces).forEach(interfaceName => {
     });
 });
 
-const PORT = "8383";
+const PORT = "8282";
 
 const app = express();
 const httpServer = http.createServer(app);
