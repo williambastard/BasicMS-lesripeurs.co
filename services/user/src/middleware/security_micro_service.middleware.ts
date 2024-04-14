@@ -1,16 +1,15 @@
 
 import { NextFunction, Request, Response } from "express";
 import fetchOptions from "../interfaces/fetch_options.interface";
-import * as ApiContructor from "../api_parser/api_parser";
-import ApiInterface from "../api_parser/api_interface";
+import ApiParser from "private_modules";
 
 export const authentication = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    let _apiConstructor = new ApiContructor.Constructor(res);
-    let _apiResponse = ApiContructor.default._HTTP_500;
+    let _apiConstructor = new ApiParser.ApiConstructor(res);
+    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_500");
 
     let _fetchOptions = new fetchOptions(req.method);
     _fetchOptions.setHeader('ms-security-method', req.method);
@@ -53,7 +52,7 @@ export const authentication = async (
             details: UncaughtException
         };
     }
-    return _apiConstructor.setResponse(_apiResponse as ApiInterface).sendResponse()
+    return _apiConstructor.setResponse(_apiResponse).sendResponse()
 };
 
 export const tokenValidator = async (
@@ -61,8 +60,8 @@ export const tokenValidator = async (
     res: Response,
     next: NextFunction
 ) => {
-    let _apiConstructor = new ApiContructor.Constructor(res);
-    let _apiResponse = ApiContructor.default._HTTP_500;
+    let _apiConstructor = new ApiParser.ApiConstructor(res);
+    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_500");
 
     let onFailure = false;
     let _fetchOptions = new fetchOptions(req.method);
@@ -112,5 +111,5 @@ export const tokenValidator = async (
         };
         onFailure = !onFailure;
     }
-    return (onFailure) ? _apiConstructor.setResponse(_apiResponse as ApiInterface).sendResponse() : next();
+    return (onFailure) ? _apiConstructor.setResponse(_apiResponse).sendResponse() : next();
 };

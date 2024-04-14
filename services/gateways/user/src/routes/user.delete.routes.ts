@@ -1,10 +1,10 @@
 import { Router } from "express";
-import * as ApiContructor from "../api_parser/api_parser";
-import ApiInterface from "../api_parser/api_interface";
+import ApiParser from "private_modules";
+
 const router = Router();
 
-router.patch("/*", (req, res, next) => {
-    let _apiConstructor = new ApiContructor.Constructor(res);
+router.delete("/*", (req, res, next) => {
+    let _apiConstructor = new ApiParser.ApiConstructor(res);
     let _apiResponse =
     {
         statusCode: 501,
@@ -19,9 +19,9 @@ router.patch("/*", (req, res, next) => {
     };
 
     _apiConstructor
-        .setResponse(_apiResponse as ApiInterface)
+        .setResponse(_apiResponse)
         .sendResponse();
 }
 );
 
-export { router as userPatchRouter };
+export { router as userDeleteRouter };
