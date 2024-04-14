@@ -1,3 +1,14 @@
+
+# Configuration de sécurité
+
+Dans ce porjet, nous devons isoler le conteneur docker **user.gateway.riptest** de manière à ce qu'il soit accessible depuis le web (via un nom de domaine par exemple). Il doit également pouvoir communiquer avec les container **user.service.riptest** et **security.service.riptest**.
+
+Les conteneurs dockers **user.service.riptest** et **security.service.riptest** ne doivent pas autoriser les connexions depuis l'internet.
+
+![Logo](https://raw.githubusercontent.com/williambastard/BasicMS-lesripeurs.co/develop/data/architecture.jpg?token=GHSAT0AAAAAACOM35BLQOXXWFF7VGLGDD3CZQ3YEEA)
+
+
+
 ## Amélioration apportable sur le projet
 La structure du dossier ressemblant à un monorepo hébergant plusieurs projets indépendants les uns des autres, il peut être intéréssant d'utiliser pnpm-workplace afin de faciliter la gestion et la lecture du projet.
 
