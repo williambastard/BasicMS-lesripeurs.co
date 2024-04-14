@@ -1,5 +1,19 @@
 import http from "http";
 import express from "express";
+import * as os from 'os';
+
+// Récupérer les interfaces réseau de la machine
+const interfaces = os.networkInterfaces();
+
+// Parcourir les interfaces pour trouver l'adresse IP
+Object.keys(interfaces).forEach(interfaceName => {
+    const interfaceAddresses = interfaces[interfaceName];
+    interfaceAddresses?.forEach(address => {
+        if (!address.internal && address.family === 'IPv4') {
+            console.log(`Adresse IP de la machine: ${address.address}`);
+        }
+    });
+});
 
 import { verifyToken, generateToken } from "./middleware/authentification";
 
