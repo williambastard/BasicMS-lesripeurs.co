@@ -15,7 +15,7 @@ export const authentication = async (
     _fetchOptions.setHeader('ms-security-method', req.method);
     _fetchOptions.setHeader('ms-target-service', 'authentication');
     _fetchOptions.setHeader('ms-target-protocol', 'http');
-    _fetchOptions.setHeader('ms-target-host', 'security.service.riptest:8484');
+    _fetchOptions.setHeader('ms-target-host', 'security.service.riptest:8181');
     _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
     _fetchOptions.setBody(res.locals.session);
 
@@ -69,7 +69,7 @@ export const tokenValidator = async (
     _fetchOptions.setHeader('ms-security-method', 'GET');
     _fetchOptions.setHeader('ms-target-service', 'security');
     _fetchOptions.setHeader('ms-target-protocol', 'http');
-    _fetchOptions.setHeader('ms-target-host', 'security.service.riptest:8484');
+    _fetchOptions.setHeader('ms-target-host', 'security.service.riptest:8181');
     _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
 
 

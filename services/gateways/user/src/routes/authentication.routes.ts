@@ -12,7 +12,7 @@ router.post("/*", async function (req, res, next) {
     _fetchOptions.setHeader('ms-user-method', req.method);
     _fetchOptions.setHeader('ms-target-service', 'authentication');
     _fetchOptions.setHeader('ms-target-protocol', 'http');
-    _fetchOptions.setHeader('ms-target-host', 'user.service.riptest:8383');
+    _fetchOptions.setHeader('ms-target-host', 'user.service.riptest:8282');
     _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
     _fetchOptions.setBody(req.body);
 

@@ -34,7 +34,7 @@ services:
     depends_on:
       - postgres.db.riptest
     ports:
-      - 8383:8383
+      - 8282:8282
     networks:
       - local-network
   # -------------------------------------------------------------------------
@@ -48,7 +48,7 @@ services:
     environment:
       <<: *common-node-variables
     ports:
-      - 8484:8484
+      - 8181:8181
     networks:
       - local-network
   # -------------------------------------------------------------------------
@@ -62,7 +62,7 @@ services:
     environment:
       <<: *common-node-variables
     ports:
-      - 8282:8282
+      - 80:80
     networks:
       - local-network
       - gateway-network
