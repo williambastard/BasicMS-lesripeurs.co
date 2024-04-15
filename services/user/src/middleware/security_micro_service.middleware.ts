@@ -1,7 +1,6 @@
 
 import { NextFunction, Request, Response } from "express";
 import ApiParser from "private_modules";
-
 export const authentication = async (
     req: Request,
     res: Response,
@@ -11,9 +10,8 @@ export const authentication = async (
     let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
 
     try {
-        req.body = res.locals.session;
-        const response = await new ApiParser.Call(req, "security", req.url, 8181).fetch();
-        console.log(response._callresponse);
+        req.body.userId = res.locals.session.userId ?? 0;
+        const response = await new ApiParser.Call(req, "security", "authentication", 8181).fetch();
 
         if (!response._isOK) {
             _apiResponse = {
@@ -26,9 +24,9 @@ export const authentication = async (
         _apiResponse = {
             statusCode: 200,
             message: "User connected with success !",
-            token: response.getToken(),
+            token: response._callresponse.token,
             data: {
-                token: response.getToken()
+                token: response._callresponse.token
             },
             details: {
                 session: res.locals.session,
@@ -56,9 +54,7 @@ export const tokenValidator = async (
 
 
     try {
-        const response = await new ApiParser.Call(req, "user", req.url, 8282).fetch();
-
-
+        const response = await new ApiParser.Call(req, "security", req.url, 8181).fetch();
         if (!response._isOK) {
             _apiResponse = {
                 statusCode: response._status,
@@ -70,8 +66,7 @@ export const tokenValidator = async (
         if (!response._session) {
             _apiResponse = {
                 statusCode: response._status,
-                message: response._callresponse.message,
-                details: response._callresponse
+                message: response._callresponse.message
             };
             onFailure = true;
         }

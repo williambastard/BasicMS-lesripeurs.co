@@ -32,7 +32,7 @@ export abstract class UserHelper extends Helper {
             })
             isSuccess = true;
         } catch (prismaError) {
-            console.log(prismaError)
+            //console.log(prismaError)
         }
         return isSuccess;
     }

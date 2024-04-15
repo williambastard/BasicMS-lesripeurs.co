@@ -20,7 +20,6 @@ export class UserController {
         return _apiConstructor.setResponse(_apiResponse).sendResponse();
     }
     static async deleteUser(req: Request, res: Response, next: NextFunction) {
-
         const searchUserId = parseInt(req.body.userId ?? req.params.userId) ?? -1;
         const deleted = await UserHelper.deletebyUserId(searchUserId);
         const message = deleted ? "sucessfully" : "unsuccessfully";

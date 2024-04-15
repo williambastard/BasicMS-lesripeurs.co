@@ -54,9 +54,9 @@ _app.use(express.urlencoded({ extended: true }));
 /* Gestion  des routes de l'application */
 
 _app.use(cors(_corsOptions), _corsOptions.actionOnError);
-_app.use("/authentication", generateToken);
+_app.use("/security/authentication", generateToken);
 _app.use("/generateTestToken", generateToken);
-_app.use(verifyToken);
+_app.use("/*", verifyToken);
 
 
 
