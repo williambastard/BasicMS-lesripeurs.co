@@ -110,6 +110,20 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
 
 
 ```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  X-Session-Id: 45647859436351..2f6b307831773d
+  X-Session-Max-Age-Value: 31536000
+  X-Session-Max-Age-Unit: seconds
+  Set-Cookie: session=s%3A45647859436351..2f6b307831773d.GSpaEooIjpbNMtDppAH5Pp8j7ZDkXV%2F20oHHjZq5G5s; Max-Age=31536; Path=/; Expires=Thu, 18 Apr 2024 03:45:00 GMT; HttpOnly,sessionExpiryDate=s%3A31536000.7Rf8ateLFEXwb%2Bk8HKI%2BD49w01AGuvRVxSdP7dIXAVY; Max-Age=31536; Path=/; Expires=Thu, 18 Apr 2024 03:45:00 GMT; HttpOnly
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 854
+  ETag: W/"356-ylXp0q5xvsub7jWwT/QpEKLXEU0"
+  Date: Wed, 17 Apr 2024 18:59:24 GMT
+  Connection: close
   {
     "statusCode": 200,
     "message": "User connected with success !",
@@ -168,6 +182,35 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
 | :-------- | :------- | :------------------------- |
 | Authorization | token | **Requis**. Le header est requis, il ne peut être transmis que dans le header |
 
+#### Réponse 
+```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Connection: keep-alive
+  Content-Length: 229
+  Content-Type: application/json; charset=utf-8
+  Date: Wed, 17 Apr 2024 18:58:32 GMT
+  Etag: W/"e5-iD7c+/CuYL67RZ3P8Nw5IDtpad4"
+  keep-alive: timeout=5
+
+  {
+    "statusCode": 200,
+    "message": "Your token is valid !",
+    "data": {
+      "session": {
+        "userId": 3,
+        "expireAt": 1744910819811,
+        "expireDate": "2025-04-17T17:26:59+00:00",
+        "createAt": "2024-04-17T19:20:12+02:00"
+      },
+      "request_url": "/",
+      "request_type": "POST"
+    }
+  }
+```
 
 #### Get item
 

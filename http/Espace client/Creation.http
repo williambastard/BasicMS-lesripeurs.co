@@ -6,9 +6,9 @@ Content-Type: application/json
 Origin: {{$dotenv ORIGIN}}
 
 {
-    "email": "tesxxt@test.com",
+   "email": "email-de-test-unique@test.com",
     "phone": "33650717809",
     "lastnames": "BASTARD RABASTE",
     "firstnames": "william",
-    "password": "password"
+    "password": "mon_mot_de_passe"
 }

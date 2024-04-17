@@ -25,7 +25,7 @@ export class UserController {
 
     static async myInformations(req: Request, res: Response, next: NextFunction) {
         let _parser = new Api.parser(res);
-        let _apiResponse: Api.ResponseInterface = { statusCode: 200, message: "Your informations", data: res.locals.me }
+        let _apiResponse: Api.ResponseInterface = { statusCode: 200, message: "Your informations", data: new User(res.locals.me).userWithoutPass() }
         return _parser.setResponse(_apiResponse).sendResponse();
     }
 
@@ -90,7 +90,7 @@ export class UserController {
                 if (res.locals.me.userId === _newData.userId!) {
                     const _userFinded = await User.updateUser(_newData.userId!, _newData);
                     if (_userFinded) {
-                        _apiResponse = { statusCode: 200, message: "User was successfully modified !", data: { user: _userFinded } };
+                        _apiResponse = { statusCode: 200, message: "User was successfully modified !", data: { user: _userFinded.userWithoutPass() } };
                     }
                 }
             }

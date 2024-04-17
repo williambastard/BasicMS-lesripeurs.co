@@ -5,7 +5,6 @@ Cache-Control: max-age=604800
 Content-Type: application/json
 Origin: {{$dotenv ORIGIN}}
 Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-Cookies: session={{$dotenv AUTHORIZATION_TOKEN}};
 
 ###
 # Récupérer un client avec son identifiant userId
@@ -14,7 +13,6 @@ Cache-Control: max-age=604800
 Content-Type: application/json
 Origin: {{$dotenv ORIGIN}}
 Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-Cookies: session={{$dotenv AUTHORIZATION_TOKEN}};
 
 ###
 # Récupérer le client avec son email
