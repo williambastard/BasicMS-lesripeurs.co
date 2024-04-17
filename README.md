@@ -118,7 +118,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   X-Session-Id: 45647859436351..2f6b307831773d
   X-Session-Max-Age-Value: 31536000
   X-Session-Max-Age-Unit: seconds
-  Set-Cookie: session=s%3A45647859436351..2f6b307831773d.GSpaEooIjpbNMtDppAH5Pp8j7ZDkXV%2F20oHHjZq5G5s; Max-Age=31536; Path=/; Expires=Thu, 18 Apr 2024 03:45:00 GMT; HttpOnly,sessionExpiryDate=s%3A31536000.7Rf8ateLFEXwb%2Bk8HKI%2BD49w01AGuvRVxSdP7dIXAVY; Max-Age=31536; Path=/; Expires=Thu, 18 Apr 2024 03:45:00 GMT; HttpOnly
+  Set-Cookie: session=s%3A45647859436351... Expires=Thu, 18 Apr 2024 03:45:00 GMT;HttpOnly
   Content-Type: application/json; charset=utf-8
   Content-Length: 854
   ETag: W/"356-ylXp0q5xvsub7jWwT/QpEKLXEU0"
@@ -168,6 +168,34 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
 | `userId` | `string` | **Requis**. Identifiant du compte a tester |
 | `expiryIn` | `string` | optional. Temps de validité du token (par défaut: 1 jour) |
 
+#### Réponse 
+```
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+X-Session-Id: 3841764e555...67553d
+X-Session-Max-Age-Value: 31536000
+X-Session-Max-Age-Unit: seconds
+Set-Cookie: session=s%3A3841764e55...Expires=Thu, 18 Apr 2024 03:47:39 GMT; HttpOnly
+Content-Type: application/json; charset=utf-8
+Content-Length: 854
+ETag: W/"356-j4NVpcXU8AIWXLtYNLINIsEFZa4"
+Date: Wed, 17 Apr 2024 19:02:03 GMT
+Connection: close
+
+{
+  "statusCode": 200,
+  "message": "Your token is ready, find it in data.token. He is valid for 1 an",
+  "token": "3841764e55...67553d",
+  "data": {
+    "token": "3841764e55...67553d",
+    "request_url": "/",
+    "request_type": "POST"
+  }
+}
+```
 
 #### Validation d'un token
 ```http
@@ -212,16 +240,99 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   }
 ```
 
-#### Get item
-
+#### Création d'un utilisateur
 ```http
-  GET /api/items/${id}
+  POST http://user.gateway.riptest/user/signup
+  Cache-Control: max-age=604800
+  Content-Type: application/json
+  Origin: {{$dotenv ORIGIN}}
+
+  {
+      "email": "email-de-test-unique@test.com",
+      "phone": "33650717809",
+      "lastnames": "BASTARD RABASTE",
+      "firstnames": "william",
+      "password": "mon_mot_de_passe"
+  }
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `email` | `string` | **Requis**. Adresse e-mail |
+| `phone` | `number` | **Requis**. Numéro de téléphone de l'utilisateur |
+| `lastnames` | `string` | **Requis**. Noms de famille |
+| `firstnames` | `string` | **Requis**. Prénoms de famille |
+| `password` | `string` | **Requis**. Mot de passe |
 
+#### Réponse 
+```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Connection: keep-alive
+  Content-Length: 228
+  Content-Type: application/json; charset=utf-8
+  Date: Wed, 17 Apr 2024 19:09:08 GMT
+  Etag: W/"e4-TzZiVp6gV2L6eDNWqCoXcE99e/s"
+  keep-alive: timeout=5
+
+  {
+    "statusCode": 200,
+    "message": "User was successfully registered !",
+    "data": {
+      "user": {
+        "email": "email-de-test-unique@test.com",
+        "phone": "33650717809",
+        "lastnames": "BASTARD RABASTE",
+        "firstnames": "william",
+        "password": "mon_mot_de_passe"
+      }
+    }
+  }
+```
+
+#### Affichage de mes informations
+```http
+  Cache-Control: max-age=604800
+  Content-Type: application/json
+  Origin: {{$dotenv ORIGIN}}
+  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| Aucuns paramètres | N/A | N/A |
+
+#### Réponse 
+```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Connection: keep-alive
+  Content-Length: 230
+  Content-Type: application/json; charset=utf-8
+  Date: Wed, 17 Apr 2024 19:13:21 GMT
+  Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
+  keep-alive: timeout=5
+
+  {
+    "statusCode": 200,
+    "message": "Your informations",
+    "data": {
+      "email": "test2@testx.com",
+      "phone": "33650717809",
+      "lastnames": "BASTARD RABASTE",
+      "firstnames": "william",
+      "password": "************",
+      "createdAt": "2024-04-17T11:43:40.931Z",
+      "userId": 3
+    }
+  }
+```
 
 
 ## Status Codes
