@@ -26,8 +26,7 @@ const _corsOptions = {
     origin: function (origin: any, callback: any) {
         if (!origin) {
             // Si l'origine n'est pas fournie dans l'en-tête de la requête
-            callback(null, true);
-            //callback(new Error('Origin not provided'));
+            callback(new Error('Origin not provided'));
         } else {
             // Extraction du hostname de l'origine
             const hostname = new URL(origin).hostname;

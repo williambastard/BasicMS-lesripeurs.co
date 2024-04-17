@@ -3,47 +3,40 @@
 GET http://user.service.riptest:8282/user/getUserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Origin: http://user.gateway.riptest
-Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoidGVzdEB0ZXN0LmZyMyIsInBob25lIjoiMzM2NTA3MTc4MDkiLCJsYXN0bmFtZXMiOiJDT01QVEUiLCJmaXJzdG5hbWVzIjoidGVzdCIsInBhc3N3b3JkIjoicGFzc3dvcmQiLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTE0VDE5OjAyOjQ2Ljg3OVoiLCJpYXQiOjE3MTMxODI1NTYsImV4cCI6MTcxMzE4NjE1Nn0.IB6F4j9A_KSgZwlIZIGNQXxUuGwx3tj8DdTYCkNtZEk
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 ###
 # Supprimer le client d'ID n°1
 DELETE http://user.service.riptest:8282/user/deleteuserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Origin: http://user.gateway.riptest
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcxMzE2Nzc2OX0.mqd3qbxG6VUhaBt-qFt26jkez6HDB1cYCJi6Bd0mIKI
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 ###
 # Créer un nouveau client
 POST http://user.service.riptest:8282/user/signup
 Cache-Control: max-age=604800
 Content-Type: application/json
-Origin: http://user.gateway.riptest
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcxMzE2Nzc2OX0.mqd3qbxG6VUhaBt-qFt26jkez6HDB1cYCJi6Bd0mIKI
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
-    "account": {
-        "firstnames": "william",
-        "lastnames": "BASTARD RABASTE",
-        "street_address1": "15 rue georges gay",
-        "street_address2": "Batiment 11-12",
-        "street_address3": "ETG 2 APT 204",
-        "zipcode": "93130",
-        "city": "Noisy-Le-Sec",
-        "country": "France",
-        "phone": "33650717809"
-    }
+    "email": "tesxxt@test.com",
+    "phone": "33650717809",
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "password": "password"
 }
-
 
 ###
 # Remplace les données d'un client
 PUT http://user.service.riptest:8282/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Origin: http://user.gateway.riptest
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcxMzE2Nzc2OX0.mqd3qbxG6VUhaBt-qFt26jkez6HDB1cYCJi6Bd0mIKI
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
     "account": {
@@ -66,8 +59,8 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcx
 PATCH http://user.service.riptest:8282/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Origin: http://user.gateway.riptest
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcxMzE2Nzc2OX0.mqd3qbxG6VUhaBt-qFt26jkez6HDB1cYCJi6Bd0mIKI
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
     "account": {

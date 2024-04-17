@@ -37,8 +37,8 @@ export class UserController {
         try {
             const _userId = parseInt(req.params.userId) ?? 0;
             const _userFinded = await User.getUserById(_userId);
+            _apiResponse = { statusCode: 200, message: "User was successfully finded !", data: { user: _userFinded.userWithoutPass() } };
 
-            _apiResponse = { statusCode: 200, message: "User was successfully finded !", data: { user: _userFinded } };
         } catch (error) {
             _apiResponse = { statusCode: 404, message: "Unssuccessfull user search.", details: error };
         }
@@ -53,13 +53,8 @@ export class UserController {
         try {
             const _email = req.params.email ?? "";
             const _userFinded = await User.getUserByEmail(_email);
+            _apiResponse = { statusCode: 200, message: "User was successfully finded !", data: { user: _userFinded.userWithoutPass() } };
 
-            if (_userFinded) {
-                _apiResponse = { statusCode: 200, message: "User was successfully finded !", data: { user: _userFinded } };
-            }
-            if (!_userFinded) {
-                _apiResponse = { statusCode: 404, message: "User not found !" };
-            }
         } catch (error) {
             _apiResponse = { statusCode: 403, message: "Unssuccessfull user search.", details: error };
         }
@@ -74,13 +69,7 @@ export class UserController {
         try {
             const _lastnames = req.params.lastnames ?? "";
             const _userFinded = await User.getUserByLastnames(_lastnames);
-
-            if (_userFinded) {
-                _apiResponse = { statusCode: 200, message: "User was successfully finded !", data: { user: _userFinded } };
-            }
-            if (!_userFinded) {
-                _apiResponse = { statusCode: 404, message: "User not found !" };
-            }
+            _apiResponse = { statusCode: 200, message: "User was successfully finded !", data: { user: _userFinded.userWithoutPass() } };
         } catch (error) {
             _apiResponse = { statusCode: 403, message: "Unssuccessfull user search.", details: error };
         }

@@ -1,0 +1,8 @@
+###
+# Supprimer le client d'ID n°1
+DELETE http://user.gateway.riptest/user/deleteuserById/1
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
