@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 export class UserInterface {
     email!: string;
-    phone!: number;
+    phone!: string;
     lastnames!: string;
     firstnames!: string;
     password!: string;
@@ -14,7 +14,7 @@ export class UserInterface {
 }
 const UserSchema = z.object({
     email: z.string().email(),
-    phone: z.number(),
+    phone: z.string(),
     lastnames: z.string(),
     firstnames: z.string(),
     password: z.string(),
@@ -23,7 +23,7 @@ const UserSchema = z.object({
 });
 export default class User implements UserInterface {
     readonly email!: string;
-    readonly phone!: number;
+    readonly phone!: string;
     readonly lastnames!: string;
     readonly firstnames!: string;
     readonly password!: string;

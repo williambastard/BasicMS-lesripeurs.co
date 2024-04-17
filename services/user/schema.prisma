@@ -10,7 +10,7 @@ datasource db {
 model User {
   userId         Int      @id @default(autoincrement())
   email      String   @unique
-  phone      BigInt   
+  phone      String   
   lastnames  String
   firstnames String
   password   String
