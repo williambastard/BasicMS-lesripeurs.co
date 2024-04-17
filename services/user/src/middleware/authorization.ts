@@ -1,10 +1,25 @@
 import { NextFunction, Request, Response } from "express";
 import * as Api from "private_modules";
+import User from "../models/user";
 
-export const authorization = (roles: string[]) => {
-    return async (req: Request, res: Response, next: NextFunction) => {
+export abstract class Authorization {
+    static async checkExistance(req: Request, res: Response, next: NextFunction) {
+        let isValidUser = false;
         let _parser = new Api.parser(res);
-        let _apiResponse =Api.messages.use("HTTP_500");
-        _parser.setResponse(_apiResponse).sendResponse()
-    };
-};
+        let _apiResponse: Api.ResponseInterface = Api.messages.use("HTTP_500");
+
+        try {
+            const _userId = parseInt(res.locals.session.session.userId) ?? 0;
+            const _userFinded = await User.getUserById(_userId);
+
+            res.locals.me = _userFinded;
+            _apiResponse = { statusCode: 200, message: "Your informations", data: { user: _userFinded } };
+            isValidUser = true;
+
+        } catch (error) {
+            _apiResponse = { statusCode: 403, message: "Sorry you are not allowed to perfom this action because the user for this token doesn't exists anymore.", details: error };
+        }
+
+        return isValidUser ? next() : _parser.setResponse(_apiResponse).sendResponse();
+    }
+}

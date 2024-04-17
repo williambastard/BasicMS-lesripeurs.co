@@ -8,7 +8,7 @@ export const authentication = async (
     next: NextFunction
 ) => {
     let _parser = new Api.parser(res);
-    let _apiResponse =Api.messages.use("HTTP_500");
+    let _apiResponse = Api.messages.use("HTTP_500");
 
     try {
         req.body.userId = res.locals.session.userId ?? 0;
@@ -50,12 +50,11 @@ export const tokenValidator = async (
     next: NextFunction
 ) => {
     let _parser = new Api.parser(res);
-    let _apiResponse =Api.messages.use("HTTP_500");
+    let _apiResponse = Api.messages.use("HTTP_500");
     let onFailure = false;
-
-
     try {
-        const response = await new Api.call(req, res, "security", req.url, 8181).fetch();
+        const response = await new Api.call(req, res, "security", "authentication/tokenValidator", 8181).fetch();
+        
         if (!response._isOK) {
             _apiResponse = {
                 statusCode: response._status,

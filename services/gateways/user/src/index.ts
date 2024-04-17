@@ -8,12 +8,9 @@ import cookieParser from "cookie-parser";
 import express, { Request, Response, NextFunction } from 'express';
 
 import { defaultRouter } from "./routes/default.routes";
+import { userGatewayRouter } from './routes/user.routes';
+import { securityGatewayRouter } from './routes/security.routes';
 import { authenticationRouter } from "./routes/authentication.routes";
-import { userDeleteRouter } from './routes/user.delete.routes';
-import { userPatchRouter } from './routes/user.patch.routes';
-import { userPutRouter } from './routes/user.put.routes';
-import { userPostRouter } from './routes/user.post.routes';
-import { userGetRouter } from './routes/user.get.routes';
 
 // Récupérer les interfaces réseau de la machine
 let _IPAdresses: string[] = [];
@@ -44,7 +41,7 @@ const _corsOptions = {
     },
     actionOnError: (err: any, req: Request, res: Response, next: NextFunction) => {
         if (err) {
-            let _apiResponse =Api.messages.use("HTTP_403");
+            let _apiResponse = Api.messages.use("HTTP_403");
             _apiResponse.message = err.toString();
 
             let _parser = new Api.parser(res);
@@ -69,12 +66,9 @@ _app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
 _app.use(cors(_corsOptions), _corsOptions.actionOnError);
+_app.use("/authentication", securityGatewayRouter);
 _app.use("/authentication", authenticationRouter);
-_app.use("/user", userGetRouter);
-_app.use("/user", userPostRouter);
-_app.use("/user", userPutRouter);
-_app.use("/user", userPatchRouter);
-_app.use("/user", userDeleteRouter);
+_app.use("/user", userGatewayRouter);
 _app.use("/*", defaultRouter);
 
 

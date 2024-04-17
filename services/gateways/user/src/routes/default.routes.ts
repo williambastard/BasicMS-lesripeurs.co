@@ -4,7 +4,6 @@ import * as Api from "private_modules";
 const router = Router();
 
 router.all("/*", (req, res, next) => {
-    console.log(req.cookies);
     let _parser = new Api.parser(res);
     let _apiResponse =Api.messages.use("HTTP_501");
     _apiResponse.data = {

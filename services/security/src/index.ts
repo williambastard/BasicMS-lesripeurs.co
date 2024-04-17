@@ -37,7 +37,7 @@ const _corsOptions = {
     },
     actionOnError: (err: any, req: Request, res: Response, next: NextFunction) => {
         if (err) {
-            let _apiResponse =Api.messages.use("HTTP_403");
+            let _apiResponse = Api.messages.use("HTTP_403");
             _apiResponse.message = err.toString();
 
             let _parser = new Api.parser(res);
@@ -64,16 +64,16 @@ _app.use(express.urlencoded({ extended: true }));
 /* Gestion  des routes de l'application */
 
 _app.use(cors(_corsOptions), _corsOptions.actionOnError);
+_app.use("/security/authentication/tokenValidator", verifyToken);
 _app.use("/security/authentication", generateToken);
 _app.use("/generateTestToken", generateToken);
-_app.use("/*", verifyToken);
 
 
 
 httpServer.listen(_HTTP_PORT, async () => {
     console.log(`API MS user en écoute sur http://security.service.riptest:${_HTTP_PORT} 🎉`);
 });
-
+/*
 httpsServer.listen(_HTTPS_PORT, async () => {
     console.log(`API MS user en écoute sur http://security.service.riptest:${_HTTPS_PORT} 🎉`);
     // Parcourir les interfaces pour trouver l'adresse IP
@@ -86,4 +86,4 @@ httpsServer.listen(_HTTPS_PORT, async () => {
         });
         console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
     });
-});
+});*/

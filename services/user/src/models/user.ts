@@ -39,4 +39,85 @@ export default class User implements UserInterface {
     get(): User {
         return this;
     }
+
+    async create(): Promise<User> {
+        await prisma.user.create({
+            data: this,
+        }).catch(prismaError => {
+            throw prismaError
+        })
+        return this;
+    }
+
+    static async deletebyUserId(userId: number): Promise<boolean> {
+        const deleteUser = await prisma.user.delete({
+            where: {
+                userId: userId,
+            },
+        }).catch(prismaError => {
+            throw prismaError
+        })
+        return deleteUser ? true : false;
+    }
+
+    static async deleteByEmail(email: string): Promise<boolean> {
+        const deleteUser = await prisma.user.delete({
+            where: {
+                email: email,
+            },
+        }).catch(prismaError => {
+            throw prismaError
+        })
+        return deleteUser ? true : false;
+    }
+
+    static async getUserById(_userId: number): Promise<User | null> {
+        const _userFinded = await prisma.user.findFirstOrThrow({
+            where: {
+                userId: _userId,
+            },
+        }).catch(prismaError => {
+            throw prismaError
+        })
+
+        return _userFinded ? new User(_userFinded) : null;
+    }
+
+    static async getUserByEmail(_email: string): Promise<User | null> {
+        const _userFinded = await prisma.user.findUnique({
+            where: {
+                email: _email,
+            },
+        }).catch(prismaError => {
+            throw prismaError
+        })
+
+        return _userFinded ? new User(_userFinded) : null;
+    }
+
+    static async getUserByLastnames(_lastnames: string): Promise<User | null> {
+        const _userFinded = await prisma.user.findFirst({
+            where: {
+                lastnames: { contains: _lastnames },
+            },
+        }).catch(prismaError => {
+            throw prismaError
+        })
+
+        return _userFinded ? new User(_userFinded) : null;
+    }
+
+
+    static async updateUser(_userId: number, _newData: User): Promise<User | null> {
+        const _userFinded = await prisma.user.update({
+            where: {
+                userId: _userId,
+            },
+            data: _newData
+        }).catch(prismaError => {
+            throw prismaError
+        })
+
+        return _userFinded ? new User(_userFinded) : null;
+    }
 }
