@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { cryptoHelper } from '../helpers/crypto.helper';
 const prisma = new PrismaClient()
 
 export class UserInterface {
@@ -49,8 +50,10 @@ export default class User implements UserInterface {
     }
 
     async create(): Promise<User> {
+        const userClone = JSON.parse(JSON.stringify(this));
+        userClone.password = cryptoHelper.encrypt(userClone.password);
         await prisma.user.create({
-            data: this,
+            data: userClone,
         }).catch(prismaError => {
             throw prismaError
         })
@@ -117,11 +120,13 @@ export default class User implements UserInterface {
 
 
     static async updateUser(_userId: number, _newData: User): Promise<User> {
+        const userClone = JSON.parse(JSON.stringify(_newData));
+        userClone.password = cryptoHelper.encrypt(userClone.password);
         const _userFinded = await prisma.user.update({
             where: {
                 userId: _userId,
             },
-            data: _newData
+            data: userClone
         }).catch(prismaError => {
             throw prismaError
         })

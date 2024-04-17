@@ -15,5 +15,4 @@ CREATE TABLE "User" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- InsertData
-INSERT INTO "User"(email, phone, lastnames, firstnames, password) VALUES ('test@test.fr','33650717809','COMPTE','test','password');
-INSERT INTO "User"(email, phone, lastnames, firstnames, password) VALUES ('test@test.fr3','33650717809','COMPTE','test','password');
+INSERT INTO "User"(email, phone, lastnames, firstnames, password) VALUES ('email-de-test-unique@test.comx','33650717809','COMPTE','test','7650657457584b4378746f30626d5139547368714a2b31327245675457346b66356c735543616868724a553d');

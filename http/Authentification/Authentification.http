@@ -12,8 +12,8 @@ Content-Type: application/json
 Origin: http://user.gateway.riptest
 
 {
-    "email": "test@test.frx",
-    "password": "password",
+    "email": "email-de-test-unique@test.comx",
+    "password": "mon_mot_de_passe",
     "expireIn":"365j" 
 }
 

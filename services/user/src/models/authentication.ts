@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client'
+import { cryptoHelper } from '../helpers/crypto.helper';
+
 const prisma = new PrismaClient()
 
 export class AuthenticationInterface {
@@ -18,7 +20,7 @@ export class Authentication implements AuthenticationInterface {
         const user = await prisma.user.findUnique({
             where: {
                 email: this.email,
-                password: this.password,
+                password: cryptoHelper.encrypt(this.password),
             },
         });
         return user;
