@@ -2,6 +2,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/user";
 import * as Api from "private_modules";
+import { cryptoHelper } from "../helpers/crypto.helper";
 
 export class UserController {
     static async signup(req: Request, res: Response, next: NextFunction) {
@@ -9,9 +10,9 @@ export class UserController {
         let _apiResponse: Api.ResponseInterface = Api.messages.use("HTTP_500");
 
         try {
-            const _userData = new User(req.body);
-            const userCreated = await _userData.create();
 
+            const _userData = new User(req.body);
+            const userCreated = await _userData!.create();
             if (userCreated) {
                 res.locals.session = userCreated;
                 _apiResponse = { statusCode: 200, message: "User was successfully registered !", data: { user: _userData } };
@@ -25,7 +26,10 @@ export class UserController {
 
     static async myInformations(req: Request, res: Response, next: NextFunction) {
         let _parser = new Api.parser(res);
-        let _apiResponse: Api.ResponseInterface = { statusCode: 200, message: "Your informations", data: new User(res.locals.me).userWithoutPass() }
+
+        const _user = new User(res.locals.me);
+
+        let _apiResponse: Api.ResponseInterface = { statusCode: 200, message: "Your informations", data: _user.userWithoutPass() }
 
         return _parser.setResponse(_apiResponse).sendResponse();
     }
@@ -83,7 +87,8 @@ export class UserController {
         let _apiResponse: Api.ResponseInterface = Api.messages.use("HTTP_500");
         try {
             _apiResponse = Api.messages.use("HTTP_400");
-            const _newData = new User(req.body) ?? null;
+
+            const _newData = new User(req.body);
 
             if (_newData) {
                 if (res.locals.me.userId !== _newData.userId!) {

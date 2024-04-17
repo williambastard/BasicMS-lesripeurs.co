@@ -20,7 +20,7 @@ export abstract class cryptoHelper {
             return Buffer.from(_encrypted, 'utf-8').toString('hex');
 
         } catch (_error) {
-            throw new cryptoError(_error!.toString());
+            throw _error;
         }
     }
 

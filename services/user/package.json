@@ -20,7 +20,9 @@
     "node": "^18.20.2",
     "nodemon": "^3.1.0",
     "os": "^0.1.2",
-    "private_modules": "github:williambastard/private_modules#main"
+    "private_modules": "github:williambastard/private_modules#main",
+    "ts-runtime": "^0.3.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
