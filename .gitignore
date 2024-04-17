@@ -116,3 +116,4 @@ dist
 
 # Exclusion des tests HTTP
 test/*
+tiktok.http

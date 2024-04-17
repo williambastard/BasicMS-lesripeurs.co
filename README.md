@@ -17,9 +17,9 @@ Dans ce porjet, nous devons isoler le conteneur docker **user.gateway.riptest** 
 
 Les conteneurs dockers **user.service.riptest** et **security.service.riptest** ne doivent pas autoriser les connexions depuis l'internet.
 
-**Restreindre l'accès au public via les headers transmis par le client (navigateur) n'atant pas une méthode sûr et sécurisée, il est préférable de coupler les la sécurité par header ip, helmet et cors à une restriction par pare-feu directement sur la machine hôte des conteneurs.**
+**Restreindre l'accès au public via les headers transmis par le client (navigateur) n'atant pas une méthode sûr et sécurisée, il est préférable de coupler la sécurité header des packages helmet et cors à une restriction par pare-feu directement sur la machine hôte des conteneurs, bloquant ainsi les connexions entrantes selon des règles spécifiques de ports et d'ip.**
 
-Pour appliquer le réseau isolé de manière complète, et rendre impossible aux machines du réseau l'accès aux conteneurs, la machine hôte doit subir quelques modifications de pare-feu afin de restreindre les connexions entrantes et sortantes aux seuls ports 80 et 443 correspondants aux ports de **user.gateway.riptest**.
+Pour appliquer le réseau isolé de manière complète, et rendre impossible aux machines du réseau l'accès aux conteneurs, la machine hôte doit subir quelques modifications de pare-feu afin de restreindre les connexions entrantes aux seuls ports 80 et 443 correspondants aux ports de **user.gateway.riptest**.
 
 
 Le conteneur **postgres.db.riptest** est configuré sur le port 5432.
@@ -146,7 +146,7 @@ Objectif final, en partant de l'exemple du dossier "Starter" (tu peux appliquer 
 ### MS User (inaccessible au public)
 
 Crée le service User avec 2 routes :
-- Une permettant de vérifier une authentification avec l'e-mail et le mot de passe
+X - Une permettant de vérifier une authentification avec l'e-mail et le mot de passe
 - Une autre pour récupérer les données d'un utilisateur via une simple ID
 
 Évidemment, crée aussi la structure pour la base de données, afin de stocker les utilisateurs (n’hésite pas à ajouter quelques champs supplémentaires, pour rendre le test plus "sympa", ex: téléphone, nom, ...).

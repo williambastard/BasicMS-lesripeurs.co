@@ -1,6 +1,7 @@
 
 import { NextFunction, Request, Response } from "express";
 import ApiParser from "private_modules";
+
 export const authentication = async (
     req: Request,
     res: Response,
@@ -11,22 +12,22 @@ export const authentication = async (
 
     try {
         req.body.userId = res.locals.session.userId ?? 0;
-        const response = await new ApiParser.Call(req, "security", "authentication", 8181).fetch();
+        const response = await new ApiParser.Call(req, res, "security", "authentication", 8181).fetch();
 
         if (!response._isOK) {
             _apiResponse = {
                 statusCode: response._status,
                 message: "Internal server error",
-                details: response._callresponse
+                details: response._callResponse
             };
         }
 
         _apiResponse = {
             statusCode: 200,
             message: "User connected with success !",
-            token: response._callresponse.token,
+            token: response._callResponse.token,
             data: {
-                token: response._callresponse.token
+                token: response._callResponse.token
             },
             details: {
                 session: res.locals.session,
@@ -54,19 +55,19 @@ export const tokenValidator = async (
 
 
     try {
-        const response = await new ApiParser.Call(req, "security", req.url, 8181).fetch();
+        const response = await new ApiParser.Call(req, res, "security", req.url, 8181).fetch();
         if (!response._isOK) {
             _apiResponse = {
                 statusCode: response._status,
                 message: "Internal server error",
-                details: response._callresponse
+                details: response._callResponse
             };
             onFailure = true;
         }
         if (!response._session) {
             _apiResponse = {
                 statusCode: response._status,
-                message: response._callresponse.message
+                message: response._callResponse.message
             };
             onFailure = true;
         }

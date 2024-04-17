@@ -2,7 +2,9 @@ import os from 'os';
 import cors from "cors";
 import http from "http";
 import https from "https";
+import * as ssl from "./ssl/ssl";
 import ApiParser from "private_modules";
+import cookieParser from "cookie-parser";
 import express, { Request, Response, NextFunction } from 'express';
 
 import { defaultRouter } from "./routes/default.routes";
@@ -23,6 +25,7 @@ const _app = express();
 const _interfaces = os.networkInterfaces();
 const _allowedHostnames = ['user.gateway.riptest'];
 const _corsOptions = {
+    credentials: true,
     origin: function (origin: any, callback: any) {
         if (!origin) {
             // Si l'origine n'est pas fournie dans l'en-tête de la requête
@@ -51,10 +54,16 @@ const _corsOptions = {
         }
     }
 }
+const _httpsOptions = {
+    key: ssl._httpsOptions.key,
+    cert: ssl._httpsOptions.cert
+}
 
 const httpServer = http.createServer(_app);
+const httpsServer = https.createServer(_httpsOptions, _app);
 
 /* Configuration des sécurités & proxy */
+_app.use(cookieParser(ssl._httpsOptions.cert));
 _app.use(express.json());
 _app.use(express.urlencoded({ extended: true }));
 
@@ -71,6 +80,10 @@ _app.use("/*", defaultRouter);
 
 httpServer.listen(_HTTP_PORT, async () => {
     console.log(`API MS user en écoute sur http://user.gateway.riptest:${_HTTP_PORT} 🎉`);    // Parcourir les interfaces pour trouver l'adresse IP
+});
+
+httpsServer.listen(_HTTPS_PORT, async () => {
+    console.log(`API MS user en écoute sur http://user.gateway.riptest:${_HTTPS_PORT} 🎉`);    // Parcourir les interfaces pour trouver l'adresse IP
     Object.keys(_interfaces).forEach(interfaceName => {
         const interfaceAddresses = _interfaces[interfaceName];
         interfaceAddresses?.forEach(address => {

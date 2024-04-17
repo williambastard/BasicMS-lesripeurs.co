@@ -1,26 +1,26 @@
-
-
 ###
 # Récupérer le client d'ID n°1
-GET http://user.service.riptest:8383/user/getUserById/1
+GET http://user.service.riptest:8282/user/getUserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+Origin: http://user.gateway.riptest
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoidGVzdEB0ZXN0LmZyMyIsInBob25lIjoiMzM2NTA3MTc4MDkiLCJsYXN0bmFtZXMiOiJDT01QVEUiLCJmaXJzdG5hbWVzIjoidGVzdCIsInBhc3N3b3JkIjoicGFzc3dvcmQiLCJjcmVhdGVkQXQiOiIyMDI0LTA0LTE0VDE5OjAyOjQ2Ljg3OVoiLCJpYXQiOjE3MTMxODI1NTYsImV4cCI6MTcxMzE4NjE1Nn0.IB6F4j9A_KSgZwlIZIGNQXxUuGwx3tj8DdTYCkNtZEk
 
 ###
 # Supprimer le client d'ID n°1
-DELETE http://user.service.riptest:8383/user/deleteuserById/1
+DELETE http://user.service.riptest:8282/user/deleteuserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
-
+Origin: http://user.gateway.riptest
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcxMzE2Nzc2OX0.mqd3qbxG6VUhaBt-qFt26jkez6HDB1cYCJi6Bd0mIKI
 
 ###
 # Créer un nouveau client
-POST http://user.service.riptest:8383/user/user/signup
+POST http://user.service.riptest:8282/user/signup
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+Origin: http://user.gateway.riptest
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcxMzE2Nzc2OX0.mqd3qbxG6VUhaBt-qFt26jkez6HDB1cYCJi6Bd0mIKI
 
 {
     "account": {
@@ -36,12 +36,14 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJD
     }
 }
 
+
 ###
 # Remplace les données d'un client
-PUT http://user.service.riptest:8383/user/update
+PUT http://user.service.riptest:8282/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+Origin: http://user.gateway.riptest
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcxMzE2Nzc2OX0.mqd3qbxG6VUhaBt-qFt26jkez6HDB1cYCJi6Bd0mIKI
 
 {
     "account": {
@@ -58,12 +60,14 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJD
     }
 }
 
+
 ###
 # Remplace partiellement les données d'un client
-PATCH http://user.service.riptest:8383/user/update
+PATCH http://user.service.riptest:8282/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+Origin: http://user.gateway.riptest
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTMxNjQxNjksImV4cCI6MTcxMzE2Nzc2OX0.mqd3qbxG6VUhaBt-qFt26jkez6HDB1cYCJi6Bd0mIKI
 
 {
     "account": {

@@ -4,6 +4,7 @@ import ApiParser from "private_modules";
 const router = Router();
 
 router.all("/*", (req, res, next) => {
+    console.log(req.cookies);
     let _apiConstructor = new ApiParser.ApiConstructor(res);
     let _apiResponse = ApiParser.ApiJSON.get("HTTP_501");
     _apiResponse.data = {
