@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { UserAuthController } from "../controllers/auth.controller";
-import { authentication } from "../middleware/security_micro_service.middleware";
+import { UserAuthController } from "../../controllers/auth.controller";
+import { authentication } from "../../middleware/security_micro_service.middleware";
 
 const router = Router();
 

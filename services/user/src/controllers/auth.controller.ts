@@ -1,7 +1,6 @@
 import * as Api from "private_modules";
 import { NextFunction, Request, Response } from "express";
 import { Authentication } from "../models/authentication";
-import { AuthenticateHelper } from "../helpers/authenticate.helper";
 
 export abstract class UserAuthController {
     static async login(req: Request, res: Response, next: NextFunction) {
@@ -11,7 +10,7 @@ export abstract class UserAuthController {
         let _apiResponse = { statusCode: 401, message: "Login failed : Wrong password or email.", data: undefined };
 
         const userLogin = new Authentication({ email: req.body.email, password: req.body.password });
-        const authenticationResult = await AuthenticateHelper.authenticate(userLogin)
+        const authenticationResult = await userLogin.authenticate();
 
         if (authenticationResult) {
             isSuccess = true;
@@ -19,7 +18,7 @@ export abstract class UserAuthController {
             res.locals.session = authenticationResult;
             _apiResponse = { statusCode: 200, message: "User was successfully loged in !", data: res.locals.session };
         }
-        
+
         return isSuccess ? next() : _parser.setResponse(_apiResponse).sendResponse();
     }
 

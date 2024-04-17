@@ -1,11 +1,11 @@
 import { Router } from "express";
 import * as Api from "private_modules";
 
-const router = Router();
+const userGateway = Router();
 
-router.get("*", async function (req, res, next) {
+userGateway.all("*", async (req, res, next) => {
     let _parser = new Api.parser(res);
-    let _apiResponse =Api.messages.use("HTTP_500");
+    let _apiResponse = Api.messages.use("HTTP_500");
 
     try {
         const response = await new Api.call(req, res, "user", req.url, 8282).fetch();
@@ -35,6 +35,6 @@ router.get("*", async function (req, res, next) {
     _parser
         .setResponse(_apiResponse)
         .sendResponse();
-});
-
-export { router as userGetRouter };
+}
+);
+export { userGateway as userGatewayRouter };
