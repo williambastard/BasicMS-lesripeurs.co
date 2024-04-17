@@ -26,6 +26,7 @@ export class UserController {
     static async myInformations(req: Request, res: Response, next: NextFunction) {
         let _parser = new Api.parser(res);
         let _apiResponse: Api.ResponseInterface = { statusCode: 200, message: "Your informations", data: new User(res.locals.me).userWithoutPass() }
+
         return _parser.setResponse(_apiResponse).sendResponse();
     }
 
@@ -83,6 +84,7 @@ export class UserController {
         try {
             _apiResponse = Api.messages.use("HTTP_400");
             const _newData = new User(req.body) ?? null;
+
             if (_newData) {
                 if (res.locals.me.userId !== _newData.userId!) {
                     _apiResponse = { statusCode: 403, message: "You only have permission to modify your user !" };
@@ -90,7 +92,7 @@ export class UserController {
                 if (res.locals.me.userId === _newData.userId!) {
                     const _userFinded = await User.updateUser(_newData.userId!, _newData);
                     if (_userFinded) {
-                        _apiResponse = { statusCode: 200, message: "User was successfully modified !", data: { user: _userFinded.userWithoutPass() } };
+                        _apiResponse = { statusCode: 200, message: "User was successfully modified !", data: { user: _userFinded } };
                     }
                 }
             }

@@ -116,7 +116,7 @@ export default class User implements UserInterface {
     }
 
 
-    static async updateUser(_userId: number, _newData: User): Promise<User | null> {
+    static async updateUser(_userId: number, _newData: User): Promise<User> {
         const _userFinded = await prisma.user.update({
             where: {
                 userId: _userId,
@@ -125,7 +125,6 @@ export default class User implements UserInterface {
         }).catch(prismaError => {
             throw prismaError
         })
-
-        return _userFinded ? new User(_userFinded) : null;
+        return new User(_userFinded);
     }
 }

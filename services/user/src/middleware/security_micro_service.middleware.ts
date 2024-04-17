@@ -63,6 +63,7 @@ export const tokenValidator = async (
             };
             onFailure = true;
         }
+        
         if (!response._session) {
             _apiResponse = {
                 statusCode: response._status,

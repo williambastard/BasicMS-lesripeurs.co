@@ -295,6 +295,7 @@ Connection: close
 
 #### Affichage de mes informations
 ```http
+  GET https://user.gateway.riptest/user/me
   Cache-Control: max-age=604800
   Content-Type: application/json
   Origin: {{$dotenv ORIGIN}}
@@ -334,6 +335,236 @@ Connection: close
   }
 ```
 
+#### Affichage des informations d'un utilisateur via son Id
+```http
+  GET https://user.gateway.riptest/user/getUserById/:userId
+  Cache-Control: max-age=604800
+  Content-Type: application/json
+  Origin: {{$dotenv ORIGIN}}
+  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `userId` | `string` | **Requis**. userId du compte recherché |
+
+#### Réponse 
+```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Connection: keep-alive
+  Content-Length: 255
+  Content-Type: application/json; charset=utf-8
+  Date: Wed, 17 Apr 2024 19:17:31 GMT
+  Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
+  keep-alive: timeout=5
+
+  {
+    "statusCode": 200,
+    "message": "User was successfully finded !",
+    "data": {
+      "user": {
+        "email": "test2@test.com",
+        "phone": "33650717809",
+        "lastnames": "BASTARD RABASTE",
+        "firstnames": "william",
+        "password": "************",
+        "createdAt": "2024-04-14T19:02:46.879Z",
+        "userId": 1
+      }
+    }
+  }
+```
+
+#### Affichage des informations d'un utilisateur via son email
+```http
+  GET https://user.gateway.riptest/user/getUserByEmail/:email
+  Cache-Control: max-age=604800
+  Content-Type: application/json
+  Origin: {{$dotenv ORIGIN}}
+  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `email` | `string` | **Requis**. Adresse e-mail |
+
+#### Réponse 
+```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Connection: keep-alive
+  Content-Length: 255
+  Content-Type: application/json; charset=utf-8
+  Date: Wed, 17 Apr 2024 19:17:31 GMT
+  Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
+  keep-alive: timeout=5
+
+  {
+    "statusCode": 200,
+    "message": "User was successfully finded !",
+    "data": {
+      "user": {
+        "email": "test2@test.com",
+        "phone": "33650717809",
+        "lastnames": "BASTARD RABASTE",
+        "firstnames": "william",
+        "password": "************",
+        "createdAt": "2024-04-14T19:02:46.879Z",
+        "userId": 1
+      }
+    }
+  }
+```
+
+#### Affichage des informations d'un utilisateur via son nom de famille
+```http
+  GET https://user.gateway.riptest/user/getUserByLastnames/:lastnames
+  Cache-Control: max-age=604800
+  Content-Type: application/json
+  Origin: {{$dotenv ORIGIN}}
+  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `lastnames` | `string` | **Requis**. Noms de famille |
+
+#### Réponse 
+```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Connection: keep-alive
+  Content-Length: 255
+  Content-Type: application/json; charset=utf-8
+  Date: Wed, 17 Apr 2024 19:17:31 GMT
+  Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
+  keep-alive: timeout=5
+
+  {
+    "statusCode": 200,
+    "message": "User was successfully finded !",
+    "data": {
+      "user": {
+        "email": "test2@test.com",
+        "phone": "33650717809",
+        "lastnames": "BASTARD RABASTE",
+        "firstnames": "william",
+        "password": "************",
+        "createdAt": "2024-04-14T19:02:46.879Z",
+        "userId": 1
+      }
+    }
+  }
+```
+
+#### Modifications des informations d'un utilisateur via Id
+Il est impossible de modifier un tulisateur autre que le sien !
+
+```http
+  PATCH https://user.gateway.riptest/user/update/:userId
+  Cache-Control: max-age=604800
+  Content-Type: application/json
+  Origin: {{$dotenv ORIGIN}}
+  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
+  {
+      "userId":1,
+      "email": "email-de-test-unique@test.com",
+      "phone": "33650717809",
+      "lastnames": "BASTARD RABASTE",
+      "firstnames": "william",
+      "password": "password"
+  }
+```
+
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `userId` | `string` | **Requis**. userId du compte associé au token |
+| `email` | `string` | **Requis**. Adresse e-mail |
+| `phone` | `number` | **Requis**. Numéro de téléphone de l'utilisateur |
+| `lastnames` | `string` | **Requis**. Noms de famille |
+| `firstnames` | `string` | **Requis**. Prénoms de famille |
+| `password` | `string` | **Requis**. Mot de passe |
+
+
+#### Réponse 
+```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Connection: keep-alive
+  Content-Length: 277
+  Content-Type: application/json; charset=utf-8
+  Date: Wed, 17 Apr 2024 19:42:43 GMT
+  Etag: W/"e6-YWcCsKfOc2rGYBfNn9QyiGVqBQ8"
+  keep-alive: timeout=5
+
+  {
+    "statusCode": 200,
+    "message": "User was successfully modified !",
+    "data": {
+      "user": {
+        "email": "email-de-test-uniquex@test.com",
+        "phone": "33650717809",
+        "lastnames": "BASTARD RABASTE",
+        "firstnames": "william",
+        "password": "mon_mot_de_passe",
+        "createdAt": "2024-04-17T11:43:40.931Z",
+        "userId": 1
+      }
+    }
+  }
+```
+
+#### Suppression d'un utilisateur
+Nous partirons du principe que nous sommes tous admins, il n'y aucun système de droits ici.
+
+```http
+  DELETE http://user.gateway.riptest/user/deleteuserById/:userId
+  Cache-Control: max-age=604800
+  Content-Type: application/json
+  Origin: {{$dotenv ORIGIN}}
+  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+```
+
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `userId` | `string` | **Requis**. userId du compte à supprimé |
+
+
+#### Réponse 
+```
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  Connection: keep-alive
+  Content-Length: 56
+  Content-Type: application/json; charset=utf-8
+  Date: Wed, 17 Apr 2024 19:49:08 GMT
+  Etag: W/"e7-e6negy8LKAGzBjd3FmHDdbimrpA"
+  keep-alive: timeout=5
+
+  {
+    "statusCode": 200,
+    "message": "User Id ':userId' was deleted !"
+  }
+```
 
 ## Status Codes
 
