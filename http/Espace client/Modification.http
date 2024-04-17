@@ -1,4 +1,3 @@
-
 ###
 # Remplace les données d'un client
 PATCH https://user.gateway.riptest/user/update/3
@@ -8,10 +7,10 @@ Origin: {{$dotenv ORIGIN}}
 Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
-    "userId":3,
-    "email": "test2@testx.com",
+    "userId": 3,
+    "email": "email-de-test-uniquex@test.com",
     "phone": "33650717809",
     "lastnames": "BASTARD RABASTE",
     "firstnames": "william",
-    "password": "password"
+    "password": "mon_mot_de_passe"
 }

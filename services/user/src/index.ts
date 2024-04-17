@@ -47,7 +47,7 @@ const _corsOptions = {
             let _apiResponse = Api.messages.use("HTTP_403");
             _apiResponse.message = err.toString();
             _apiResponse.details = { body: req?.body, headers: req.headers };
-
+            
             let _parser = new Api.parser(res);
             return _parser.setResponse(_apiResponse).sendResponse();
         } else {

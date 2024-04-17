@@ -41,8 +41,8 @@ const _corsOptions = {
     actionOnError: (err: any, req: Request, res: Response, next: NextFunction) => {
         if (err) {
             let _apiResponse = Api.messages.use("HTTP_403");
-            _apiResponse.message = err.toString();
-
+            _apiResponse.details = err;
+            
             let _parser = new Api.parser(res);
             return _parser.setResponse(_apiResponse).sendResponse();
         } else {
@@ -50,6 +50,7 @@ const _corsOptions = {
         }
     }
 }
+
 const _httpsOptions = {
     key: ssl._httpsOptions.key,
     cert: ssl._httpsOptions.cert

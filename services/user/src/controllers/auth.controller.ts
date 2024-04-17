@@ -7,24 +7,28 @@ export abstract class UserAuthController {
 
         let isSuccess = false;
         let _parser = new Api.parser(res);
-        let _apiResponse = { statusCode: 401, message: "Login failed : Wrong password or email.", data: undefined };
+        let _apiResponse: Api.ResponseInterface = Api.messages.use("HTTP_500");
 
-        const userLogin = new Authentication({ email: req.body.email, password: req.body.password });
-        const authenticationResult = await userLogin.authenticate();
+        try {
+            const userLogin = new Authentication(req.body);
 
-        if (authenticationResult) {
-            isSuccess = true;
-            authenticationResult.password = "************";
-            res.locals.session = authenticationResult;
-            _apiResponse = { statusCode: 200, message: "User was successfully loged in !", data: res.locals.session };
+            try {
+                const authenticationResult = await userLogin.authenticate();
+                _apiResponse = { statusCode: 401, message: "Login failed : Wrong password or email." }
+                if (authenticationResult) {
+                    isSuccess = true;
+                    res.locals.session = authenticationResult;
+                    _apiResponse = { statusCode: 200, message: "User was successfully loged in !", data: res.locals.session };
+                }
+            }
+            catch (error) {
+                _apiResponse.details = error;
+            }
         }
-
+        catch (error) {
+            _apiResponse = Api.messages.use("HTTP_400");
+            _apiResponse.details = error;
+        }
         return isSuccess ? next() : _parser.setResponse(_apiResponse).sendResponse();
-    }
-
-    static async getProfile(req: Request, res: Response, next: NextFunction) {
-        let _parser = new Api.parser(res);
-        let _apiResponse = { statusCode: 200, message: "User was successfully finded !", data: res.locals.session };
-        return _parser.setResponse(_apiResponse).sendResponse();
     }
 }
