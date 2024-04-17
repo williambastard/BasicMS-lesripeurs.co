@@ -1,6 +1,5 @@
 ###
 # Génerer un nouveau Token de test
-
 POST http://security.service.riptest:8181/generateTestToken
 Cache-Control: max-age=604800
 Content-Type: application/json
@@ -8,7 +7,7 @@ Origin: {{$dotenv ORIGIN}}
 
 {
     "userId":1,
-    "expireIn": "1xx"
+    "expireIn": "1 a"
 }
 
 
