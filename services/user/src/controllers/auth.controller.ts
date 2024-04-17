@@ -9,7 +9,7 @@ export abstract class UserAuthController {
         let _parser = new Api.parser(res);
         let _apiResponse = { statusCode: 401, message: "Login failed : Wrong password or email.", data: undefined };
 
-        const userLogin = new Authentication({ email: req.body.email, password: req.body.password });
+        const userLogin = new Authentication(req.body);
         const authenticationResult = await userLogin.authenticate();
 
         if (authenticationResult) {
