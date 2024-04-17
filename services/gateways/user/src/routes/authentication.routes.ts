@@ -1,32 +1,34 @@
 import { Router } from "express";
-import fetchOptions from "../interfaces/fetch_options.interface";
-import ApiParser from "private_modules";
+import * as Api from "private_modules";
 
-const router = Router();
+const Authentication = Router();
 
-router.post("/*", async function (req, res, next) {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_500");
+Authentication.post("/*", async function (req, res, next) {
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_500");
+    const response = await new Api.call(req, res, "user", "authentication", 8282).fetch();
 
-    let _fetchOptions = new fetchOptions(req.method);
-    _fetchOptions.setHeader('ms-user-method', req.method);
-    _fetchOptions.setHeader('ms-target-service', 'authentication');
-    _fetchOptions.setHeader('ms-target-protocol', 'http');
-    _fetchOptions.setHeader('ms-target-host', 'user.service.riptest:8282');
-    _fetchOptions.setHeader('ms-target-endpoint', req.url.replace('/', ''));
-    _fetchOptions.setBody(req.body);
+    // Convertir les en-têtes en un objet clé-valeur
+    const fetchHeaders: Record<string, string> = {};
+    for (const [key, value] of response._callHeaders.entries()) {
+        fetchHeaders[key] = value;
+    }
+    // Définir les en-têtes dans la réponse Express
+    for (const [key, value] of Object.entries(fetchHeaders)) {
+        const formatedKeyName = key.split('-')
+            .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join('-')
+        res.set(formatedKeyName, value as string);
+    }
 
     try {
-        const response = await fetch(`${_fetchOptions.getTarget()}`, _fetchOptions)
-        const _ms_user_response = await response.json();
-        _apiResponse = _ms_user_response;
+        _apiResponse = response._callResponse;
     }
     catch (UncaughtException) {
-        _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_500");
         _apiResponse.details = UncaughtException;
 
     }
-    return _apiConstructor.setResponse(_apiResponse).sendResponse();
+    return _parser.setResponse(_apiResponse).sendResponse();
 });
 
-export { router as authenticationRouter };
+export { Authentication as authenticationRouter };

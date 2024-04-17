@@ -1,12 +1,20 @@
 ###
 # Génerer un nouveau Token de test
-GET http://security.service.riptest:8484/generateTestToken
+POST http://security.service.riptest:8181/generateTestToken
 Cache-Control: max-age=604800
 Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+
+{
+    "userId":1,
+    "expireIn": "1 a"
+}
+
 
 ###
 # Vérifier la validité d'un Token
-POST http://security.service.riptest:8484/verifyToken
+POST http://security.service.riptest:8181/verifyToken
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImVtYWlsIjoidGVzdEB0ZXN0LmZyIiwicGhvbmUiOiIwMDAwIiwibGFzdG5hbWVzIjoiQ09NUFRFIiwiZmlyc3RuYW1lcyI6InRlc3QiLCJwYXNzd29yZCI6InBhc3N3b3JkIiwiY3JlYXRlZEF0IjoiMjAyNC0wNC0xM1QxNzo0Mjo0OC44NDJaIiwiaWF0IjoxNzEzMDM0MjQ5LCJleHAiOjE3MTMwMzc4NDl9.ozm2-fH3Fzf5i6iA94WxkN-BuohR11iUt9HKou-TGec
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}

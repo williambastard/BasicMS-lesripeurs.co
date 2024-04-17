@@ -1,9 +1,10 @@
 ###
 # Test du serveur pour la méthode GET
-GET http://user.service.riptest:8383/default/get
+GET http://user.gateway.riptest/default/get
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+Cookies: session=s%3A6b6a61464562332b566c6c354f704d624a6c397234653334517942444963637132336e5342595848514a75683565686362336f49425773506551467849424c33534d65715669746453525067346f635277464e3848397a4c4f315834776151414270447551546443715459464e4448423737596d6232313036652b74647178555153395a2b737863516477646d54416262367836624e69305375434d47444c4a516e412b6d355a67707046362b622b4b6f685759423454795362635559423838.KTrwNC3RrjAfe5hvZoXDjbVIzquABFR9c8mobRANJPQ; Max-Age=3; Path=/; Expires=Tue, 16 Apr 2024 18:24:10 GMT; HttpOnly,sessionExpiryDate=3600; Path=/
 
 
 ###
@@ -11,15 +12,15 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3
 DELETE http://user.service.riptest:8383/default/delete
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
 
 ###
 # Test du serveur pour la méthode POST
 POST http://user.service.riptest:8383/default/post
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
-
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
     "account": {
@@ -35,13 +36,14 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3
     }
 }
 
+
+
 ###
 # Test du serveur pour la méthode PUT
 PUT http://user.service.riptest:8383/default/put
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
-
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
     "account": {
@@ -63,8 +65,7 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3
 PATCH http://user.service.riptest:8383/default/patch?queryTestParameter1[]=valueAt0&queryTestParameter1[testIndex]=valueIndex1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
-
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
     "bodyTestObject": {

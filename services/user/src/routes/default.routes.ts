@@ -1,12 +1,13 @@
-import ApiParser from "private_modules";
+import * as Api from "private_modules";
 import { Router } from "express";
 
 const router = Router();
 
 router.all("/:target?/:endpoint?", (req, res, next) => {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_501")
 
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_501")
+    
     _apiResponse.data = {
         url: req.url,
         headers: req.headers,
@@ -14,13 +15,13 @@ router.all("/:target?/:endpoint?", (req, res, next) => {
         body: req.body,
         query: req.query
     }
-    return _apiConstructor.setResponse(_apiResponse).sendResponse();
+    return _parser.setResponse(_apiResponse).sendResponse();
 }
 );
 
 router.all("/*", (req, res, next) => {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiDefaultResponse.get("HTTP_501");
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_501");
     _apiResponse.data = {
         url: req.url,
         headers: req.headers,
@@ -28,7 +29,7 @@ router.all("/*", (req, res, next) => {
         body: req.body,
         query: req.query
     }
-    return _apiConstructor.setResponse(_apiResponse).sendResponse();
+    return _parser.setResponse(_apiResponse).sendResponse();
 }
 );
 

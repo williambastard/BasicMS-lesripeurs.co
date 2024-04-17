@@ -1,26 +1,26 @@
-
-
-
 ###
 # Récupérer le client d'ID n°1
 GET http://user.gateway.riptest:8282/user/getUserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 ###
 # Supprimer le client d'ID n°1
 DELETE http://user.gateway.riptest:8282/user/deleteuserById/1
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTMwMjU5NjgsImV4cCI6MTcxMzAyOTU2OH0.4XguIpOdyS8cPVgrtcs47pGVErVJ98RT3nk3nadWICg
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 ###
 # Supprimer le client d'email test@test.fr
 DELETE http://user.gateway.riptest:8282/user/deleteuserById/test@test.fr
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 
 ###
@@ -28,7 +28,8 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJD
 POST http://user.gateway.riptest:8282/user/signup
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJDT01QVEUgREUgVEVTVCIsImZpcnN0bmFtZXMiOiJBbGJlcnQiLCJpYXQiOjE3MTI4OTg5NDcsImV4cCI6MTcxMjkwMjU0N30.G1yUPUwh7KJRf82-WNSXr0-KfSP4A4R89f4dq1SeyT0
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
     "lastnames": "BASTARD RABASTE",
@@ -43,7 +44,8 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOi0xLCJsYXN0bmFtZXMiOiJD
 PUT http://user.gateway.riptest:8282/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
     "lastnames": "BASTARD RABASTE",
@@ -58,7 +60,8 @@ Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3
 PATCH http://user.gateway.riptest:8282/user/update
 Cache-Control: max-age=604800
 Content-Type: application/json
-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MTI4Njc5MzMsImV4cCI6MTcxMjg3MTUzM30.UCn-QpdgLsKKis0PpV71GxXx6dj-AzzqITrL7GYesjk
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 {
     "lastnames": "BASTARD RABASTE",
