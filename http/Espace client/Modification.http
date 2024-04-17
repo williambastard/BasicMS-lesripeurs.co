@@ -1,0 +1,17 @@
+
+###
+# Remplace les données d'un client
+PATCH https://user.gateway.riptest/user/update/3
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
+{
+    "userId":3,
+    "email": "test2@testx.com",
+    "phone": "33650717809",
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "password": "password"
+}

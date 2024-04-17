@@ -14,7 +14,7 @@ export abstract class UserAuthController {
 
         if (authenticationResult) {
             isSuccess = true;
-            authenticationResult.password = "(hidden)";
+            authenticationResult.password = "************";
             res.locals.session = authenticationResult;
             _apiResponse = { statusCode: 200, message: "User was successfully loged in !", data: res.locals.session };
         }

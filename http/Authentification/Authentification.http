@@ -1,0 +1,19 @@
+###
+# S'authentifier via la passerelle user
+#
+# @email string required
+# @password string required
+# @expireIn string optional. Token validity delay it can be 1year, 1an 10ans, 1y, 1d, etc. (default: 1d)
+###
+
+POST http://user.gateway.riptest/authentication
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: http://user.gateway.riptest
+
+{
+    "email": "test@test.frx",
+    "password": "password",
+    "expireIn":"365j" 
+}
+

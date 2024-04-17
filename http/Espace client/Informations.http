@@ -1,0 +1,33 @@
+###
+# Récupérer mes informations
+GET https://user.gateway.riptest/user/me
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+Cookies: session={{$dotenv AUTHORIZATION_TOKEN}};
+
+###
+# Récupérer un client avec son identifiant userId
+GET https://user.gateway.riptest/user/getUserById/2
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+Cookies: session={{$dotenv AUTHORIZATION_TOKEN}};
+
+###
+# Récupérer le client avec son email
+GET https://user.gateway.riptest/user/getUserByEmail/test@test.fr
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
+###
+# Récupérer le premier client avec ses noms de famille
+GET https://user.gateway.riptest/user/getUserByLastnames/BASTARD
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}

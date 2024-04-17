@@ -24,6 +24,14 @@ export default class User implements UserInterface {
         return this;
     }
 
+    userWithoutPass(): User {
+        const clone = this.clone();
+        const cloneJSON = JSON.parse(JSON.stringify(clone));
+        cloneJSON.password = "************";
+        return JSON.parse(JSON.stringify(cloneJSON)) as User;
+    }
+
+
     clone(): User {
         return JSON.parse(JSON.stringify(this)) as User;
     }
@@ -71,7 +79,7 @@ export default class User implements UserInterface {
         return deleteUser ? true : false;
     }
 
-    static async getUserById(_userId: number): Promise<User | null> {
+    static async getUserById(_userId: number): Promise<User> {
         const _userFinded = await prisma.user.findFirstOrThrow({
             where: {
                 userId: _userId,
@@ -80,11 +88,11 @@ export default class User implements UserInterface {
             throw prismaError
         })
 
-        return _userFinded ? new User(_userFinded) : null;
+        return new User(_userFinded)
     }
 
-    static async getUserByEmail(_email: string): Promise<User | null> {
-        const _userFinded = await prisma.user.findUnique({
+    static async getUserByEmail(_email: string): Promise<User> {
+        const _userFinded = await prisma.user.findFirstOrThrow({
             where: {
                 email: _email,
             },
@@ -92,11 +100,11 @@ export default class User implements UserInterface {
             throw prismaError
         })
 
-        return _userFinded ? new User(_userFinded) : null;
+        return new User(_userFinded)
     }
 
-    static async getUserByLastnames(_lastnames: string): Promise<User | null> {
-        const _userFinded = await prisma.user.findFirst({
+    static async getUserByLastnames(_lastnames: string): Promise<User> {
+        const _userFinded = await prisma.user.findFirstOrThrow({
             where: {
                 lastnames: { contains: _lastnames },
             },
@@ -104,7 +112,7 @@ export default class User implements UserInterface {
             throw prismaError
         })
 
-        return _userFinded ? new User(_userFinded) : null;
+        return new User(_userFinded)
     }
 
 
