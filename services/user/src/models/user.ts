@@ -76,11 +76,8 @@ export default class User implements UserInterface {
     }
 
     async create(): Promise<User> {
-        const userClone = JSON.parse(JSON.stringify(this));
-        const user = new User(userClone)
-
         await prisma.user.create({
-            data: user,
+            data: this,
         }).catch(prismaError => {
             throw prismaError
         })
@@ -110,7 +107,7 @@ export default class User implements UserInterface {
     }
 
     static async getUserById(_userId: number): Promise<User> {
-        const _userFinded = await prisma.user.findFirstOrThrow({
+        const _userFound = await prisma.user.findFirstOrThrow({
             where: {
                 userId: _userId,
             },
@@ -118,34 +115,34 @@ export default class User implements UserInterface {
             throw prismaError
         })
 
-        return new User(_userFinded)
+        return new User(_userFound)
     }
 
     static async getUserByEmail(_email: string): Promise<User> {
-        const _userFinded = await prisma.user.findFirstOrThrow({
+        const _userFound = await prisma.user.findFirstOrThrow({
             where: {
                 email: _email,
             },
         }).catch(prismaError => {
             throw prismaError
         })
-        return new User(_userFinded)
+        return new User(_userFound)
     }
 
     static async getUserByLastnames(_lastnames: string): Promise<User> {
-        const _userFinded = await prisma.user.findFirstOrThrow({
+        const _userFound = await prisma.user.findFirstOrThrow({
             where: {
                 lastnames: { contains: _lastnames },
             },
         }).catch(prismaError => {
             throw prismaError
         })
-        return new User(_userFinded)
+        return new User(_userFound)
     }
 
 
     static async updateUser(_userId: number, _newData: User): Promise<User> {
-        const _userFinded = await prisma.user.update({
+        const _userFound = await prisma.user.update({
             where: {
                 userId: _userId,
             },

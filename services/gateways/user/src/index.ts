@@ -42,7 +42,7 @@ const _corsOptions = {
         if (err) {
             let _apiResponse = Api.messages.use("HTTP_403");
             _apiResponse.details = err;
-
+            
             let _parser = new Api.parser(res);
             return _parser.setResponse(_apiResponse).sendResponse();
         } else {

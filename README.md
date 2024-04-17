@@ -364,7 +364,7 @@ Connection: close
 
   {
     "statusCode": 200,
-    "message": "User was successfully finded !",
+    "message": "User was successfully found !",
     "data": {
       "user": {
         "email": "test2@test.com",
@@ -408,7 +408,7 @@ Connection: close
 
   {
     "statusCode": 200,
-    "message": "User was successfully finded !",
+    "message": "User was successfully found !",
     "data": {
       "user": {
         "email": "test2@test.com",
@@ -452,7 +452,7 @@ Connection: close
 
   {
     "statusCode": 200,
-    "message": "User was successfully finded !",
+    "message": "User was successfully found !",
     "data": {
       "user": {
         "email": "test2@test.com",

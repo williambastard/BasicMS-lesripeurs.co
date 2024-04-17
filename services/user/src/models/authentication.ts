@@ -20,8 +20,6 @@ export class Authentication implements AuthenticationInterface {
 
         try {
             const validatedUserData = UserSchema.parse(_userLogin);
-
-            // Affecter les valeurs comme avant
             this.email = validatedUserData.email;
             this.password = cryptoHelper.encrypt(validatedUserData.password);
             return this;

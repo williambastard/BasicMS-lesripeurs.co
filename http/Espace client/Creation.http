@@ -7,7 +7,7 @@ Content-Type: application/json
 Origin: {{$dotenv ORIGIN}}
 
 {
-   "email": "email-de-test-unique@test.com",
+   "email": "email-de-test-uniquexx@test.com",
     "phone": "33650717809",
     "lastnames": "BASTARD RABASTE",
     "firstnames": "william",

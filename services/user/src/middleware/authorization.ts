@@ -10,10 +10,10 @@ export abstract class Authorization {
 
         try {
             const _userId = parseInt(res.locals.session.session.userId) ?? 0;
-            const _userFinded = await User.getUserById(_userId);
+            const _userFound = await User.getUserById(_userId);
 
-            res.locals.me = _userFinded;
-            _apiResponse = { statusCode: 200, message: "Your informations", data: { user: _userFinded } };
+            res.locals.me = _userFound;
+            _apiResponse = { statusCode: 200, message: "Your informations", data: { user: _userFound } };
             isValidUser = true;
 
         } catch (error) {
