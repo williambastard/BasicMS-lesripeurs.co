@@ -1,18 +1,18 @@
 
 import { NextFunction, Request, Response } from "express";
-import ApiParser from "private_modules";
+import * as Api from "private_modules";
 
 export const authentication = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_500");
 
     try {
         req.body.userId = res.locals.session.userId ?? 0;
-        const response = await new ApiParser.Call(req, res, "security", "authentication", 8181).fetch();
+        const response = await new Api.call(req, res, "security", "authentication", 8181).fetch();
 
         if (!response._isOK) {
             _apiResponse = {
@@ -41,7 +41,7 @@ export const authentication = async (
             details: UncaughtException
         };
     }
-    return _apiConstructor.setResponse(_apiResponse).sendResponse()
+    return _parser.setResponse(_apiResponse).sendResponse()
 };
 
 export const tokenValidator = async (
@@ -49,13 +49,13 @@ export const tokenValidator = async (
     res: Response,
     next: NextFunction
 ) => {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_500");
     let onFailure = false;
 
 
     try {
-        const response = await new ApiParser.Call(req, res, "security", req.url, 8181).fetch();
+        const response = await new Api.call(req, res, "security", req.url, 8181).fetch();
         if (!response._isOK) {
             _apiResponse = {
                 statusCode: response._status,
@@ -84,5 +84,5 @@ export const tokenValidator = async (
         };
         onFailure = !onFailure;
     }
-    return (onFailure) ? _apiConstructor.setResponse(_apiResponse).sendResponse() : next();
+    return (onFailure) ? _parser.setResponse(_apiResponse).sendResponse() : next();
 };

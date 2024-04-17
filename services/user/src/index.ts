@@ -3,7 +3,7 @@ import cors from "cors";
 import http from "http";
 import https from "https";
 import * as ssl from "./ssl/ssl";
-import ApiParser from "private_modules";
+import * as Api from "private_modules";
 import express, { Request, Response, NextFunction } from 'express';
 
 import { userRouter } from "./routes/user.routes";
@@ -40,12 +40,12 @@ const _corsOptions = {
     actionOnError: (err: any, req: Request, res: Response, next: NextFunction) => {
         console.log(req.get('Origin'));
         if (err) {
-            let _apiResponse = ApiParser.ApiJSON.get("HTTP_403");
+            let _apiResponse =Api.messages.use("HTTP_403");
             _apiResponse.message = err.toString();
             _apiResponse.details = { body: req?.body, headers: req.headers };
 
-            let _apiConstructor = new ApiParser.ApiConstructor(res);
-            return _apiConstructor.setResponse(_apiResponse).sendResponse();
+            let _parser = new Api.parser(res);
+            return _parser.setResponse(_apiResponse).sendResponse();
         } else {
             next();
         }

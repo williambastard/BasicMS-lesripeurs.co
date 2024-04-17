@@ -1,12 +1,12 @@
 import { Router } from "express";
-import ApiParser from "private_modules";
+import * as Api from "private_modules";
 
 const Authentication = Router();
 
 Authentication.post("/*", async function (req, res, next) {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
-    const response = await new ApiParser.Call(req, res, "user", "authentication", 8282).fetch();
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_500");
+    const response = await new Api.call(req, res, "user", "authentication", 8282).fetch();
 
     // Convertir les en-têtes en un objet clé-valeur
     const fetchHeaders: Record<string, string> = {};
@@ -28,7 +28,7 @@ Authentication.post("/*", async function (req, res, next) {
         _apiResponse.details = UncaughtException;
 
     }
-    return _apiConstructor.setResponse(_apiResponse).sendResponse();
+    return _parser.setResponse(_apiResponse).sendResponse();
 });
 
 export { Authentication as authenticationRouter };

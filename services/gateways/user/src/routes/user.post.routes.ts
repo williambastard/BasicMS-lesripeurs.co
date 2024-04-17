@@ -1,14 +1,14 @@
 import { Router } from "express";
-import ApiParser from "private_modules";
+import * as Api from "private_modules";
 
 const router = Router();
 
 router.post("*", async function (req, res, next) {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_500");
 
     try {
-        const response = await new ApiParser.Call(req, res, "user", req.url, 8282).fetch();
+        const response = await new Api.call(req, res, "user", req.url, 8282).fetch();
         if (!response._isOK) {
             _apiResponse = {
                 statusCode: response._status,
@@ -30,7 +30,7 @@ router.post("*", async function (req, res, next) {
     catch (UncaughtException) {
         _apiResponse = { statusCode: 500, message: "UncaughtException Exception", details: UncaughtException };
     }
-    return _apiConstructor.setResponse(_apiResponse).sendResponse();
+    return _parser.setResponse(_apiResponse).sendResponse();
 });
 
 export { router as userPostRouter };

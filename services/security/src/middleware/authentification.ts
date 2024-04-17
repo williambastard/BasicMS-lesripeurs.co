@@ -1,4 +1,4 @@
-import ApiParser from "private_modules";
+import * as Api from "private_modules";
 import { NextFunction, Request, Response } from "express";
 import { cryptoHelper } from "../helpers/crypto.helper";
 import { timeHelper } from "../helpers/time.helper";
@@ -10,8 +10,8 @@ export const generateToken = (
     req: Request,
     res: Response
 ) => {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_500");
 
     if (req.body?.userId > 0) {
         const expireIn = req.body?.expireIn ?? "1d";
@@ -36,7 +36,7 @@ export const generateToken = (
         _apiResponse = { statusCode: 401, message: "Le payload ne contient pas de userId correcte à qui assigner ce token.", details: { payload: req.body } };
     }
 
-    return _apiConstructor.setResponse(_apiResponse).sendResponse();
+    return _parser.setResponse(_apiResponse).sendResponse();
 };
 
 export const verifyToken = (
@@ -44,8 +44,8 @@ export const verifyToken = (
     res: Response,
     next: NextFunction
 ) => {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiJSON.get("HTTP_500");
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_500");
 
     try {
         const token = (req.header('authorization') ?? "")?.replace('token ', '');
@@ -57,5 +57,5 @@ export const verifyToken = (
         _apiResponse = { statusCode: 498, message: "Your token is invalid or expired !", details: { error: error!.toString() } };
     }
 
-    return _apiConstructor.setResponse(_apiResponse).sendResponse();
+    return _parser.setResponse(_apiResponse).sendResponse();
 };

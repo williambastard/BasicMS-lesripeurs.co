@@ -1,10 +1,10 @@
 import { Router } from "express";
-import ApiParser from "private_modules";
+import * as Api from "private_modules";
 const router = Router();
 
 router.patch("/*", (req, res, next) => {
-    let _apiConstructor = new ApiParser.ApiConstructor(res);
-    let _apiResponse = ApiParser.ApiJSON.get("HTTP_501");
+    let _parser = new Api.parser(res);
+    let _apiResponse =Api.messages.use("HTTP_501");
     _apiResponse.data = {
         url: req.url,
         headers: req.headers,
@@ -12,7 +12,7 @@ router.patch("/*", (req, res, next) => {
         body: req.body,
         query: req.query
     }
-    _apiConstructor
+    _parser
         .setResponse(_apiResponse)
         .sendResponse();
 }
