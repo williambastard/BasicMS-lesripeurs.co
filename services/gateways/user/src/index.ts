@@ -8,8 +8,9 @@ import cookieParser from "cookie-parser";
 import express, { Request, Response, NextFunction } from 'express';
 
 import { defaultRouter } from "./routes/default.routes";
-import { authenticationRouter } from "./routes/authentication.routes";
 import { userGatewayRouter } from './routes/user.routes';
+import { securityGatewayRouter } from './routes/security.routes';
+import { authenticationRouter } from "./routes/authentication.routes";
 
 // Récupérer les interfaces réseau de la machine
 let _IPAdresses: string[] = [];
@@ -65,6 +66,7 @@ _app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
 _app.use(cors(_corsOptions), _corsOptions.actionOnError);
+_app.use("/authentication", securityGatewayRouter);
 _app.use("/authentication", authenticationRouter);
 _app.use("/user", userGatewayRouter);
 _app.use("/*", defaultRouter);

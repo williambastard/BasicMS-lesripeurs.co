@@ -13,6 +13,7 @@ import { userFindRouter } from './routes/user/find/user.get.routes';
 import { userDeleteRouter } from './routes/user/delete/user.delete.routes';
 import { userSignUpRouter } from './routes/user/signup/user.signup.routes';
 import { userUpdateRouter } from './routes/user/update/user.update.routes';
+import { userMeRouter } from './routes/user/me/user.me.routes';
 
 // Récupérer les interfaces réseau de la machine
 let _IPAdresses: string[] = [];
@@ -73,6 +74,7 @@ _app.use(express.urlencoded({ extended: true }));
 
 _app.use(cors(_corsOptions), _corsOptions.actionOnError);
 _app.use("/user/authentication", authenticationRouter);
+_app.use("/user", userMeRouter);
 _app.use("/user", userFindRouter);
 _app.use("/user", userUpdateRouter);
 _app.use("/user", userSignUpRouter);

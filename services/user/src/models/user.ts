@@ -72,7 +72,7 @@ export default class User implements UserInterface {
     }
 
     static async getUserById(_userId: number): Promise<User | null> {
-        const _userFinded = await prisma.user.findUnique({
+        const _userFinded = await prisma.user.findFirstOrThrow({
             where: {
                 userId: _userId,
             },
