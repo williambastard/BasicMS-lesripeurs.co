@@ -6,8 +6,8 @@ export class Authentication implements AuthenticationInterface {
     readonly email!: string;
     readonly password!: string;
 
-    constructor(userLogin: AuthenticationInterface) {
-        Object.assign(this, userLogin);
+    constructor(_userLogin: AuthenticationInterface) {
+        Object.assign(this, _userLogin);
         return this;
     }
 

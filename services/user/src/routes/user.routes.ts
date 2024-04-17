@@ -1,13 +1,11 @@
 import { Router } from "express";
 
 import { UserController } from "../controllers/user.controllers";
-//import { UserAuthController } from "../controllers/controllers/auth.controller";
-import { tokenValidator } from "../middleware/security_micro_service.middleware";
+import { authentication, tokenValidator } from "../middleware/security_micro_service.middleware";
 
 const router = Router();
 
-//router.post("/login", UserAuthController.login);
-//router.post("/signup", UserController.signup);
+router.post("/signup", UserController.signup);
 
 router.get(
     '/getUserById/:userId',

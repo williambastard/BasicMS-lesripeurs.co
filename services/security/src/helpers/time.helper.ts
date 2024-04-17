@@ -10,6 +10,11 @@ export abstract class timeHelper {
 
     static nowInSeconds = momentTz().valueOf();
 
+    private static splitParts(_duration: string): RegExpMatchArray {
+        const _regexReturn = _duration!.replaceAll(/[^a-zA-Z0-9]/g, '').match(/^(\d+)([A-z]+)?$/);
+        return _regexReturn!;
+    }
+
     private static unitGroupCoefficient: { [key: string]: number } = {
         'y': 3600 * 24 * 365,
         'M': 3600 * 24 * 30,
@@ -29,10 +34,6 @@ export abstract class timeHelper {
         'm': ["minute", "minutes", "m"],
         's': ["second", "seconds", "seconde", "secondes", "sec", "s"],
     };
-    private static match(_duration: string): RegExpMatchArray {
-        const _regexReturn = _duration!.replaceAll(/[^a-zA-Z0-9]/g, '').match(/^(\d+)([A-z]+)?$/);
-        return _regexReturn!;
-    }
 
     static getExpiryDate(_expiryTimeInSeconds: number) {
         return momentTz(_expiryTimeInSeconds).format();
@@ -43,7 +44,7 @@ export abstract class timeHelper {
 
     static getExpiryDateInseconds(_duration: string): number {
 
-        const [_, valueUnit, unit] = timeHelper.match(_duration);
+        const [_, valueUnit, unit] = timeHelper.splitParts(_duration);
 
         const valueToAdd = parseInt(valueUnit) as number;
         let indexName = Object.keys(timeHelper.unitGroup).map(keyGroup => timeHelper.unitGroup[keyGroup].find(k => k === unit) ? keyGroup : undefined).find(x => x !== undefined) ?? timeHelper._defaultExpiryInUnit
@@ -52,10 +53,8 @@ export abstract class timeHelper {
 
     static cookieDuration(_duration: string): number {
 
-        const [_, valueUnit, unit] = timeHelper.match(_duration);
-
+        const [_, valueUnit, unit] = timeHelper.splitParts(_duration);
         let indexName = Object.keys(timeHelper.unitGroup).map(keyGroup => timeHelper.unitGroup[keyGroup].find(k => k === unit) ? keyGroup : undefined).find(x => x !== undefined) ?? timeHelper._defaultExpiryInUnit
-        console.log(unit);
         const coefficient = timeHelper.unitGroupCoefficient[indexName];
 
         return parseInt(valueUnit) * coefficient;

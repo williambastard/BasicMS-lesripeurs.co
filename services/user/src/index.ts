@@ -41,7 +41,6 @@ const _corsOptions = {
         console.log(req.get('Origin'));
         if (err) {
             let _apiResponse = ApiParser.ApiJSON.get("HTTP_403");
-            console.log(err);
             _apiResponse.message = err.toString();
             _apiResponse.details = { body: req?.body, headers: req.headers };
 
