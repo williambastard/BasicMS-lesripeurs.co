@@ -21,11 +21,11 @@
   
   [Affichage de mes informations](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
   
-  [Affichage des informations d'un utilisateur via son Id](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Recherche d'utilisateur avec l'id](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
   
-  [Affichage des informations d'un utilisateur via son email](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Recherche d'utilisateur avec l'email](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
   
-  [Affichage des informations d'un utilisateur via son nom de famille](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Recherche d'utilisateur avec le nom de famille](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
   
   [Modifications des informations d'un utilisateur via Id](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
   
@@ -366,7 +366,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
 
 | Paramètre      | Type     | Attribut   | Description                                     |
 | :------------- | :------- | :--------- | :---------------------------------------------- |
-| **`userId`**   | `string` | **Requis** | Adresse email du compte                         |
+| **`userId`**   | `string` | **Requis** | Identifiant du compte                           |
 | **`expiryIn`** | `string` | Optionnel  | Temps de validité du token (par défaut: 1 jour) |
 
 <details>
@@ -629,7 +629,7 @@ Keep-Alive: timeout=5
 
 </details>
 
-## Affichage des informations d'un utilisateur via son Id
+## Recherche d'utilisateur avec l'id
 
 | Méthode   | Point d'entré                                         | Port HTTP | Port HTTPS |
 | :-------- | :---------------------------------------------------- | :-------- | :--------- |
@@ -640,12 +640,12 @@ Keep-Alive: timeout=5
 | **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
 | **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
 
-| Paramètre    | Type     | Attribut   | Description                            |
-| :----------- | :------- | :--------- | :------------------------------------- |
-| **`userId`** | `string` | **Requis** | Identifiant du compte de l'utilisateur |
+| Paramètre    | Type     | Attribut   | Description                                         |
+| :----------- | :------- | :--------- | :-------------------------------------------------- |
+| **`userId`** | `string` | **Requis** | Identifiant du compte de l'utilisateur à rechercher |
 
 <details>
-<summary>Affichage des informations d'un utilisateur via son Id : Requête</summary>
+<summary>Recherche d'utilisateur avec l'id : Requête</summary>
 
 ```http
 
@@ -660,7 +660,7 @@ Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 </details>
 
 <details>
-<summary>Affichage des informations d'un utilisateur via son Id : Réponse</summary>
+<summary>Recherche d'utilisateur avec l'id : Réponse</summary>
 
 ```http
 
@@ -696,196 +696,282 @@ keep-alive: timeout=5
 
 </details>
 
-## Affichage des informations d'un utilisateur via son email
+## Recherche d'utilisateur avec l'email
+
+| Méthode   | Point d'entré                                           | Port HTTP | Port HTTPS |
+| :-------- | :------------------------------------------------------ | :-------- | :--------- |
+| **`GET`** | **`http://user.gateway.riptest/getUserByEmail/:email`** | 80        | 443        |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
+
+| Paramètre   | Type     | Attribut   | Description                                   |
+| :---------- | :------- | :--------- | :-------------------------------------------- |
+| **`email`** | `string` | **Requis** | Email du compte de l'utilisateur à rechercher |
+
+<details>
+<summary>Recherche d'utilisateur avec l'email : Requête</summary>
 
 ```http
-  GET https://user.gateway.riptest/user/getUserByEmail/:email
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `email`   | `string` | **Requis**. Adresse e-mail |
-
-### Réponse
+GET https://user.gateway.riptest/user/getUserByEmail/:email
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 ```
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  Connection: keep-alive
-  Content-Length: 255
-  Content-Type: application/json; charset=utf-8
-  Date: Wed, 17 Apr 2024 19:17:31 GMT
-  Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
-  keep-alive: timeout=5
 
-  {
-    "statusCode": 200,
-    "message": "User was successfully finded !",
-    "data": {
-      "user": {
-        "email": "test2@test.com",
-        "phone": "33650717809",
-        "lastnames": "BASTARD RABASTE",
-        "firstnames": "william",
-        "password": "************",
-        "createdAt": "2024-04-14T19:02:46.879Z",
-        "userId": 1
-      }
-    }
-  }
-```
+</details>
 
-## Affichage des informations d'un utilisateur via son nom de famille
+<details>
+<summary>Recherche d'utilisateur avec l'email : Réponse</summary>
 
 ```http
-  GET https://user.gateway.riptest/user/getUserByLastnames/:lastnames
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-```
 
-| Parameter   | Type     | Description                 |
-| :---------- | :------- | :-------------------------- |
-| `lastnames` | `string` | **Requis**. Noms de famille |
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Connection: keep-alive
+Content-Length: 255
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Apr 2024 19:17:31 GMT
+Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
+keep-alive: timeout=5
 
-### Réponse
-
-```
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  Connection: keep-alive
-  Content-Length: 255
-  Content-Type: application/json; charset=utf-8
-  Date: Wed, 17 Apr 2024 19:17:31 GMT
-  Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
-  keep-alive: timeout=5
-
-  {
-    "statusCode": 200,
-    "message": "User was successfully finded !",
-    "data": {
-      "user": {
-        "email": "test2@test.com",
-        "phone": "33650717809",
-        "lastnames": "BASTARD RABASTE",
-        "firstnames": "william",
-        "password": "************",
-        "createdAt": "2024-04-14T19:02:46.879Z",
-        "userId": 1
-      }
-    }
-  }
-```
-
-## Modifications des informations d'un utilisateur via Id
-
-Il est impossible de modifier un tulisateur autre que le sien !
-
-```http
-  PATCH https://user.gateway.riptest/user/update/:userId
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-
-  {
-      "userId":1,
-      "email": "email-de-test-unique@test.com",
+{
+  "statusCode": 200,
+  "message": "User was successfully finded !",
+  "data": {
+    "user": {
+      "email": "test2@test.com",
       "phone": "33650717809",
       "lastnames": "BASTARD RABASTE",
       "firstnames": "william",
-      "password": "password"
-  }
-```
-
-| Parameter    | Type     | Description                                      |
-| :----------- | :------- | :----------------------------------------------- |
-| `userId`     | `string` | **Requis**. userId du compte associé au token    |
-| `email`      | `string` | **Requis**. Adresse e-mail                       |
-| `phone`      | `number` | **Requis**. Numéro de téléphone de l'utilisateur |
-| `lastnames`  | `string` | **Requis**. Noms de famille                      |
-| `firstnames` | `string` | **Requis**. Prénoms de famille                   |
-| `password`   | `string` | **Requis**. Mot de passe                         |
-
-#### Réponse
-
-```
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  Connection: keep-alive
-  Content-Length: 277
-  Content-Type: application/json; charset=utf-8
-  Date: Wed, 17 Apr 2024 19:42:43 GMT
-  Etag: W/"e6-YWcCsKfOc2rGYBfNn9QyiGVqBQ8"
-  keep-alive: timeout=5
-
-  {
-    "statusCode": 200,
-    "message": "User was successfully modified !",
-    "data": {
-      "user": {
-        "email": "email-de-test-uniquex@test.com",
-        "phone": "33650717809",
-        "lastnames": "BASTARD RABASTE",
-        "firstnames": "william",
-        "password": "mon_mot_de_passe",
-        "createdAt": "2024-04-17T11:43:40.931Z",
-        "userId": 1
-      }
+      "password": "************",
+      "createdAt": "2024-04-14T19:02:46.879Z",
+      "userId": 1
     }
   }
+}
+
 ```
+
+</details>
+
+## Recherche d'utilisateur avec le nom de famille
+
+| Méthode   | Point d'entré                                                   | Port HTTP | Port HTTPS |
+| :-------- | :-------------------------------------------------------------- | :-------- | :--------- |
+| **`GET`** | **`http://user.gateway.riptest/getUserByLastnames/:lastnames`** | 80        | 443        |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
+
+| Paramètre       | Type     | Attribut   | Description                                            |
+| :-------------- | :------- | :--------- | :----------------------------------------------------- |
+| **`lastnames`** | `string` | **Requis** | Nom de famille du compte de l'utilisateur à rechercher |
+
+<details>
+<summary>Recherche d'utilisateur avec le nom de famille : Requête</summary>
+
+```http
+
+GET https://user.gateway.riptest/user/getUserByLastnames/:lastnames
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
+```
+
+</details>
+
+<details>
+<summary>Recherche d'utilisateur avec le nom de famille : Réponse</summary>
+
+```http
+
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Connection: keep-alive
+Content-Length: 255
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Apr 2024 19:17:31 GMT
+Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
+keep-alive: timeout=5
+
+{
+  "statusCode": 200,
+  "message": "User was successfully finded !",
+  "data": {
+    "user": {
+      "email": "test2@test.com",
+      "phone": "33650717809",
+      "lastnames": "BASTARD RABASTE",
+      "firstnames": "william",
+      "password": "************",
+      "createdAt": "2024-04-14T19:02:46.879Z",
+      "userId": 1
+    }
+  }
+}
+
+```
+
+</details>
+
+## Modifications de mes informations
+
+Il est impossible de modifier un utilisateur autre que le sien !
+
+| Méthode     | Point d'entré                                                   | Port HTTP | Port HTTPS |
+| :---------- | :-------------------------------------------------------------- | :-------- | :--------- |
+| **`PATCH`** | **`http://user.gateway.riptest/getUserByLastnames/:lastnames`** | 80        | 443        |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
+
+| Paramètre        | Type     | Attribut   | Description                                                             |
+| :--------------- | :------- | :--------- | :---------------------------------------------------------------------- |
+| **`userId`**     | `string` | **Requis** | Identifiant du compte de l'utilisateur à modifier (soi-même uniquement) |
+| **`email`**      | `string` | **Requis** | Adresse e-mail                                                          |
+| **`phone`**      | `number` | **Requis** | Numéro de téléphone de l'utilisateur                                    |
+| **`lastnames`**  | `string` | **Requis** | Noms de famille                                                         |
+| **`firstnames`** | `string` | **Requis** | Prénoms de famille                                                      |
+| **`password`**   | `string` | **Requis** | Mot de passe                                                            |
+
+<details>
+<summary>Modifications de mes informations : Requête</summary>
+
+```http
+
+PATCH https://user.gateway.riptest/user/update/:userId
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
+{
+  "userId":1,
+  "email": "nouvel-email@test.com",
+  "phone": "33650717809",
+  "lastnames": "BASTARD RABASTE",
+  "firstnames": "william",
+  "password": "password"
+}
+
+```
+
+</details>
+
+<details>
+<summary>Modifications de mes informations : Réponse</summary>
+
+```http
+
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Connection: keep-alive
+Content-Length: 277
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Apr 2024 19:42:43 GMT
+Etag: W/"e6-YWcCsKfOc2rGYBfNn9QyiGVqBQ8"
+keep-alive: timeout=5
+
+{
+  "statusCode": 200,
+  "message": "User was successfully modified !",
+  "data": {
+    "user": {
+      "email": "nouvel-email@test.com",
+      "phone": "33650717809",
+      "lastnames": "BASTARD RABASTE",
+      "firstnames": "william",
+      "password": "mon_mot_de_passe",
+      "createdAt": "2024-04-17T11:43:40.931Z",
+      "userId": 1
+    }
+  }
+}
+
+```
+
+</details>
 
 ## Suppression d'un utilisateur
 
 Nous partirons du principe que nous sommes tous admins, il n'y aucun système de droits ici.
 
+Il est impossible de modifier un utilisateur autre que le sien !
+
+| Méthode      | Point d'entré                                            | Port HTTP | Port HTTPS |
+| :----------- | :------------------------------------------------------- | :-------- | :--------- |
+| **`DELETE`** | **`http://user.gateway.riptest/deleteuserById/:userId`** | 80        | 443        |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
+
+| Paramètre    | Type     | Attribut   | Description                                        |
+| :----------- | :------- | :--------- | :------------------------------------------------- |
+| **`userId`** | `string` | **Requis** | Identifiant du compte de l'utilisateur à supprimer |
+
+<details>
+<summary>Suppression d'un utilisateur : Requête</summary>
+
 ```http
-  DELETE http://user.gateway.riptest/user/deleteuserById/:userId
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-```
 
-| Parameter | Type     | Description                             |
-| :-------- | :------- | :-------------------------------------- |
-| `userId`  | `string` | **Requis**. userId du compte à supprimé |
-
-### Réponse
+DELETE http://user.gateway.riptest/user/deleteuserById/:userId
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 ```
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  Connection: keep-alive
-  Content-Length: 56
-  Content-Type: application/json; charset=utf-8
-  Date: Wed, 17 Apr 2024 19:49:08 GMT
-  Etag: W/"e7-e6negy8LKAGzBjd3FmHDdbimrpA"
-  keep-alive: timeout=5
 
-  {
-    "statusCode": 200,
-    "message": "User Id ':userId' was deleted !"
-  }
+</details>
+
+<details>
+<summary>Suppression d'un utilisateur : Réponse</summary>
+
+```http
+
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Connection: keep-alive
+Content-Length: 56
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Apr 2024 19:49:08 GMT
+Etag: W/"e7-e6negy8LKAGzBjd3FmHDdbimrpA"
+keep-alive: timeout=5
+
+{
+"statusCode": 200,
+"message": "User Id ':userId' was deleted !"
+}
+
 ```
+
+</details>
 
 ## 🆘 Codes de retours
 
