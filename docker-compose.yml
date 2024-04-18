@@ -26,7 +26,7 @@ services:
       context: ./services/user
       dockerfile: production.Dockerfile
     volumes:
-      - ./services/.env:/usr/src/app/.env
+      - ./.env:/usr/src/app/.env
       - ./services/user/src:/usr/src/app/src
       - ./services/user/migrations:/usr/src/app/migrations
       - ./services/user/schema.prisma:/usr/src/app/schema.prisma
@@ -46,7 +46,7 @@ services:
       context: ./services/security
       dockerfile: production.Dockerfile
     volumes:
-      - ./services/.env:/usr/src/app/.env
+      - ./.env:/usr/src/app/.env
       - ./services/security/src:/usr/src/app/src
     environment:
       <<: *common-node-variables
@@ -62,7 +62,7 @@ services:
       context: ./services/gateways/user
       dockerfile: production.Dockerfile
     volumes:
-      - ./services/.env:/usr/src/app/.env
+      - ./.env:/usr/src/app/.env
       - ./services/gateways/user/src:/usr/src/app/src
     environment:
       <<: *common-node-variables
