@@ -271,7 +271,7 @@ Un fichier .env constitué ainsi devra être placé en sa racine.
     GCw4xl7qgyrHvgMp1LUJXM3M3B5DsXPS4Kauik9HMs6dp1zWYUcvGZo=
     -----END CERTIFICATE-----"
 
-````
+```
 </details>
 
 ## Authentification
@@ -308,7 +308,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   "password": "password",
   "expireIn":"365j"
   }
-````
+```
 
 </details>
 
@@ -434,9 +434,9 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
 | **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
 | **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
 
-| Paramètre | Type  | Attribut | Description |
-| :-------- | :---- | :------- | :---------- |
-| **`N/A`** | `N/A` | **N/A**  | N/A         |
+| Paramètre | Type      | Attribut  | Description |
+| :-------- | :-------- | :-------- | :---------- |
+| **`N/A`** | **`N/A`** | **`N/A`** | **`N/A`**   |
 
 <details>
   <summary>Validation d'un token : Requête</summary>
