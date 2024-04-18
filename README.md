@@ -11,25 +11,25 @@
 </details>
 <details>
   <summary>📖 Référentiel d'API</summary>
-  [Authentification]()
+  [Authentification](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
   
-  [Génération de token de test](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Génération de token de test](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-de-token-de-test)
   
-  [Validation d'un token](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Validation d'un token](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#validation-dun-token)
   
-  [Création d'un utilisateur](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Création d'un utilisateur](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#cr%C3%A9ation-dun-utilisateur)
   
-  [Affichage de mes informations](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Affichage de mes informations](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#affichage-de-mes-informations)
   
-  [Recherche d'utilisateur avec l'id](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Recherche d'utilisateur avec l'id](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#recherche-dutilisateur-avec-lid)
   
-  [Recherche d'utilisateur avec l'email](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Recherche d'utilisateur avec l'email](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#recherche-dutilisateur-avec-lemail)
   
-  [Recherche d'utilisateur avec le nom de famille](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Recherche d'utilisateur avec le nom de famille](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#recherche-dutilisateur-avec-le-nom-de-famille)
   
-  [Modifications des informations d'un utilisateur via Id](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Modifications de mes informations](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#modifications-de-mes-informations)
   
-  [Suppression d'un utilisateur](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Suppression d'un utilisateur](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#suppression-dun-utilisateur)
 </details>
 <details>
   <summary>[🆘 Codes de retours]()</summary>
