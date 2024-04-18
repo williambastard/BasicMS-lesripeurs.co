@@ -15,13 +15,13 @@ Si vous déjà généré les images docker, vous devrez effectuer un run.
 
 ## Première utilisation
 
-Par défaut, un ulisateur est automatiquement créé au build des conteneurs dockers.
+Par défaut, un utilisateur est automatiquement créé au build des conteneurs dockers.
 
 Email : [**email-de-test-unique@test.com**](#)
 
 Mot de passe : [**mon_mot_de_passe**](#)
 
-Vous pourez vous y connecter via l'api de login suivante : [**`/authentication`**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
+Vous pourrez vous y connecter via l'api de login suivante : [**`/authentication`**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
 
 # Configuration de sécurité
 
