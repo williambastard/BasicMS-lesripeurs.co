@@ -1,41 +1,27 @@
-<style>
-r { color: Red }
-o { color: Orange }
-g { color: Green }
-</style>
-
 ## Installation
 
-Les images sont auto-générées via le fichier `docker-compose.yml`, 
+Les images sont auto-générées via le fichier `docker-compose.yml`,
 Si vous n'avez jamais généré les images docker, vous devrez effectuer un build, les images seront automatiquement lancées ensuite.
+
 ```bash
   docker compose up --build
 ```
 
 Si vous déjà généré les images docker, vous devrez effectuer un run.
+
 ```bash
   docker compose up
 ```
 
 ## Première utilisation
-Par défaut, un tulisateur est automatiquement créé au build des conteneurs dockers.
 
-Email : <r>**email-de-test-unique@test.com**</r>
+Par défaut, un ulisateur est automatiquement créé au build des conteneurs dockers.
 
-Mot de passe : <r>**mon_mot_de_passe**</r>
+Email : <span style="color:red">**email-de-test-unique@test.com**</span>
+
+Mot de passe : <span style="color:red">**mon_mot_de_passe**</span>
 
 Vous pourez vous y connecter via l'api de login suivante : [<u>**`/authentication`**</u>](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
-
-Les images sont auto-générées via le fichier `docker-compose.yml`, 
-Si vous n'avez jamais généré les images docker, vous devrez effectuer un build, les images seront automatiquement lancées ensuite.
-```bash
-  docker compose up --build
-```
-
-Si vous déjà généré les images docker, vous devrez effectuer un run.
-```bash
-  docker compose up
-```
 
 # Configuration de sécurité
 
@@ -53,23 +39,20 @@ Restreindre l'accès au public via les headers transmis par le client (navigateu
 
 - **postgres.db.riptest** est configuré sur le port 5432, IP:176.25.1.3.
 
-
 Les conteneurs dockers sont configurés sur deux réseaux : **local-network** et **gateway-network**.
 
-- local-network représente le réseau privé, non accessible depuis le net. 
+- local-network représente le réseau privé, non accessible depuis le net.
 
 - gateway-network est le réseau accessible depuis le web.
 
-
 Pour appliquer le réseau isolé de manière complète, la machine hôte doit subir quelques modifications de pare-feu afin de restreindre les connexions entrantes aux seuls ports 80 et 443 correspondants aux ports de **user.gateway.riptest**. Ainsi, même si la sécurisation des IP est désactivé de la fonction `Authorization.checkIP`, les microsservices seront toujours isolés de l'internet.
-
 
 Pour des raisons de tests du projet, les accès directes via les endpoints des microservices ne permettront pas l'accès directe. Il faudra commenter la ligne `
 _app.use(Authorization.checkIP);` si il est souhaité l'accès directe au microservice ciblé.
 
-
 Le shell iptable sur la machine hôte des conteneurs docker de **user.gateway.riptest**, **security.service.riptest**, **user.service.riptest** et **postgres.db.riptest** doit resembler à ceci :
-````
+
+```
 # Efface toutes les règles et les chaînes existantes
 iptables -F
 iptables -X
@@ -88,16 +71,17 @@ iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 
 # Configuration optionnelle qui autorise l'utilisation du port 21 (FTP)
 iptables -A INPUT -p tcp --dport 21 -j ACCEPT
-````
+```
 
 ![Logo](data/architecture.jpg)
 
-
 ## API Reference
+
 Les microservices ne permettent pas l'accès directe aux ressources, ils vérifient l'origine des requêtes et l'ip de l'hôte émétteur de la requête.
 Pour chaque requête le header `Origin: http://user.gateway.riptest` est donc requis.
 
 Si le Header **Origin:** n'est pas fournie, le serveur renvoi :
+
 ```
 {
   "statusCode": 403,
@@ -107,6 +91,7 @@ Si le Header **Origin:** n'est pas fournie, le serveur renvoi :
 ```
 
 Si le Header **Origin:** fournie mais non autorisé, le serveur renvoi :
+
 ```
 {
   "statusCode": 403,
@@ -117,6 +102,7 @@ Si le Header **Origin:** fournie mais non autorisé, le serveur renvoi :
 
 Pour tester les APIs, un dossier `http` a été mis à disposition, il suffit d'utiliser le plugin `REST CLIENT` de Visual Studio code pour tester les fonctionnalités.
 Un fichier .env constitué ainsi devra être placé en sa racine.
+
 ```
 #Token à générer via http/Authentification/Token.http
 AUTHORIZATION_TOKEN=
@@ -234,6 +220,7 @@ GCw4xl7qgyrHvgMp1LUJXM3M3B5DsXPS4Kauik9HMs6dp1zWYUcvGZo=
 ```
 
 #### Authentification
+
 L'authentification est obligatoire pour obtenir un token valide, sans un token lié à un utilisateur valide, il sera impossible d'effectuer des actions sur le microservice User.
 
 ```http
@@ -242,22 +229,20 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   Content-Type: application/json
   Origin: {{$dotenv ORIGIN}}
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-  
+
   {
       "email": "test@test.fr",
       "password": "password",
-      "expireIn":"365j" 
+      "expireIn":"365j"
   }
-  
+
 ```
 
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `email` | `string` | **Requis**. Adresse email du compte |
-| `password` | `string` | **Requis**. Mot de passe associé à l'email |
+| Parameter  | Type     | Description                                               |
+| :--------- | :------- | :-------------------------------------------------------- |
+| `email`    | `string` | **Requis**. Adresse email du compte                       |
+| `password` | `string` | **Requis**. Mot de passe associé à l'email                |
 | `expiryIn` | `string` | optional. Temps de validité du token (par défaut: 1 jour) |
-
 
 ```
   HTTP/1.1 200 OK
@@ -293,10 +278,8 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
       }
     }
   }
-  
+
 ```
-
-
 
 #### Génération d'un token de test forcé
 
@@ -313,12 +296,13 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   }
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `userId` | `string` | **Requis**. Identifiant du compte a tester |
+| Parameter  | Type     | Description                                               |
+| :--------- | :------- | :-------------------------------------------------------- |
+| `userId`   | `string` | **Requis**. Identifiant du compte a tester                |
 | `expiryIn` | `string` | optional. Temps de validité du token (par défaut: 1 jour) |
 
-#### Réponse 
+#### Réponse
+
 ```
 HTTP/1.1 200 OK
 X-Powered-By: Les Ripeurs server
@@ -348,6 +332,7 @@ Connection: close
 ```
 
 #### Validation d'un token
+
 ```http
   POST http://user.gateway.riptest/authentication/tokenValidator
   Cache-Control: max-age=604800
@@ -356,11 +341,12 @@ Connection: close
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 ```
 
-| Header | Type     | Description                |
-| :-------- | :------- | :------------------------- |
+| Header        | Type  | Description                                                                   |
+| :------------ | :---- | :---------------------------------------------------------------------------- |
 | Authorization | token | **Requis**. Le header est requis, il ne peut être transmis que dans le header |
 
-#### Réponse 
+#### Réponse
+
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -391,6 +377,7 @@ Connection: close
 ```
 
 #### Création d'un utilisateur
+
 ```http
   POST http://user.gateway.riptest/user/signup
   Cache-Control: max-age=604800
@@ -406,15 +393,16 @@ Connection: close
   }
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `email` | `string` | **Requis**. Adresse e-mail |
-| `phone` | `number` | **Requis**. Numéro de téléphone de l'utilisateur |
-| `lastnames` | `string` | **Requis**. Noms de famille |
-| `firstnames` | `string` | **Requis**. Prénoms de famille |
-| `password` | `string` | **Requis**. Mot de passe |
+| Parameter    | Type     | Description                                      |
+| :----------- | :------- | :----------------------------------------------- |
+| `email`      | `string` | **Requis**. Adresse e-mail                       |
+| `phone`      | `number` | **Requis**. Numéro de téléphone de l'utilisateur |
+| `lastnames`  | `string` | **Requis**. Noms de famille                      |
+| `firstnames` | `string` | **Requis**. Prénoms de famille                   |
+| `password`   | `string` | **Requis**. Mot de passe                         |
 
-#### Réponse 
+#### Réponse
+
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -444,6 +432,7 @@ Connection: close
 ```
 
 #### Affichage de mes informations
+
 ```http
   GET https://user.gateway.riptest/user/me
   Cache-Control: max-age=604800
@@ -452,11 +441,12 @@ Connection: close
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| Aucuns paramètres | N/A | N/A |
+| Parameter         | Type | Description |
+| :---------------- | :--- | :---------- |
+| Aucuns paramètres | N/A  | N/A         |
 
-#### Réponse 
+#### Réponse
+
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -486,6 +476,7 @@ Connection: close
 ```
 
 #### Affichage des informations d'un utilisateur via son Id
+
 ```http
   GET https://user.gateway.riptest/user/getUserById/:userId
   Cache-Control: max-age=604800
@@ -494,11 +485,12 @@ Connection: close
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `userId` | `string` | **Requis**. userId du compte recherché |
+| Parameter | Type     | Description                            |
+| :-------- | :------- | :------------------------------------- |
+| `userId`  | `string` | **Requis**. userId du compte recherché |
 
-#### Réponse 
+#### Réponse
+
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -530,6 +522,7 @@ Connection: close
 ```
 
 #### Affichage des informations d'un utilisateur via son email
+
 ```http
   GET https://user.gateway.riptest/user/getUserByEmail/:email
   Cache-Control: max-age=604800
@@ -540,9 +533,10 @@ Connection: close
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `email` | `string` | **Requis**. Adresse e-mail |
+| `email`   | `string` | **Requis**. Adresse e-mail |
 
-#### Réponse 
+#### Réponse
+
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -574,6 +568,7 @@ Connection: close
 ```
 
 #### Affichage des informations d'un utilisateur via son nom de famille
+
 ```http
   GET https://user.gateway.riptest/user/getUserByLastnames/:lastnames
   Cache-Control: max-age=604800
@@ -582,11 +577,12 @@ Connection: close
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
+| Parameter   | Type     | Description                 |
+| :---------- | :------- | :-------------------------- |
 | `lastnames` | `string` | **Requis**. Noms de famille |
 
-#### Réponse 
+#### Réponse
+
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -618,6 +614,7 @@ Connection: close
 ```
 
 #### Modifications des informations d'un utilisateur via Id
+
 Il est impossible de modifier un tulisateur autre que le sien !
 
 ```http
@@ -637,18 +634,17 @@ Il est impossible de modifier un tulisateur autre que le sien !
   }
 ```
 
+| Parameter    | Type     | Description                                      |
+| :----------- | :------- | :----------------------------------------------- |
+| `userId`     | `string` | **Requis**. userId du compte associé au token    |
+| `email`      | `string` | **Requis**. Adresse e-mail                       |
+| `phone`      | `number` | **Requis**. Numéro de téléphone de l'utilisateur |
+| `lastnames`  | `string` | **Requis**. Noms de famille                      |
+| `firstnames` | `string` | **Requis**. Prénoms de famille                   |
+| `password`   | `string` | **Requis**. Mot de passe                         |
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `userId` | `string` | **Requis**. userId du compte associé au token |
-| `email` | `string` | **Requis**. Adresse e-mail |
-| `phone` | `number` | **Requis**. Numéro de téléphone de l'utilisateur |
-| `lastnames` | `string` | **Requis**. Noms de famille |
-| `firstnames` | `string` | **Requis**. Prénoms de famille |
-| `password` | `string` | **Requis**. Mot de passe |
+#### Réponse
 
-
-#### Réponse 
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -680,6 +676,7 @@ Il est impossible de modifier un tulisateur autre que le sien !
 ```
 
 #### Suppression d'un utilisateur
+
 Nous partirons du principe que nous sommes tous admins, il n'y aucun système de droits ici.
 
 ```http
@@ -690,13 +687,12 @@ Nous partirons du principe que nous sommes tous admins, il n'y aucun système de
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 ```
 
+| Parameter | Type     | Description                             |
+| :-------- | :------- | :-------------------------------------- |
+| `userId`  | `string` | **Requis**. userId du compte à supprimé |
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `userId` | `string` | **Requis**. userId du compte à supprimé |
+#### Réponse
 
-
-#### Réponse 
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -720,29 +716,23 @@ Nous partirons du principe que nous sommes tous admins, il n'y aucun système de
 
 Gophish returns the following status codes in its API:
 
-| Status Code | Description |
-| :--- | :--- |
-| 200 | `OK` |
-| 201 | `CREATED` |
-| 400 | `BAD REQUEST` |
-| 404 | `NOT FOUND` |
-| 500 | `INTERNAL SERVER ERROR` |
-
-
-
+| Status Code | Description             |
+| :---------- | :---------------------- |
+| 200         | `OK`                    |
+| 201         | `CREATED`               |
+| 400         | `BAD REQUEST`           |
+| 404         | `NOT FOUND`             |
+| 500         | `INTERNAL SERVER ERROR` |
 
 ## Amélioration possibles sur le projet
+
 La structure du dossier ressemblant à un monorepo hébergant plusieurs projets indépendants les uns des autres, il peut être intéréssant d'utiliser pnpm-workplace afin de faciliter la gestion et la lecture du projet.
 Exemple d'utilisation : https://www.brockherion.dev/blog/posts/setting-up-a-monorepo-with-pnpm-and-typescript/
 
-
-
 ## Acknowledgements
 
- - [Tutoriel de configuration Iptables](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands)
- - [Module privé utilisé pour ce test](https://github.com/williambastard/private_modules)
-
-
+- [Tutoriel de configuration Iptables](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands)
+- [Module privé utilisé pour ce test](https://github.com/williambastard/private_modules)
 
 ## Badges
 
@@ -752,16 +742,15 @@ Add badges from somewhere like: [shields.io](https://shields.io/)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
-
 # BasicMS
 
 Bienvenue sur le test technique BasicMS (Node.js).
-
 
 ## Test technique
 
 La liste des tâches à effectuer est ci-dessous.
 Technos obligatoires :
+
 - Node.js
 - TypeScript
 - Docker & Docker-compose (démarrage via un simple "docker-compose up" et pense à faire un "docker-compose up --build" si tu installes de nouveaux packages)
@@ -769,22 +758,23 @@ Technos obligatoires :
 - PostgreSQL
 - Git
 
-
 ### Écosystème de micro-services
 
 Objectif final, en partant de l'exemple du dossier "Starter" (tu peux appliquer autant de modifications que tu le souhaites), crée 3 MS (Micro-Services) indépendant les uns des autres, dans un seul repos Git avec, idéalement, des commits fréquent :
 
-- **Gateway User** 
-  
+- **Gateway User**
+
   ✅ MS accessible publiquement (web, app, ...), permettant à un utilisateur de se connecter et de récupérer ses informations.
+
 - **MS Security**
 
   ✅ MS inaccessible au public, il permet de gérer le système de token.
+
 - **MS User**
 
   ✅ MS inaccessible au public, permet de gérer les utilisateurs.
 
-*PS: schéma de l'architecture, voir : "schema-microservices.png"*
+_PS: schéma de l'architecture, voir : "schema-microservices.png"_
 
 ### MS User (inaccessible au public)
 
@@ -796,7 +786,6 @@ Crée le service User avec 2 routes :
 
 Évidemment, crée aussi la structure pour la base de données, afin de stocker les utilisateurs (n’hésite pas à ajouter quelques champs supplémentaires, pour rendre le test plus "sympa", ex: téléphone, nom, ...).
 
-
 ### MS Security (inaccessible au public)
 
 Crée le service Security avec 2 routes :
@@ -805,7 +794,6 @@ Crée le service Security avec 2 routes :
 
 ✅ - Une autre permettant d'authentifier un token et d'obtenir l'ID utilisateur correspondant
 
-
 ### Gateway User (accessible au public)
 
 Créer la gateway user, avec les routes suivantes :
@@ -813,7 +801,6 @@ Créer la gateway user, avec les routes suivantes :
 ✅ - Une pour s'authentifier via le service User et obtenir un token via le service Security
 
 ✅ - Une autre (un genre de "/me") pour obtenir ses informations (champs de la BDD) via un token (checké par le service Security) et en obtenant la data du service User
-
 
 ## Note finale
 
