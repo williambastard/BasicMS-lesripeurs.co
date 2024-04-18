@@ -1,4 +1,30 @@
+<style>
+r { color: Red }
+o { color: Orange }
+g { color: Green }
+</style>
+
 ## Installation
+
+Les images sont auto-générées via le fichier `docker-compose.yml`, 
+Si vous n'avez jamais généré les images docker, vous devrez effectuer un build, les images seront automatiquement lancées ensuite.
+```bash
+  docker compose up --build
+```
+
+Si vous déjà généré les images docker, vous devrez effectuer un run.
+```bash
+  docker compose up
+```
+
+## Première utilisation
+Par défaut, un tulisateur est automatiquement créé au build des conteneurs dockers.
+
+Email : [**email-de-test-unique@test.com**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
+
+Mot de passe : [**mon_mot_de_passe**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
+
+Vous pourez vous y connecter via l'api de login suivante : [<u>**`/authentication`**</u>](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
 
 Les images sont auto-générées via le fichier `docker-compose.yml`, 
 Si vous n'avez jamais généré les images docker, vous devrez effectuer un build, les images seront automatiquement lancées ensuite.

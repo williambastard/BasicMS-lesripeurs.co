@@ -13,3 +13,6 @@ CREATE TABLE "User" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- Création de l'utilisateur par défaut
+INSERT INTO "User"(email, phone, lastnames, firstnames, password) VALUES ('email-de-test-unique@test.com','33650717809','BASTARD RABASTE','william','7650657457584b4378746f30626d5139547368714a2b31327245675457346b66356c735543616868724a553d');
