@@ -68,6 +68,8 @@ Mot de passe : [**mon_mot_de_passe**](#)
 
 Vous pourrez vous y connecter via l'api de login suivante : [**`/authentication`**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
 
+**Le système n'ayant pas de système de mémorisation de session, il est impératif d'importer le token dans la variable `AUTHORIZATION_TOKEN` du fichier `.env` à la racine du dossier de travail.**
+
 # 🔐 Configuration de sécurité
 
 Dans ce porjet, nous devons isoler le conteneur docker **user.gateway.riptest** de manière à ce qu'il soit accessible depuis le web (via un nom de domaine par exemple). Il doit également pouvoir communiquer avec les container **user.service.riptest** et **security.service.riptest**.
