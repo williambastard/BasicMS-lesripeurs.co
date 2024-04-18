@@ -1,0 +1,15 @@
+###
+# Vérifier la validité d'un Token via la gateway
+POST http://user.gateway.riptest/authentication/tokenValidator
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
+###
+# Vérifier la validité d'un Token directement sur le microservice
+POST http://security.service.riptest:8181/security/authentication/tokenValidator
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}

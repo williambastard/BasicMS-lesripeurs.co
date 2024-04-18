@@ -1,0 +1,14 @@
+###
+# Créer un nouveau client
+POST http://user.gateway.riptest/user/signup
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+
+{
+   "email": "email-de-test-unique@test.com",
+    "phone": "33650717809",
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "password":"mon_mot_de_passe"
+}

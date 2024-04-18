@@ -1,0 +1,18 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "userId" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "lastnames" TEXT NOT NULL,
+    "firstnames" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("userId")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- Création de l'utilisateur par défaut
+INSERT INTO "User"(email, phone, lastnames, firstnames, password) VALUES ('email-de-test-unique@test.com','33650717809','BASTARD RABASTE','william','7650657457584b4378746f30626d5139547368714a2b31327245675457346b66356c735543616868724a553d');
