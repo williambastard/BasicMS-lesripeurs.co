@@ -20,9 +20,9 @@ Si vous déjà généré les images docker, vous devrez effectuer un run.
 ## Première utilisation
 Par défaut, un tulisateur est automatiquement créé au build des conteneurs dockers.
 
-Email : [**email-de-test-unique@test.com**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
+Email : <r>**email-de-test-unique@test.com**</r>
 
-Mot de passe : [**mon_mot_de_passe**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
+Mot de passe : <r>**mon_mot_de_passe**</r>
 
 Vous pourez vous y connecter via l'api de login suivante : [<u>**`/authentication`**</u>](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
 
