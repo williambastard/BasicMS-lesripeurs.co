@@ -6,7 +6,7 @@ const Authentication = Router();
 Authentication.post("/*", async function (req, res, next) {
     let _parser = new Api.parser(res);
     let _apiResponse = Api.messages.use("HTTP_500");
-    const response = await new Api.call(req, res, "user", "authentication", 8282).setGatewayIp("176.25.1.1").fetch()
+    const response = await new Api.call(req, res, "user", "authentication", Number(process.env.USER_SERVICE_HTTP_PORT!.toString())).setGatewayIp(process.env.GATEWAYIP!.toString()).fetch()
 
     try {
         // Convertir les en-têtes en un objet clé-valeur
