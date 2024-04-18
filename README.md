@@ -271,7 +271,7 @@ Un fichier .env constitué ainsi devra être placé en sa racine.
     GCw4xl7qgyrHvgMp1LUJXM3M3B5DsXPS4Kauik9HMs6dp1zWYUcvGZo=
     -----END CERTIFICATE-----"
 
-```
+````
 </details>
 
 ## Authentification
@@ -308,7 +308,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   "password": "password",
   "expireIn":"365j"
   }
-```
+````
 
 </details>
 
@@ -382,7 +382,7 @@ Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 {
   "userId":1,
   "expireIn": "1 an"
-  }
+}
 
 ```
 
@@ -442,6 +442,7 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
   <summary>Validation d'un token : Requête</summary>
 
 ```http
+
   POST http://user.gateway.riptest/authentication/tokenValidator
   Cache-Control: max-age=604800
   Content-Type: application/json
@@ -456,6 +457,7 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
   <summary>Validation d'un token : Réponse</summary>
 
 ```http
+
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
   Access-Control-Allow-Origin: http://user.gateway.riptest
@@ -482,6 +484,7 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
       "request_type": "POST"
     }
   }
+
 ```
 
 </details>
