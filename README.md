@@ -13,7 +13,7 @@
   <summary>📖 Référentiel d'API</summary>
   [Authentification]()
   
-  [Génération d'un token de test forcé](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Génération de token de test](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
   
   [Validation d'un token](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
   
@@ -125,7 +125,7 @@ Pour chaque requête le header `Origin: http://user.gateway.riptest` est donc re
 
 Si le Header **Origin:** n'est pas fournie, le serveur renvoi :
 
-```
+```http
 {
   "statusCode": 403,
   "message": "Error: Origin not provided"
@@ -135,7 +135,7 @@ Si le Header **Origin:** n'est pas fournie, le serveur renvoi :
 
 Si le Header **Origin:** fournie mais non autorisé, le serveur renvoi :
 
-```
+```http
 {
   "statusCode": 403,
   "message": "Error: Not allowed by CORS"
@@ -150,6 +150,7 @@ Un fichier .env constitué ainsi devra être placé en sa racine.
   <summary>Consulter le fichier .env</summary>
   
   ```bash
+  
     #Token à générer via http/Authentification/Token.http
     AUTHORIZATION_TOKEN=
 
@@ -269,22 +270,27 @@ Un fichier .env constitué ainsi devra être placé en sa racine.
     uKothxRN2Eyh+c5FaY027Rbecu3lL33kzPUZcOgjmsZ4NZ8o4FW/nofPGcpD3F9z
     GCw4xl7qgyrHvgMp1LUJXM3M3B5DsXPS4Kauik9HMs6dp1zWYUcvGZo=
     -----END CERTIFICATE-----"
-  ```
+
+```
 </details>
 
 ## Authentification
 
 L'authentification est obligatoire pour obtenir un token valide, sans un token lié à un utilisateur valide, il sera impossible d'effectuer des actions sur le microservice User.
 
-|    Méthode    |                   Point d'entré                      |       Port HTTP       |       Port HTTPS       |
-| :------------ | :----------------------------------------------------|:----------------------|:---------------------- |
-|**```POST```** | **```https://user.gateway.riptest/authentication```**|           80          |           443          |
+| Méthode    | Point d'entré                                     | Port HTTP | Port HTTPS |
+| :--------- | :------------------------------------------------ | :-------- | :--------- |
+| **`POST`** | **`https://user.gateway.riptest/authentication`** | 80        | 443        |
 
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
 
-|     Paramètre  | Type     | Attribut     | Description |
-| :------------- | :------- |:------------ | :------------|
-| **`email`**    | `string` | **Requis** | Adresse email du compte |
-| **`password`** | `string` | **Requis** | Mot de passe associé à l'email |
+| Paramètre      | Type     | Attribut   | Description                                     |
+| :------------- | :------- | :--------- | :---------------------------------------------- |
+| **`email`**    | `string` | **Requis** | Adresse email du compte                         |
+| **`password`** | `string` | **Requis** | Mot de passe associé à l'email                  |
 | **`expiryIn`** | `string` | Optionnel  | Temps de validité du token (par défaut: 1 jour) |
 
 <details>
@@ -296,118 +302,144 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   Content-Type: application/json
   Origin: {{$dotenv ORIGIN}}
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-  
+
   {
-    "email": "test@test.fr",
-    "password": "password",
-    "expireIn":"365j"
-    }
-  ```
+  "email": "test@test.fr",
+  "password": "password",
+  "expireIn":"365j"
+  }
+```
 
 </details>
 
 <details>
   <summary>Authentification : Réponse</summary>
 
-  ```http
-    HTTP/1.1 200 OK
-    X-Powered-By: Les Ripeurs server
-    Access-Control-Allow-Origin: http://user.gateway.riptest
-    Vary: Origin
-    Access-Control-Allow-Credentials: true
-    X-Session-Id: 45647859436351..2f6b307831773d
-    X-Session-Max-Age-Value: 31536000
-    X-Session-Max-Age-Unit: seconds
-    Set-Cookie: session=s%3A45647859436351... Expires=Thu, 18 Apr 2024 03:45:00 GMT;HttpOnly
-    Content-Type: application/json; charset=utf-8
-    Content-Length: 854
-    ETag: W/"356-ylXp0q5xvsub7jWwT/QpEKLXEU0"
-    Date: Wed, 17 Apr 2024 18:59:24 GMT
-    Connection: close
-    {
-      "statusCode": 200,
-      "message": "User connected with success !",
-      "token": "45647859436351..2f6b307831773d",
-      "data": {
-        "token": "45647859436351..2f6b307831773d"
-      },
-      "details": {
-        "session": {
-          "userId": 8,
-          "email": "test@test.frx",
-          "phone": "33650717809",
-          "lastnames": "BASTARD RABASTE",
-          "firstnames": "william",
-          "password": "************",
-          "createdAt": "2024-04-17T11:43:53.020Z"
-        }
-      }
-    }
-  ```
-
-</details>
-
-## Génération d'un token de test forcé
-
-|    Méthode    |                   Point d'entré                                 |       Port HTTP        |         Port HTTPS       |
-| :------------ | :---------------------------------------------------------------|:---------------------- |:------------------------ |
-|**```POST```** | **```http://security.service.riptest:8181/generateTestToken```**|           8181         |           4441           |
-
-|     Paramètre  | Type     | Attribut     | Description |
-| :------------- | :------- |:------------ | :------------|
-| **`userId`**    | `string` | **Requis** | Adresse email du compte |
-| **`expiryIn`** | `string` | Optionnel  | Temps de validité du token (par défaut: 1 jour) |
-
-<details>
-<summary>Génération d'un token de test forcé : Requête</summary>
-
-  ```http
-  POST http://security.service.riptest:8181/generateTestToken
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-  
-  {
-    "userId":1,
-    "expireIn": "1 an"
-    }
-
-  ```
-</details>
-
-<details>
-<summary>Génération d'un token de test forcé : Réponse</summary>
-
-  ```http
+```http
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
   Access-Control-Allow-Origin: http://user.gateway.riptest
   Vary: Origin
   Access-Control-Allow-Credentials: true
-  X-Session-Id: 3841764e555...67553d
+  X-Session-Id: 45647859436351..2f6b307831773d
   X-Session-Max-Age-Value: 31536000
   X-Session-Max-Age-Unit: seconds
-  Set-Cookie: session=s%3A3841764e55...Expires=Thu, 18 Apr 2024 03:47:39 GMT; HttpOnly
+  Set-Cookie: session=s%3A45647859436351... Expires=Thu, 18 Apr 2024 03:45:00 GMT;HttpOnly
   Content-Type: application/json; charset=utf-8
   Content-Length: 854
-  ETag: W/"356-j4NVpcXU8AIWXLtYNLINIsEFZa4"
-  Date: Wed, 17 Apr 2024 19:02:03 GMT
+  ETag: W/"356-ylXp0q5xvsub7jWwT/QpEKLXEU0"
+  Date: Wed, 17 Apr 2024 18:59:24 GMT
   Connection: close
-
   {
     "statusCode": 200,
-    "message": "Your token is ready, find it in data.token. He is valid for 1 an",
-    "token": "3841764e55...67553d",
+    "message": "User connected with success !",
+    "token": "45647859436351..2f6b307831773d",
     "data": {
-      "token": "3841764e55...67553d",
-      "request_url": "/",
-      "request_type": "POST"
+      "token": "45647859436351..2f6b307831773d"
+    },
+    "details": {
+      "session": {
+        "userId": 8,
+        "email": "test@test.frx",
+        "phone": "33650717809",
+        "lastnames": "BASTARD RABASTE",
+        "firstnames": "william",
+        "password": "************",
+        "createdAt": "2024-04-17T11:43:53.020Z"
+      }
     }
   }
-  ```
+```
+
 </details>
+
+## Génération de token de test
+
+| Méthode    | Point d'entré                                                | Port HTTP | Port HTTPS |
+| :--------- | :----------------------------------------------------------- | :-------- | :--------- |
+| **`POST`** | **`http://security.service.riptest:8181/generateTestToken`** | 8181      | 4441       |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
+
+| Paramètre      | Type     | Attribut   | Description                                     |
+| :------------- | :------- | :--------- | :---------------------------------------------- |
+| **`userId`**   | `string` | **Requis** | Adresse email du compte                         |
+| **`expiryIn`** | `string` | Optionnel  | Temps de validité du token (par défaut: 1 jour) |
+
+<details>
+<summary>Génération de token de test : Requête</summary>
+
+```http
+POST http://security.service.riptest:8181/generateTestToken
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
+{
+  "userId":1,
+  "expireIn": "1 an"
+  }
+
+```
+
+</details>
+
+<details>
+<summary>Génération de token de test : Réponse</summary>
+
+```http
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+X-Session-Id: 3841764e555...67553d
+X-Session-Max-Age-Value: 31536000
+X-Session-Max-Age-Unit: seconds
+Set-Cookie: session=s%3A3841764e55...Expires=Thu, 18 Apr 2024 03:47:39 GMT; HttpOnly
+Content-Type: application/json; charset=utf-8
+Content-Length: 854
+ETag: W/"356-j4NVpcXU8AIWXLtYNLINIsEFZa4"
+Date: Wed, 17 Apr 2024 19:02:03 GMT
+Connection: close
+
+{
+  "statusCode": 200,
+  "message": "Your token is ready, find it in data.token. He is valid for 1 an",
+  "token": "3841764e55...67553d",
+  "data": {
+    "token": "3841764e55...67553d",
+    "request_url": "/",
+    "request_type": "POST"
+  }
+}
+```
+
+</details>
+
 ## Validation d'un token
+
+La validation du token est utilisée dans toutes les APi des microservices, avant d'effectuer une action, on vérifie le token de l'utilisateur, sauf pour la création d'un utilisateur ou la connexion d'un utilisateur.
+
+| Méthode    | Point d'entré                                                   | Port HTTP | Port HTTPS |
+| :--------- | :-------------------------------------------------------------- | :-------- | :--------- |
+| **`POST`** | **`http://user.gateway.riptest/authentication/tokenValidator`** | 80        | 443        |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
+
+| Paramètre | Type  | Attribut | Description |
+| :-------- | :---- | :------- | :---------- |
+| **`N/A`** | `N/A` | **N/A**  | N/A         |
+
+<details>
+  <summary>Validation d'un token : Requête</summary>
 
 ```http
   POST http://user.gateway.riptest/authentication/tokenValidator
@@ -415,15 +447,15 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   Content-Type: application/json
   Origin: {{$dotenv ORIGIN}}
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-```
-
-| Header        | Type  | Description                                                                   |
-| :------------ | :---- | :---------------------------------------------------------------------------- |
-| Authorization | token | **Requis**. Le header est requis, il ne peut être transmis que dans le header |
-
-### Réponse
 
 ```
+
+</details>
+
+<details>
+  <summary>Validation d'un token : Réponse</summary>
+
+```http
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
   Access-Control-Allow-Origin: http://user.gateway.riptest
@@ -437,9 +469,9 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   keep-alive: timeout=5
 
   {
-    "statusCode": 200,
-    "message": "Your token is valid !",
-    "data": {
+  "statusCode": 200,
+  "message": "Your token is valid !",
+  "data": {
       "session": {
         "userId": 3,
         "expireAt": 1744910819811,
@@ -452,7 +484,21 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   }
 ```
 
+</details>
+
 ## Création d'un utilisateur
+
+| Méthode    | Point d'entré                                                | Port HTTP | Port HTTPS |
+| :--------- | :----------------------------------------------------------- | :-------- | :--------- |
+| **`POST`** | **`http://security.service.riptest:8181/generateTestToken`** | 8181      | 4441       |
+
+| Paramètre        | Type     | Attribut   | Description                          |
+| :--------------- | :------- | :--------- | :----------------------------------- |
+| **`email`**      | `string` | **Requis** | Adresse e-mail                       |
+| **`phone`**      | `number` | **Requis** | Numéro de téléphone de l'utilisateur |
+| **`lastnames`**  | `string` | **Requis** | Noms de famille                      |
+| **`firstnames`** | `string` | **Requis** | Prénoms de famille                   |
+| **`password`**   | `string` | **Requis** | Mot de passe                         |
 
 ```http
   POST http://user.gateway.riptest/user/signup
@@ -468,14 +514,6 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
       "password": "mon_mot_de_passe"
   }
 ```
-
-| Parameter    | Type     | Description                                      |
-| :----------- | :------- | :----------------------------------------------- |
-| `email`      | `string` | **Requis**. Adresse e-mail                       |
-| `phone`      | `number` | **Requis**. Numéro de téléphone de l'utilisateur |
-| `lastnames`  | `string` | **Requis**. Noms de famille                      |
-| `firstnames` | `string` | **Requis**. Prénoms de famille                   |
-| `password`   | `string` | **Requis**. Mot de passe                         |
 
 ### Réponse
 
