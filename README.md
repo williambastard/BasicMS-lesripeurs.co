@@ -17,11 +17,11 @@ Si vous déjà généré les images docker, vous devrez effectuer un run.
 
 Par défaut, un ulisateur est automatiquement créé au build des conteneurs dockers.
 
-Email : <span style="color:red">**email-de-test-unique@test.com**</span>
+Email : [**email-de-test-unique@test.com**](#)
 
-Mot de passe : <span style="color:red">**mon_mot_de_passe**</span>
+Mot de passe : [**mon_mot_de_passe**](#)
 
-Vous pourez vous y connecter via l'api de login suivante : [<u>**`/authentication`**</u>](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
+Vous pourez vous y connecter via l'api de login suivante : [**`/authentication`**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
 
 # Configuration de sécurité
 
