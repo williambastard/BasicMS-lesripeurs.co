@@ -1,4 +1,37 @@
-## Installation
+# Sommaire
+<details>
+  <summary>[⚙️ Installation](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#installation)</summary>
+</details>
+<details>
+  <summary>[🖥️ Première utilisation](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#premi%C3%A8re-utilisation)</summary>
+</details>
+<details>
+  <summary>[🔐 Configuration de sécurité](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#premi%C3%A8re-utilisation)</summary>
+</details>
+<details>
+  <summary>[📖 Référentiel d'API](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#référentiel-dapi)</summary>
+  [Authentification]()
+  [Génération d'un token de test forcé](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Validation d'un token](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Création d'un utilisateur](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Affichage de mes informations](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Affichage des informations d'un utilisateur via son Id](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Affichage des informations d'un utilisateur via son email](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Affichage des informations d'un utilisateur via son nom de famille](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Modifications des informations d'un utilisateur via Id](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+  [Suppression d'un utilisateur](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#g%C3%A9n%C3%A9ration-dun-token-de-test-forc%C3%A9)
+</details>
+<details>
+  <summary>[🆘 Codes de retours]()</summary>
+</details>
+<details>
+  <summary>[✍🏼 Amélioration possibles sur le projet]()</summary>
+</details>
+<details>
+  <summary>[📚 Base de connaissances et ressources utilisées]()</summary>
+</details>
+
+# ⚙️ Installation
 
 Les images sont auto-générées via le fichier `docker-compose.yml`,
 Si vous n'avez jamais généré les images docker, vous devrez effectuer un build, les images seront automatiquement lancées ensuite.
@@ -13,7 +46,7 @@ Si vous déjà généré les images docker, vous devrez effectuer un run.
   docker compose up
 ```
 
-## Première utilisation
+# 🖥️ Première utilisation
 
 Par défaut, un utilisateur est automatiquement créé au build des conteneurs dockers.
 
@@ -23,7 +56,7 @@ Mot de passe : [**mon_mot_de_passe**](#)
 
 Vous pourrez vous y connecter via l'api de login suivante : [**`/authentication`**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
 
-# Configuration de sécurité
+# 🔐 Configuration de sécurité
 
 Dans ce porjet, nous devons isoler le conteneur docker **user.gateway.riptest** de manière à ce qu'il soit accessible depuis le web (via un nom de domaine par exemple). Il doit également pouvoir communiquer avec les container **user.service.riptest** et **security.service.riptest**.
 
@@ -75,7 +108,7 @@ iptables -A INPUT -p tcp --dport 21 -j ACCEPT
 
 ![Logo](data/architecture.jpg)
 
-## API Reference
+# 📖 Référentiel d'API
 
 Les microservices ne permettent pas l'accès directe aux ressources, ils vérifient l'origine des requêtes et l'ip de l'hôte émétteur de la requête.
 Pour chaque requête le header `Origin: http://user.gateway.riptest` est donc requis.
@@ -219,7 +252,7 @@ GCw4xl7qgyrHvgMp1LUJXM3M3B5DsXPS4Kauik9HMs6dp1zWYUcvGZo=
 -----END CERTIFICATE-----"
 ```
 
-#### Authentification
+## Authentification
 
 L'authentification est obligatoire pour obtenir un token valide, sans un token lié à un utilisateur valide, il sera impossible d'effectuer des actions sur le microservice User.
 
@@ -281,7 +314,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
 
 ```
 
-#### Génération d'un token de test forcé
+## Génération d'un token de test forcé
 
 ```http
   POST http://security.service.riptest:8181/generateTestToken
@@ -301,7 +334,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
 | `userId`   | `string` | **Requis**. Identifiant du compte a tester                |
 | `expiryIn` | `string` | optional. Temps de validité du token (par défaut: 1 jour) |
 
-#### Réponse
+### Réponse
 
 ```
 HTTP/1.1 200 OK
@@ -331,7 +364,7 @@ Connection: close
 }
 ```
 
-#### Validation d'un token
+## Validation d'un token
 
 ```http
   POST http://user.gateway.riptest/authentication/tokenValidator
@@ -345,7 +378,7 @@ Connection: close
 | :------------ | :---- | :---------------------------------------------------------------------------- |
 | Authorization | token | **Requis**. Le header est requis, il ne peut être transmis que dans le header |
 
-#### Réponse
+### Réponse
 
 ```
   HTTP/1.1 200 OK
@@ -376,7 +409,7 @@ Connection: close
   }
 ```
 
-#### Création d'un utilisateur
+## Création d'un utilisateur
 
 ```http
   POST http://user.gateway.riptest/user/signup
@@ -401,7 +434,7 @@ Connection: close
 | `firstnames` | `string` | **Requis**. Prénoms de famille                   |
 | `password`   | `string` | **Requis**. Mot de passe                         |
 
-#### Réponse
+### Réponse
 
 ```
   HTTP/1.1 200 OK
@@ -431,7 +464,7 @@ Connection: close
   }
 ```
 
-#### Affichage de mes informations
+## Affichage de mes informations
 
 ```http
   GET https://user.gateway.riptest/user/me
@@ -445,7 +478,7 @@ Connection: close
 | :---------------- | :--- | :---------- |
 | Aucuns paramètres | N/A  | N/A         |
 
-#### Réponse
+### Réponse
 
 ```
   HTTP/1.1 200 OK
@@ -475,7 +508,7 @@ Connection: close
   }
 ```
 
-#### Affichage des informations d'un utilisateur via son Id
+## Affichage des informations d'un utilisateur via son Id
 
 ```http
   GET https://user.gateway.riptest/user/getUserById/:userId
@@ -489,7 +522,7 @@ Connection: close
 | :-------- | :------- | :------------------------------------- |
 | `userId`  | `string` | **Requis**. userId du compte recherché |
 
-#### Réponse
+### Réponse
 
 ```
   HTTP/1.1 200 OK
@@ -521,7 +554,7 @@ Connection: close
   }
 ```
 
-#### Affichage des informations d'un utilisateur via son email
+## Affichage des informations d'un utilisateur via son email
 
 ```http
   GET https://user.gateway.riptest/user/getUserByEmail/:email
@@ -535,7 +568,7 @@ Connection: close
 | :-------- | :------- | :------------------------- |
 | `email`   | `string` | **Requis**. Adresse e-mail |
 
-#### Réponse
+### Réponse
 
 ```
   HTTP/1.1 200 OK
@@ -567,7 +600,7 @@ Connection: close
   }
 ```
 
-#### Affichage des informations d'un utilisateur via son nom de famille
+## Affichage des informations d'un utilisateur via son nom de famille
 
 ```http
   GET https://user.gateway.riptest/user/getUserByLastnames/:lastnames
@@ -581,7 +614,7 @@ Connection: close
 | :---------- | :------- | :-------------------------- |
 | `lastnames` | `string` | **Requis**. Noms de famille |
 
-#### Réponse
+### Réponse
 
 ```
   HTTP/1.1 200 OK
@@ -613,7 +646,7 @@ Connection: close
   }
 ```
 
-#### Modifications des informations d'un utilisateur via Id
+## Modifications des informations d'un utilisateur via Id
 
 Il est impossible de modifier un tulisateur autre que le sien !
 
@@ -675,7 +708,7 @@ Il est impossible de modifier un tulisateur autre que le sien !
   }
 ```
 
-#### Suppression d'un utilisateur
+## Suppression d'un utilisateur
 
 Nous partirons du principe que nous sommes tous admins, il n'y aucun système de droits ici.
 
@@ -691,7 +724,7 @@ Nous partirons du principe que nous sommes tous admins, il n'y aucun système de
 | :-------- | :------- | :-------------------------------------- |
 | `userId`  | `string` | **Requis**. userId du compte à supprimé |
 
-#### Réponse
+### Réponse
 
 ```
   HTTP/1.1 200 OK
@@ -712,29 +745,32 @@ Nous partirons du principe que nous sommes tous admins, il n'y aucun système de
   }
 ```
 
-## Status Codes
+## 🆘 Codes de retours
 
-Gophish returns the following status codes in its API:
+Description des codes http de retours utilisés dans les API
 
 | Status Code | Description             |
 | :---------- | :---------------------- |
 | 200         | `OK`                    |
 | 201         | `CREATED`               |
 | 400         | `BAD REQUEST`           |
+| 401         | `UNAUTHORIZED`          |
+| 403         | `FORBIDEN`              |
 | 404         | `NOT FOUND`             |
 | 500         | `INTERNAL SERVER ERROR` |
+| 501         | `NOT IMPLEMENTED`       |
 
-## Amélioration possibles sur le projet
+## ✍🏼 Amélioration possibles sur le projet
 
 La structure du dossier ressemblant à un monorepo hébergant plusieurs projets indépendants les uns des autres, il peut être intéréssant d'utiliser pnpm-workplace afin de faciliter la gestion et la lecture du projet.
 Exemple d'utilisation : https://www.brockherion.dev/blog/posts/setting-up-a-monorepo-with-pnpm-and-typescript/
 
-## Acknowledgements
+## 📚 Base de connaissances et ressources utilisées
 
 - [Tutoriel de configuration Iptables](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands)
 - [Module privé utilisé pour ce test](https://github.com/williambastard/private_modules)
 
-## Badges
+# Licences
 
 Add badges from somewhere like: [shields.io](https://shields.io/)
 
@@ -743,6 +779,98 @@ Add badges from somewhere like: [shields.io](https://shields.io/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
 # BasicMS
+
+Bienvenue sur le test technique BasicMS (Node.js).
+
+## Test technique
+
+La liste des tâches à effectuer est ci-dessous.
+Technos obligatoires :
+
+- Node.js
+- TypeScript
+- Docker & Docker-compose (démarrage via un simple "docker-compose up" et pense à faire un "docker-compose up --build" si tu installes de nouveaux packages)
+- Micro-services via API REST
+- PostgreSQL
+- Git
+
+### Écosystème de micro-services
+
+Objectif final, en partant de l'exemple du dossier "Starter" (tu peux appliquer autant de modifications que tu le souhaites), crée 3 MS (Micro-Services) indépendant les uns des autres, dans un seul repos Git avec, idéalement, des commits fréquent :
+
+- **Gateway User**
+
+  ✅ MS accessible publiquement (web, app, ...), permettant à un utilisateur de se connecter et de récupérer ses informations.
+
+- **MS Security**
+
+  ✅ MS inaccessible au public, il permet de gérer le système de token.
+
+- **MS User**
+
+  ✅ MS inaccessible au public, permet de gérer les utilisateurs.
+
+_PS: schéma de l'architecture, voir : "schema-microservices.png"_
+
+### MS User (inaccessible au public)
+
+Crée le service User avec 2 routes :
+
+✅ - Une permettant de vérifier une authentification avec l'e-mail et le mot de passe
+
+✅ - Une autre pour récupérer les données d'un utilisateur via une simple ID
+
+Évidemment, crée aussi la structure pour la base de données, afin de stocker les utilisateurs (n’hésite pas à ajouter quelques champs supplémentaires, pour rendre le test plus "sympa", ex: téléphone, nom, ...).
+
+### MS Security (inaccessible au public)
+
+Crée le service Security avec 2 routes :
+
+✅ - Une permettant de créer un token (carte blanche sur la méthode : stockage en BDD, JWT, ...) avec une ID utilisateur
+
+✅ - Une autre permettant d'authentifier un token et d'obtenir l'ID utilisateur correspondant
+
+### Gateway User (accessible au public)
+
+Créer la gateway user, avec les routes suivantes :
+
+✅ - Une pour s'authentifier via le service User et obtenir un token via le service Security
+
+✅ - Une autre (un genre de "/me") pour obtenir ses informations (champs de la BDD) via un token (checké par le service Security) et en obtenant la data du service User
+
+## Note finale
+
+L'idée est d'avoir un code structuré, **sécurisé**, logique, facilement compréhensible, modulable et avec un niveau de production.
+Mais toujours avec l'optique que le projet reste globalement "simple" et fonctionne instantanément.
+
+Enfin, push ton projet sur un repos Git privée (comme Gitlab ou Github) et donne-moi un accès en lecture à l'adresse mail "it@lesripeurs.com".
+
+Bon courage 👍
+
+## Installation
+
+Les images sont auto-générées via le fichier `docker-compose.yml`,
+Si vous n'avez jamais généré les images docker, vous devrez effectuer un build, les images seront automatiquement lancées ensuite.
+
+```bash
+  docker compose up --build
+```
+
+Si vous déjà généré les images docker, vous devrez effectuer un run.
+
+```bash
+  docker compose up
+```
+
+## Première utilisation
+
+Par défaut, un utilisateur est automatiquement créé au build des conteneurs dockers.
+
+Email : [**email-de-test-unique@test.com**](#)
+
+Mot de passe : [**mon_mot_de_passe**](#)
+
+Vous pourrez vous y connecter via l'api de login suivante : [**`/authentication`**](https://github.com/williambastard/BasicMS-lesripeurs.co?tab=readme-ov-file#authentification)
 
 Bienvenue sur le test technique BasicMS (Node.js).
 
