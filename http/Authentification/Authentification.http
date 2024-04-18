@@ -4,7 +4,6 @@
 # @email string required
 # @password string required
 # @expireIn string optional. Token validity delay it can be 1year, 1an 10ans, 1y, 1d, etc. (default: 1d)
-
 POST http://user.gateway.riptest/authentication
 Cache-Control: max-age=604800
 Content-Type: application/json
@@ -15,6 +14,7 @@ Origin: http://user.gateway.riptest
     "password": "mon_mot_de_passe",
     "expireIn":"365j"
 }
+
 ###
 
 POST http://user.service.riptest:8282/authentication

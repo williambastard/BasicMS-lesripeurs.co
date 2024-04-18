@@ -125,23 +125,49 @@ iptables -A INPUT -p tcp --dport 21 -j ACCEPT
 Les microservices ne permettent pas l'accès directe aux ressources, ils vérifient l'origine des requêtes et l'ip de l'hôte émétteur de la requête.
 Pour chaque requête le header `Origin: http://user.gateway.riptest` est donc requis.
 
-Si le Header **Origin:** n'est pas fournie, le serveur renvoi :
+Si le Header **Origin:** n'est pas fourni, le serveur renvoi :
 
 ```http
 {
   "statusCode": 403,
   "message": "Error: Origin not provided"
-  ...
 }
 ```
 
-Si le Header **Origin:** fournie mais non autorisé, le serveur renvoi :
+Si le Header **Origin:** fourni mais non autorisé, le serveur renvoi :
 
 ```http
 {
   "statusCode": 403,
   "message": "Error: Not allowed by CORS"
-  ...
+}
+```
+
+Si votre ip ne fait pas partie du fichier `.env` en sa variable `WHITELIST` le serveur renvois : 
+
+```http
+HTTP/1.1 403 Forbidden
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Connection: keep-alive
+Content-Length: 351
+Content-Type: application/json; charset=utf-8
+Date: Thu, 18 Apr 2024 13:47:25 GMT
+Etag: W/"be-bsL3y9ZP9+I7E9Ik8SZdjr2uAtE"
+keep-alive: timeout=5
+Vary: Origin
+
+{
+  "statusCode": 403,
+  "message": "Forbidden : Accès refusé pour l'adresse IP: ::ffff:176.25.1.2, l'avez vous ajouté à la whiteliste du fichier .env ?",
+  "details": {
+    "statusCode": 403,
+    "message": "Forbidden : Accès refusé pour l'adresse IP: ::ffff:176.25.1.2, l'avez vous ajouté à la whiteliste du fichier .env ?",
+    "details": {
+      "reqIP": "::ffff:176.25.1.2"
+    }
+  }
 }
 ```
 
@@ -273,7 +299,7 @@ Un fichier .env constitué ainsi devra être placé en sa racine.
     GCw4xl7qgyrHvgMp1LUJXM3M3B5DsXPS4Kauik9HMs6dp1zWYUcvGZo=
     -----END CERTIFICATE-----"
 
-````
+```
 </details>
 
 ## Authentification
@@ -298,19 +324,19 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
 <details>
   <summary>Authentification : Requête</summary>
 
-  ```http
-  POST https://user.gateway.riptest/authentication
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+```http
+POST https://user.gateway.riptest/authentication
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
-  {
+{
   "email": "test@test.fr",
   "password": "password",
   "expireIn":"365j"
-  }
-````
+}
+```
 
 </details>
 
@@ -318,39 +344,40 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   <summary>Authentification : Réponse</summary>
 
 ```http
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  X-Session-Id: 45647859436351..2f6b307831773d
-  X-Session-Max-Age-Value: 31536000
-  X-Session-Max-Age-Unit: seconds
-  Set-Cookie: session=s%3A45647859436351... Expires=Thu, 18 Apr 2024 03:45:00 GMT;HttpOnly
-  Content-Type: application/json; charset=utf-8
-  Content-Length: 854
-  ETag: W/"356-ylXp0q5xvsub7jWwT/QpEKLXEU0"
-  Date: Wed, 17 Apr 2024 18:59:24 GMT
-  Connection: close
-  {
-    "statusCode": 200,
-    "message": "User connected with success !",
-    "token": "45647859436351..2f6b307831773d",
-    "data": {
-      "token": "45647859436351..2f6b307831773d"
-    },
-    "details": {
-      "session": {
-        "userId": 8,
-        "email": "test@test.frx",
-        "phone": "33650717809",
-        "lastnames": "BASTARD RABASTE",
-        "firstnames": "william",
-        "password": "************",
-        "createdAt": "2024-04-17T11:43:53.020Z"
-      }
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+X-Session-Id: 45647859436351..2f6b307831773d
+X-Session-Max-Age-Value: 31536000
+X-Session-Max-Age-Unit: seconds
+Set-Cookie: session=s%3A45647859436351... Expires=Thu, 18 Apr 2024 03:45:00 GMT;HttpOnly
+Content-Type: application/json; charset=utf-8
+Content-Length: 854
+ETag: W/"356-ylXp0q5xvsub7jWwT/QpEKLXEU0"
+Date: Wed, 17 Apr 2024 18:59:24 GMT
+Connection: close
+
+{
+  "statusCode": 200,
+  "message": "User connected with success !",
+  "token": "45647859436351..2f6b307831773d",
+  "data": {
+    "token": "45647859436351..2f6b307831773d"
+  },
+  "details": {
+    "session": {
+      "userId": 8,
+      "email": "test@test.frx",
+      "phone": "33650717809",
+      "lastnames": "BASTARD RABASTE",
+      "firstnames": "william",
+      "password": "************",
+      "createdAt": "2024-04-17T11:43:53.020Z"
     }
   }
+}
 ```
 
 </details>
