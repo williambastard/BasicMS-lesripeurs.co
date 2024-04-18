@@ -16,6 +16,7 @@ export abstract class Authorization {
         const allowedIPPatterns = whitelist.map(ip => new RegExp(ip.replace(/\./g, '\\.')));
 
         let _apiResponse: Api.ResponseInterface = Api.messages.use("HTTP_403");
+        _apiResponse.message = `Forbidden : Accès refusé pour l'adresse IP: ${req.ip}, l'avez vous ajouté à la whiteliste du fichier .env ?`;
 
         _apiResponse.details = { reqIP: clientIP };
 
