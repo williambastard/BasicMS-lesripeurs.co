@@ -113,7 +113,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-# Exclusion des tests HTTP
-test/*
-tiktok.http

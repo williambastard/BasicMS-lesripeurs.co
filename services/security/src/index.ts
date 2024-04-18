@@ -2,7 +2,6 @@ import os from 'os';
 import cors from "cors";
 import http from "http";
 import https from "https";
-import * as ssl from "./ssl/ssl";
 import * as Api from "private_modules";
 import cookieParser from "cookie-parser";
 import express, { Request, Response, NextFunction } from 'express';
@@ -11,9 +10,6 @@ import { Authorization } from './middleware/authorization';
 
 // Récupérer les interfaces réseau de la machine
 let _IPAdresses: string[] = [];
-
-const _HTTP_PORT = "8181";
-const _HTTPS_PORT = "4441";
 
 const _app = express();
 const _interfaces = os.networkInterfaces();
@@ -50,8 +46,8 @@ const _corsOptions = {
 }
 
 const _httpsOptions = {
-    key: ssl._httpsOptions.key,
-    cert: ssl._httpsOptions.cert
+    key: process.env.KEY,
+    cert: process.env.CERT
 }
 const httpServer = http.createServer(_app);
 const httpsServer = https.createServer(_httpsOptions, _app);
@@ -59,7 +55,7 @@ const httpsServer = https.createServer(_httpsOptions, _app);
 /* Configuration des sécurités & proxy */
 _app.use(Authorization.checkIP);
 _app.use(cors(_corsOptions), _corsOptions.actionOnError);
-_app.use(cookieParser(ssl._httpsOptions.cert));
+_app.use(cookieParser(process.env.KEY));
 _app.use(express.json());
 _app.use(express.urlencoded({ extended: true }));
 
@@ -69,8 +65,8 @@ _app.use("/security/authentication", generateToken);
 _app.use("/generateTestToken", generateToken);
 
 
-httpServer.listen(_HTTP_PORT, async () => {
-    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTP_PORT} 🎉`);
+httpServer.listen(Number(process.env.SECURITY_SERVICE_HTTP_PORT!.toString()), async () => {
+    console.log(`API MS user en écoute sur http://user.service.riptest:${Number(process.env.SECURITY_SERVICE_HTTP_PORT!.toString())} 🎉`);
     Object.keys(_interfaces).forEach(interfaceName => {
         const interfaceAddresses = _interfaces[interfaceName];
         interfaceAddresses?.forEach(address => {
@@ -79,12 +75,13 @@ httpServer.listen(_HTTP_PORT, async () => {
         });
     });
     console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
+    console.log(`Adresses IP en whitelist : ${process.env.WHITELIST}`)
 });
 
 /*
 
-httpsServer.listen(_HTTPS_PORT, async () => {
-    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTPS_PORT} 🎉`);
+httpsServer.listen(Number(process.env.SECURITY_SERVICE_HTTPS_PORT!.toString()), async () => {
+    console.log(`API MS user en écoute sur http://user.service.riptest:${Number(process.env.SECURITY_SERVICE_HTTPS_PORT!.toString())} 🎉`);
 });
 
 */
