@@ -271,7 +271,7 @@ Un fichier .env constitué ainsi devra être placé en sa racine.
     GCw4xl7qgyrHvgMp1LUJXM3M3B5DsXPS4Kauik9HMs6dp1zWYUcvGZo=
     -----END CERTIFICATE-----"
 
-```
+````
 </details>
 
 ## Authentification
@@ -308,7 +308,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   "password": "password",
   "expireIn":"365j"
   }
-```
+````
 
 </details>
 
@@ -442,11 +442,12 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
   <summary>Validation d'un token : Requête</summary>
 
 ```http
-  POST http://user.gateway.riptest/authentication/tokenValidator
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+
+POST http://user.gateway.riptest/authentication/tokenValidator
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 ```
 
@@ -456,32 +457,33 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
   <summary>Validation d'un token : Réponse</summary>
 
 ```http
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  Connection: keep-alive
-  Content-Length: 229
-  Content-Type: application/json; charset=utf-8
-  Date: Wed, 17 Apr 2024 18:58:32 GMT
-  Etag: W/"e5-iD7c+/CuYL67RZ3P8Nw5IDtpad4"
-  keep-alive: timeout=5
 
-  {
-  "statusCode": 200,
-  "message": "Your token is valid !",
-  "data": {
-      "session": {
-        "userId": 3,
-        "expireAt": 1744910819811,
-        "expireDate": "2025-04-17T17:26:59+00:00",
-        "createAt": "2024-04-17T19:20:12+02:00"
-      },
-      "request_url": "/",
-      "request_type": "POST"
-    }
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Connection: keep-alive
+Content-Length: 229
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Apr 2024 18:58:32 GMT
+Etag: W/"e5-iD7c+/CuYL67RZ3P8Nw5IDtpad4"
+keep-alive: timeout=5
+
+{
+"statusCode": 200,
+"message": "Your token is valid !",
+"data": {
+    "session": {
+      "userId": 3,
+      "expireAt": 1744910819811,
+      "expireDate": "2025-04-17T17:26:59+00:00",
+      "createAt": "2024-04-17T19:20:12+02:00"
+    },
+    "request_url": "/",
+    "request_type": "POST"
   }
+}
 
 ```
 
@@ -507,30 +509,32 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
 | **`password`**   | `string` | **Requis** | Mot de passe                         |
 
 <details>
-<summary>Génération de token de test : Requête</summary>
+<summary>Création d'un utilisateur : Requête</summary>
 
 ```http
-  POST http://user.gateway.riptest/user/signup
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
 
-  {
-    "email": "email-de-test-unique@test.com",
-    "phone": "33650717809",
-    "lastnames": "BASTARD RABASTE",
-    "firstnames": "william",
-    "password": "mon_mot_de_passe"
-  }
+POST http://user.gateway.riptest/user/signup
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+
+{
+  "email": "email-de-test-unique@test.com",
+  "phone": "33650717809",
+  "lastnames": "BASTARD RABASTE",
+  "firstnames": "william",
+  "password": "mon_mot_de_passe"
+}
 
 ```
 
 </details>
 
 <details>
-<summary>Génération de token de test : Réponse</summary>
+<summary>Création d'un utilisateur : Réponse</summary>
 
 ```http
+
 HTTP/1.1 200 OK
 X-Powered-By: Les Ripeurs server
 Access-Control-Allow-Origin: http://user.gateway.riptest
@@ -548,14 +552,14 @@ keep-alive: timeout=5
   "message": "User was successfully registered !",
   "data": {
     "user": {
-      "email": "email-de-test-unique@test.com",
-      "phone": "33650717809",
-      "lastnames": "BASTARD RABASTE",
-      "firstnames": "william",
-      "password": "mon_mot_de_passe"
-      }
+    "email": "email-de-test-unique@test.com",
+    "phone": "33650717809",
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "password": "mon_mot_de_passe"
     }
   }
+}
 
 ```
 
@@ -577,97 +581,120 @@ keep-alive: timeout=5
 | **`N/A`** | **`N/A`** | **`N/A`** | **`N/A`**   |
 
 <details>
-<summary>Génération de token de test : Requête</summary>
+<summary>Affichage de mes informations : Requête</summary>
 
 ```http
-  GET http://user.gateway.riptest/user/me
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
+
+GET http://user.gateway.riptest/user/me
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
 
 ```
 
 </details>
 
 <details>
-<summary>Génération de token de test : Réponse</summary>
+<summary>Affichage de mes informations : Réponse</summary>
 
 ```http
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  Connection: keep-alive
-  Content-Length: 230
-  Content-Type: application/json; charset=utf-8
-  Date: Wed, 17 Apr 2024 19:13:21 GMT
-  Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
-  keep-alive: timeout=5
-  {
-    "statusCode": 200,
-    "message": "Your informations",
-    "data": {
-      "email": "test2@testx.com",
-      "phone": "33650717809",
-      "lastnames": "BASTARD RABASTE",
-      "firstnames": "william",
-      "password": "************",
-      "createdAt": "2024-04-17T11:43:40.931Z",
-      "userId": 3
-    }
+
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Connection: keep-alive
+Content-Length: 230
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Apr 2024 19:13:21 GMT
+Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
+Keep-Alive: timeout=5
+
+{
+  "statusCode": 200,
+  "message": "Your informations",
+  "data": {
+    "email": "test2@testx.com",
+    "phone": "33650717809",
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "password": "************",
+    "createdAt": "2024-04-17T11:43:40.931Z",
+    "userId": 3
   }
+}
 
 ```
 
 </details>
 
-
 ## Affichage des informations d'un utilisateur via son Id
 
+| Méthode   | Point d'entré                                         | Port HTTP | Port HTTPS |
+| :-------- | :---------------------------------------------------- | :-------- | :--------- |
+| **`GET`** | **`http://user.gateway.riptest/getUserById/:userId`** | 80        | 443        |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
+
+| Paramètre    | Type     | Attribut   | Description                            |
+| :----------- | :------- | :--------- | :------------------------------------- |
+| **`userId`** | `string` | **Requis** | Identifiant du compte de l'utilisateur |
+
+<details>
+<summary>Affichage des informations d'un utilisateur via son Id : Requête</summary>
+
 ```http
-  GET https://user.gateway.riptest/user/getUserById/:userId
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-```
 
-| Parameter | Type     | Description                            |
-| :-------- | :------- | :------------------------------------- |
-| `userId`  | `string` | **Requis**. userId du compte recherché |
-
-### Réponse
+GET https://user.gateway.riptest/user/getUserById/:userId
+Cache-Control: max-age=604800
+Content-Type: application/json
+Origin: {{$dotenv ORIGIN}}
+Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
 ```
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  Connection: keep-alive
-  Content-Length: 255
-  Content-Type: application/json; charset=utf-8
-  Date: Wed, 17 Apr 2024 19:17:31 GMT
-  Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
-  keep-alive: timeout=5
 
-  {
-    "statusCode": 200,
-    "message": "User was successfully finded !",
-    "data": {
-      "user": {
-        "email": "test2@test.com",
-        "phone": "33650717809",
-        "lastnames": "BASTARD RABASTE",
-        "firstnames": "william",
-        "password": "************",
-        "createdAt": "2024-04-14T19:02:46.879Z",
-        "userId": 1
-      }
+</details>
+
+<details>
+<summary>Affichage des informations d'un utilisateur via son Id : Réponse</summary>
+
+```http
+
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Connection: keep-alive
+Content-Length: 255
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Apr 2024 19:17:31 GMT
+Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
+keep-alive: timeout=5
+
+{
+  "statusCode": 200,
+  "message": "User was successfully finded !",
+  "data": {
+    "user": {
+      "email": "test2@test.com",
+      "phone": "33650717809",
+      "lastnames": "BASTARD RABASTE",
+      "firstnames": "william",
+      "password": "************",
+      "createdAt": "2024-04-14T19:02:46.879Z",
+      "userId": 1
     }
   }
+}
+
 ```
+
+</details>
 
 ## Affichage des informations d'un utilisateur via son email
 
