@@ -17,14 +17,30 @@ Dans ce porjet, nous devons isoler le conteneur docker **user.gateway.riptest** 
 
 Les conteneurs dockers **user.service.riptest** et **security.service.riptest** ne doivent pas autoriser les connexions depuis l'internet.
 
-**Restreindre l'accès au public via les headers transmis par le client (navigateur) n'atant pas une méthode sûr et sécurisée, il est préférable de coupler la sécurité header des packages helmet et cors à une restriction par pare-feu directement sur la machine hôte des conteneurs, bloquant ainsi les connexions entrantes selon des règles spécifiques de ports et d'ip.**
+Restreindre l'accès au public via les headers transmis par le client (navigateur) n'atant pas une méthode sûr et sécurisée, il est préférable de coupler la sécurité header des packages helmet et cors à une restriction par pare-feu directement sur la machine hôte des conteneurs, bloquant ainsi les connexions entrantes selon des règles spécifiques de ports et d'ip.
 
-Pour appliquer le réseau isolé de manière complète, et rendre impossible aux machines du réseau l'accès aux conteneurs, la machine hôte doit subir quelques modifications de pare-feu afin de restreindre les connexions entrantes aux seuls ports 80 et 443 correspondants aux ports de **user.gateway.riptest**.
+- **user.gateway.riptest** est configuré sur le port 80, IP: 172.25.1.1, 176.25.1.0.
+
+- **security.service.riptest** est configuré sur le port 8181, IP: 176.25.1.1.
+
+- **user.service.riptest** est configuré sur le port 8282, IP: 176.25.1.2.
+
+- **postgres.db.riptest** est configuré sur le port 5432, IP:176.25.1.3.
 
 
-Le conteneur **postgres.db.riptest** est configuré sur le port 5432.
-Le conteneur **security.service.riptest** est configuré sur le port 8181.
-Le conteneur **user.service.riptest** est configuré sur le port 8282.
+Les conteneurs dockers sont configurés sur deux réseaux : **local-network** et **gateway-network**.
+
+- local-network représente le réseau privé, non accessible depuis le net. 
+
+- gateway-network est le réseau accessible depuis le web.
+
+
+Pour appliquer le réseau isolé de manière complète, la machine hôte doit subir quelques modifications de pare-feu afin de restreindre les connexions entrantes aux seuls ports 80 et 443 correspondants aux ports de **user.gateway.riptest**. Ainsi, même si la sécurisation des IP est désactivé de la fonction `Authorization.checkIP`, les microsservices seront toujours isolés de l'internet.
+
+
+Pour des raisons de tests du projet, les accès directes via les endpoints des microservices ne permettront pas l'accès directe. Il faudra commenter la ligne `
+_app.use(Authorization.checkIP);` si il est souhaité l'accès directe au microservice ciblé.
+
 
 Le shell iptable sur la machine hôte des conteneurs docker de **user.gateway.riptest**, **security.service.riptest**, **user.service.riptest** et **postgres.db.riptest** doit resembler à ceci :
 ````
@@ -364,7 +380,7 @@ Connection: close
 
   {
     "statusCode": 200,
-    "message": "User was successfully found !",
+    "message": "User was successfully finded !",
     "data": {
       "user": {
         "email": "test2@test.com",
@@ -408,7 +424,7 @@ Connection: close
 
   {
     "statusCode": 200,
-    "message": "User was successfully found !",
+    "message": "User was successfully finded !",
     "data": {
       "user": {
         "email": "test2@test.com",
@@ -452,7 +468,7 @@ Connection: close
 
   {
     "statusCode": 200,
-    "message": "User was successfully found !",
+    "message": "User was successfully finded !",
     "data": {
       "user": {
         "email": "test2@test.com",
@@ -602,8 +618,9 @@ Add badges from somewhere like: [shields.io](https://shields.io/)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
+# Consignes données
 
-# BasicMS
+## BasicMS
 
 Bienvenue sur le test technique BasicMS (Node.js).
 
