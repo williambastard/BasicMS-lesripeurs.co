@@ -12,7 +12,7 @@ export const authentication = async (
 
     try {
         req.body.userId = res.locals.session.userId ?? 0;
-        const response = await new Api.call(req, res, "security", "authentication", 8181).setGatewayIp("176.25.1.1").fetch()
+        const response = await new Api.call(req, res, "security", "authentication", Number(process.env.SECURITY_SERVICE_HTTP_PORT!.toString())).setGatewayIp(process.env.GATEWAYIP!.toString()).fetch()
 
         if (!response._isOK) {
             _apiResponse = {
@@ -53,7 +53,7 @@ export const tokenValidator = async (
     let _apiResponse = Api.messages.use("HTTP_500");
     let onFailure = false;
     try {
-        const response = await new Api.call(req, res, "security", "authentication/tokenValidator", 8181).setGatewayIp("176.25.1.1").fetch()
+        const response = await new Api.call(req, res, "security", "authentication/tokenValidator", Number(process.env.SECURITY_SERVICE_HTTP_PORT!.toString())).setGatewayIp(process.env.GATEWAYIP!.toString()).fetch()
         
         if (!response._isOK) {
             _apiResponse = {

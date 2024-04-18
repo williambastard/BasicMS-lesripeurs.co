@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev --poll ./src/index.ts",
-    "prod": "npx prisma generate && npx prisma migrate deploy && nodemon --legacy-watch --watch src -e tsx,ts --exec 'ts-node' ./src/index.ts"
+    "prod": "npx prisma generate && npx prisma migrate deploy && nodemon -r dotenv/config --legacy-watch --watch src -e tsx,ts --exec 'ts-node' ./src/index.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",
@@ -13,6 +13,7 @@
     "@types/express": "^4.17.21",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
