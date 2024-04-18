@@ -8,7 +8,7 @@ securityGateway.all("/tokenValidator", async (req, res, next) => {
     let _apiResponse = Api.messages.use("HTTP_500");
 
     try {
-        const response = await new Api.call(req, res, "security", "authentication/tokenValidator", 8181).fetch();
+        const response = await new Api.call(req, res, "security", "authentication/tokenValidator", Number(process.env.SECURITY_SERVICE_HTTP_PORT!.toString())).setGatewayIp(process.env.GATEWAYIP!.toString()).fetch()
 
         if (!response._isOK) {
             _apiResponse = {

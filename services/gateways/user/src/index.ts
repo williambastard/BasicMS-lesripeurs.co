@@ -2,10 +2,8 @@ import os from 'os';
 import cors from "cors";
 import http from "http";
 import https from "https";
-import * as ssl from "./ssl/ssl";
-import * as Api from "private_modules";
 import cookieParser from "cookie-parser";
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 
 import { defaultRouter } from "./routes/default.routes";
 import { userGatewayRouter } from './routes/user.routes';
@@ -20,52 +18,23 @@ const _HTTPS_PORT = "443";
 
 const _app = express();
 const _interfaces = os.networkInterfaces();
-const _allowedHostnames = ['user.gateway.riptest'];
-const _corsOptions = {
-    credentials: true,
-    origin: function (origin: any, callback: any) {
-        if (!origin) {
-            // Si l'origine n'est pas fournie dans l'en-tête de la requête
-            callback(new Error('Origin not provided'));
-        } else {
-            // Extraction du hostname de l'origine
-            const hostname = new URL(origin).hostname;
-            // Vérification si le hostname est autorisé
-            if (_allowedHostnames.includes(hostname)) {
-                callback(null, true);
-            } else {
-                callback(new Error('Not allowed by CORS'));
-            }
-        }
-    },
-    actionOnError: (err: any, req: Request, res: Response, next: NextFunction) => {
-        if (err) {
-            let _apiResponse = Api.messages.use("HTTP_403");
-            _apiResponse.details = err;
-            
-            let _parser = new Api.parser(res);
-            return _parser.setResponse(_apiResponse).sendResponse();
-        } else {
-            next();
-        }
-    }
-}
+
 
 const _httpsOptions = {
-    key: ssl._httpsOptions.key,
-    cert: ssl._httpsOptions.cert
+    key: process.env.KEY,
+    cert: process.env.CERT
 }
 
 const httpServer = http.createServer(_app);
 const httpsServer = https.createServer(_httpsOptions, _app);
 
 /* Configuration des sécurités & proxy */
-_app.use(cookieParser(ssl._httpsOptions.cert));
+_app.set('trust proxy', process.env.GATEWAYIP);
+_app.use(cookieParser(process.env.KEY));
 _app.use(express.json());
 _app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
-_app.use(cors(_corsOptions), _corsOptions.actionOnError);
 _app.use("/authentication", securityGatewayRouter);
 _app.use("/authentication", authenticationRouter);
 _app.use("/user", userGatewayRouter);
@@ -73,18 +42,18 @@ _app.use("/*", defaultRouter);
 
 
 httpServer.listen(_HTTP_PORT, async () => {
-    console.log(`API MS user en écoute sur http://user.gateway.riptest:${_HTTP_PORT} 🎉`);    // Parcourir les interfaces pour trouver l'adresse IP
+    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTP_PORT} 🎉`);
 });
 
 httpsServer.listen(_HTTPS_PORT, async () => {
-    console.log(`API MS user en écoute sur http://user.gateway.riptest:${_HTTPS_PORT} 🎉`);    // Parcourir les interfaces pour trouver l'adresse IP
+    console.log(`API MS user en écoute sur http://user.gateways.riptest:${_HTTPS_PORT} 🎉`);
     Object.keys(_interfaces).forEach(interfaceName => {
         const interfaceAddresses = _interfaces[interfaceName];
         interfaceAddresses?.forEach(address => {
-            if (!address.internal && address.family === 'IPv4') {
-                _IPAdresses.push(address.address);
-            }
+            _IPAdresses.push(address.address);
+
         });
-        console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
     });
+    console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
+    console.log(`Adresses IP en whitelist : ${process.env.WHITELIST}`)
 });

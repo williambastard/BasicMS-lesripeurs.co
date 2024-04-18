@@ -8,7 +8,7 @@ userGateway.all("*", async (req, res, next) => {
     let _apiResponse = Api.messages.use("HTTP_500");
 
     try {
-        const response = await new Api.call(req, res, "user", req.url, 8282).fetch();
+        const response = await new Api.call(req, res, "user", req.url, Number(process.env.USER_SERVICE_HTTP_PORT!.toString())).setGatewayIp(process.env.GATEWAYIP!.toString()).fetch()
 
         if (!response._isOK) {
             _apiResponse = {
