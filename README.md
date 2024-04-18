@@ -442,7 +442,6 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
   <summary>Validation d'un token : Requête</summary>
 
 ```http
-
   POST http://user.gateway.riptest/authentication/tokenValidator
   Cache-Control: max-age=604800
   Content-Type: application/json
@@ -457,7 +456,6 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
   <summary>Validation d'un token : Réponse</summary>
 
 ```http
-
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
   Access-Control-Allow-Origin: http://user.gateway.riptest
@@ -491,9 +489,14 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
 
 ## Création d'un utilisateur
 
-| Méthode    | Point d'entré                                                | Port HTTP | Port HTTPS |
-| :--------- | :----------------------------------------------------------- | :-------- | :--------- |
-| **`POST`** | **`http://security.service.riptest:8181/generateTestToken`** | 8181      | 4441       |
+| Méthode    | Point d'entré                                 | Port HTTP | Port HTTPS |
+| :--------- | :-------------------------------------------- | :-------- | :--------- |
+| **`POST`** | **`http://user.gateway.riptest/user/signup`** | 80        | 443        |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
 
 | Paramètre        | Type     | Attribut   | Description                          |
 | :--------------- | :------- | :--------- | :----------------------------------- |
@@ -503,6 +506,9 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
 | **`firstnames`** | `string` | **Requis** | Prénoms de famille                   |
 | **`password`**   | `string` | **Requis** | Mot de passe                         |
 
+<details>
+<summary>Génération de token de test : Requête</summary>
+
 ```http
   POST http://user.gateway.riptest/user/signup
   Cache-Control: max-age=604800
@@ -510,61 +516,83 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
   Origin: {{$dotenv ORIGIN}}
 
   {
+    "email": "email-de-test-unique@test.com",
+    "phone": "33650717809",
+    "lastnames": "BASTARD RABASTE",
+    "firstnames": "william",
+    "password": "mon_mot_de_passe"
+  }
+
+```
+
+</details>
+
+<details>
+<summary>Génération de token de test : Réponse</summary>
+
+```http
+HTTP/1.1 200 OK
+X-Powered-By: Les Ripeurs server
+Access-Control-Allow-Origin: http://user.gateway.riptest
+Vary: Origin
+Access-Control-Allow-Credentials: true
+Connection: keep-alive
+Content-Length: 228
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Apr 2024 19:09:08 GMT
+Etag: W/"e4-TzZiVp6gV2L6eDNWqCoXcE99e/s"
+keep-alive: timeout=5
+
+{
+  "statusCode": 200,
+  "message": "User was successfully registered !",
+  "data": {
+    "user": {
       "email": "email-de-test-unique@test.com",
       "phone": "33650717809",
       "lastnames": "BASTARD RABASTE",
       "firstnames": "william",
       "password": "mon_mot_de_passe"
-  }
-```
-
-### Réponse
-
-```
-  HTTP/1.1 200 OK
-  X-Powered-By: Les Ripeurs server
-  Access-Control-Allow-Origin: http://user.gateway.riptest
-  Vary: Origin
-  Access-Control-Allow-Credentials: true
-  Connection: keep-alive
-  Content-Length: 228
-  Content-Type: application/json; charset=utf-8
-  Date: Wed, 17 Apr 2024 19:09:08 GMT
-  Etag: W/"e4-TzZiVp6gV2L6eDNWqCoXcE99e/s"
-  keep-alive: timeout=5
-
-  {
-    "statusCode": 200,
-    "message": "User was successfully registered !",
-    "data": {
-      "user": {
-        "email": "email-de-test-unique@test.com",
-        "phone": "33650717809",
-        "lastnames": "BASTARD RABASTE",
-        "firstnames": "william",
-        "password": "mon_mot_de_passe"
       }
     }
   }
+
 ```
+
+</details>
 
 ## Affichage de mes informations
 
+| Méthode   | Point d'entré                             | Port HTTP | Port HTTPS |
+| :-------- | :---------------------------------------- | :-------- | :--------- |
+| **`GET`** | **`http://user.gateway.riptest/user/me`** | 80        | 443        |
+
+| En-tête             | Préfix                            | Attribut   | Description                                                                              |
+| :------------------ | :-------------------------------- | :--------- | :--------------------------------------------------------------------------------------- |
+| **`Origin`**        | **`http://user.gateway.riptest`** | **Requis** | L'origin est indispensable pour autoriser les demandes aux interfaces des microservices' |
+| **`Authorization`** | **`token`**                       | **Requis** | Le header est requis, il ne peut être transmis que dans le header                        |
+
+| Paramètre | Type      | Attribut  | Description |
+| :-------- | :-------- | :-------- | :---------- |
+| **`N/A`** | **`N/A`** | **`N/A`** | **`N/A`**   |
+
+<details>
+<summary>Génération de token de test : Requête</summary>
+
 ```http
-  GET https://user.gateway.riptest/user/me
+  GET http://user.gateway.riptest/user/me
   Cache-Control: max-age=604800
   Content-Type: application/json
   Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-```
-
-| Parameter         | Type | Description |
-| :---------------- | :--- | :---------- |
-| Aucuns paramètres | N/A  | N/A         |
-
-### Réponse
 
 ```
+
+</details>
+
+<details>
+<summary>Génération de token de test : Réponse</summary>
+
+```http
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
   Access-Control-Allow-Origin: http://user.gateway.riptest
@@ -576,7 +604,6 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
   Date: Wed, 17 Apr 2024 19:13:21 GMT
   Etag: W/"e4-WDu1MRYSLBlBWSB4pXX3/MkOm1Y"
   keep-alive: timeout=5
-
   {
     "statusCode": 200,
     "message": "Your informations",
@@ -590,7 +617,11 @@ La validation du token est utilisée dans toutes les APi des microservices, avan
       "userId": 3
     }
   }
+
 ```
+
+</details>
+
 
 ## Affichage des informations d'un utilisateur via son Id
 
