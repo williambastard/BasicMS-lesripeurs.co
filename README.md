@@ -291,16 +291,16 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   <summary>Authentification : Requête</summary>
 
   ```http
-    POST https://user.gateway.riptest/authentication
-    Cache-Control: max-age=604800
-    Content-Type: application/json
-    Origin: {{$dotenv ORIGIN}}
-    Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-
-    {
-        "email": "test@test.fr",
-        "password": "password",
-        "expireIn":"365j"
+  POST https://user.gateway.riptest/authentication
+  Cache-Control: max-age=604800
+  Content-Type: application/json
+  Origin: {{$dotenv ORIGIN}}
+  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+  
+  {
+    "email": "test@test.fr",
+    "password": "password",
+    "expireIn":"365j"
     }
   ```
 
@@ -359,7 +359,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
 | **`expiryIn`** | `string` | Optionnel  | Temps de validité du token (par défaut: 1 jour) |
 
 <details>
-<summary>Génération d'un token de test forcé : Réponse</summary>
+<summary>Génération d'un token de test forcé : Requête</summary>
 
   ```http
   POST http://security.service.riptest:8181/generateTestToken
@@ -367,46 +367,46 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
   Content-Type: application/json
   Origin: {{$dotenv ORIGIN}}
   Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
-
+  
   {
     "userId":1,
     "expireIn": "1 an"
-  }
+    }
 
   ```
 </details>
 
+<details>
+<summary>Génération d'un token de test forcé : Réponse</summary>
 
-### Réponse
+  ```http
+  HTTP/1.1 200 OK
+  X-Powered-By: Les Ripeurs server
+  Access-Control-Allow-Origin: http://user.gateway.riptest
+  Vary: Origin
+  Access-Control-Allow-Credentials: true
+  X-Session-Id: 3841764e555...67553d
+  X-Session-Max-Age-Value: 31536000
+  X-Session-Max-Age-Unit: seconds
+  Set-Cookie: session=s%3A3841764e55...Expires=Thu, 18 Apr 2024 03:47:39 GMT; HttpOnly
+  Content-Type: application/json; charset=utf-8
+  Content-Length: 854
+  ETag: W/"356-j4NVpcXU8AIWXLtYNLINIsEFZa4"
+  Date: Wed, 17 Apr 2024 19:02:03 GMT
+  Connection: close
 
-```
-HTTP/1.1 200 OK
-X-Powered-By: Les Ripeurs server
-Access-Control-Allow-Origin: http://user.gateway.riptest
-Vary: Origin
-Access-Control-Allow-Credentials: true
-X-Session-Id: 3841764e555...67553d
-X-Session-Max-Age-Value: 31536000
-X-Session-Max-Age-Unit: seconds
-Set-Cookie: session=s%3A3841764e55...Expires=Thu, 18 Apr 2024 03:47:39 GMT; HttpOnly
-Content-Type: application/json; charset=utf-8
-Content-Length: 854
-ETag: W/"356-j4NVpcXU8AIWXLtYNLINIsEFZa4"
-Date: Wed, 17 Apr 2024 19:02:03 GMT
-Connection: close
-
-{
-  "statusCode": 200,
-  "message": "Your token is ready, find it in data.token. He is valid for 1 an",
-  "token": "3841764e55...67553d",
-  "data": {
+  {
+    "statusCode": 200,
+    "message": "Your token is ready, find it in data.token. He is valid for 1 an",
     "token": "3841764e55...67553d",
-    "request_url": "/",
-    "request_type": "POST"
+    "data": {
+      "token": "3841764e55...67553d",
+      "request_url": "/",
+      "request_type": "POST"
+    }
   }
-}
-```
-
+  ```
+</details>
 ## Validation d'un token
 
 ```http
