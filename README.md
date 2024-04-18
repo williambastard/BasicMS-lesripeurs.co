@@ -162,7 +162,7 @@ Un fichier .env constitué ainsi devra être placé en sa racine.
 
     #IP WHITELISTE (Ex: 176.25.1.0, 168.128.1.1,... )
 
-    WHITELIST=176.25.1.0
+    WHITELIST=176.25.*
 
     #IP GATEWAY (Une seule IP possible )
 

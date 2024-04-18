@@ -75,7 +75,7 @@ httpServer.listen(Number(process.env.SECURITY_SERVICE_HTTP_PORT!.toString()), as
         });
     });
     console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
-    console.log(`Adresses IP en whitelist : ${process.env.WHITELIST}`)
+    console.log(`Adresses IP en whitelist : ${process.env.WHITELIST ? process.env.WHITELIST.split(',') : []}`)
 });
 
 /*

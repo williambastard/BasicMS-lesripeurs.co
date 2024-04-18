@@ -13,15 +13,6 @@ export const authentication = async (
     try {
         req.body.userId = res.locals.session.userId ?? 0;
         const response = await new Api.call(req, res, "security", "authentication", Number(process.env.SECURITY_SERVICE_HTTP_PORT!.toString())).setGatewayIp(process.env.GATEWAYIP!.toString()).fetch()
-
-        if (!response._isOK) {
-            _apiResponse = {
-                statusCode: response._status,
-                message: "Internal server error",
-                details: response._callResponse
-            };
-        }
-
         _apiResponse = {
             statusCode: 200,
             message: "User connected with success !",
@@ -33,6 +24,14 @@ export const authentication = async (
                 session: res.locals.session,
             }
         };
+
+        if (!response._isOK) {
+            _apiResponse = {
+                statusCode: response._status,
+                message: response._callResponse.message ?? "Internal server error",
+                details: response._callResponse
+            };
+        }
     }
     catch (UncaughtException) {
         _apiResponse = {
@@ -54,7 +53,7 @@ export const tokenValidator = async (
     let onFailure = false;
     try {
         const response = await new Api.call(req, res, "security", "authentication/tokenValidator", Number(process.env.SECURITY_SERVICE_HTTP_PORT!.toString())).setGatewayIp(process.env.GATEWAYIP!.toString()).fetch()
-        
+
         if (!response._isOK) {
             _apiResponse = {
                 statusCode: response._status,
@@ -63,7 +62,7 @@ export const tokenValidator = async (
             };
             onFailure = true;
         }
-        
+
         if (!response._session) {
             _apiResponse = {
                 statusCode: response._status,
