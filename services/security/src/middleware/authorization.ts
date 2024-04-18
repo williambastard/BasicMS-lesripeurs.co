@@ -3,7 +3,7 @@ import * as Api from "private_modules";
 
 export abstract class Authorization {
     static async checkIP(req: Request, res: Response, next: NextFunction) {
-
+        
         // Récupérer l'adresse IP du client
         const clientIP = req.ip ?? "";
 
