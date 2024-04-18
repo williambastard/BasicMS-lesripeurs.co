@@ -14,6 +14,7 @@ import { userDeleteRouter } from './routes/user/delete/user.delete.routes';
 import { userSignUpRouter } from './routes/user/signup/user.signup.routes';
 import { userUpdateRouter } from './routes/user/update/user.update.routes';
 import { userMeRouter } from './routes/user/me/user.me.routes';
+import { Authorization } from './middleware/authorization';
 
 // Récupérer les interfaces réseau de la machine
 let _IPAdresses: string[] = [];
@@ -47,7 +48,7 @@ const _corsOptions = {
             let _apiResponse = Api.messages.use("HTTP_403");
             _apiResponse.message = err.toString();
             _apiResponse.details = { body: req?.body, headers: req.headers };
-            
+
             let _parser = new Api.parser(res);
             return _parser.setResponse(_apiResponse).sendResponse();
         } else {
@@ -60,19 +61,17 @@ const _httpsOptions = {
     key: ssl._httpsOptions.key,
     cert: ssl._httpsOptions.cert
 }
-
 const httpServer = http.createServer(_app);
 const httpsServer = https.createServer(_httpsOptions, _app);
 
-
 /* Configuration des sécurités & proxy */
+_app.use(Authorization.checkIP);
+_app.use(cors(_corsOptions), _corsOptions.actionOnError);
 _app.use(cookieParser(ssl._httpsOptions.cert));
 _app.use(express.json());
 _app.use(express.urlencoded({ extended: true }));
 
 /* Gestion  des routes de l'application */
-
-_app.use(cors(_corsOptions), _corsOptions.actionOnError);
 _app.use("/user/authentication", authenticationRouter);
 _app.use("/user", userMeRouter);
 _app.use("/user", userFindRouter);
@@ -83,21 +82,21 @@ _app.use("/", defaultRouter);
 
 
 httpServer.listen(_HTTP_PORT, async () => {
-    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTP_PORT} 🎉`);    // Parcourir les interfaces pour trouver l'adresse IP
-});
-
-/*
-httpsServer.listen(_HTTPS_PORT, async () => {
-    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTPS_PORT} 🎉`);    // Parcourir les interfaces pour trouver l'adresse IP
+    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTP_PORT} 🎉`);
     Object.keys(_interfaces).forEach(interfaceName => {
         const interfaceAddresses = _interfaces[interfaceName];
         interfaceAddresses?.forEach(address => {
-            if (!address.internal && address.family === 'IPv4') {
-                _IPAdresses.push(address.address);
-            }
+            _IPAdresses.push(address.address);
+
         });
-        console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
     });
+    console.log(`Adresses IP de la machine: ${_IPAdresses.join(', ')}`)
+});
+
+/*
+
+httpsServer.listen(_HTTPS_PORT, async () => {
+    console.log(`API MS user en écoute sur http://user.service.riptest:${_HTTPS_PORT} 🎉`);
 });
 
 */
