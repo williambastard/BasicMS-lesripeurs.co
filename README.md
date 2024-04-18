@@ -1,6 +1,7 @@
 # Sommaire
+
 <details>
-  <summary>⚙️ Installatio</summary>
+  <summary>⚙️ Installation</summary>
 </details>
 <details>
   <summary>🖥️ Première utilisation</summary>
@@ -145,20 +146,27 @@ Si le Header **Origin:** fournie mais non autorisé, le serveur renvoi :
 Pour tester les APIs, un dossier `http` a été mis à disposition, il suffit d'utiliser le plugin `REST CLIENT` de Visual Studio code pour tester les fonctionnalités.
 Un fichier .env constitué ainsi devra être placé en sa racine.
 
+<details>
+  <summary>Consulter le fichier .env</summary>
+  
 ```
 #Token à générer via http/Authentification/Token.http
 AUTHORIZATION_TOKEN=
 
 # Origine des requêtes
+
 ORIGIN=http://user.gateway.riptest
 
 # IP WHITELISTE (Ex: 176.25.1.0, 168.128.1.1,... )
+
 WHITELIST=176.25.1.0
 
 # IP GATEWAY (Une seule IP possible )
+
 GATEWAYIP=176.25.1.0
 
 # CONFIGURATION DES PORTS DES CONTENEURS
+
 USER_SERVICE_HTTP_PORT=8282
 USER_SERVICE_HTTPS_PORT=4442
 
@@ -169,9 +177,11 @@ USER_GATEWAY_HTTP_PORT=80
 USER_GATEWAY_HTTPS_PORT=443
 
 # CONFIGURATION POSTGRES
+
 DATABASE_URL="postgresql://postgres:postgres@postgres.db.riptest:5432/riptest"
 
 # CONFIGURATION SSL SELF SIGNED
+
 KEY="-----BEGIN PRIVATE KEY-----
 MIIJQQIBADANBgkqhkiG9w0BAQEFAASCCSswggknAgEAAoICAQCpXi6/l2T40yKh
 9iebyc0HfcUkxbi+gCPtohxO5ZMTC1ZvBFdW6mB4LUDBq7zjzw6V9MDXOlbPCmVO
@@ -259,33 +269,43 @@ wiecWN8MY/5xi3rM/qD1wT+GcYbvLMa9svdr24MR6xOPDwu9gLBKxX1LOqSEdRdW
 uKothxRN2Eyh+c5FaY027Rbecu3lL33kzPUZcOgjmsZ4NZ8o4FW/nofPGcpD3F9z
 GCw4xl7qgyrHvgMp1LUJXM3M3B5DsXPS4Kauik9HMs6dp1zWYUcvGZo=
 -----END CERTIFICATE-----"
-```
+
+````
+</details>
 
 ## Authentification
 
 L'authentification est obligatoire pour obtenir un token valide, sans un token lié à un utilisateur valide, il sera impossible d'effectuer des actions sur le microservice User.
+| Méthode  | Point d'entré     | Port HTTP     | Port HTTPS     |
+| :--------- | :------- |:------- |:------- |
+|**``` POST```** | **```https://user.gateway.riptest/authentication```**| 80| 443
 
-```http
-  POST https://user.gateway.riptest/authentication
-  Cache-Control: max-age=604800
-  Content-Type: application/json
-  Origin: {{$dotenv ORIGIN}}
-  Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
+| Paramètre  | Type     | Attribut     | Description |
+| :--------- | :------- |:------- | :------------|
+| **`email`**    | `string` | **Requis** |Adresse email du compte|
+| **`password`** | `string` | **Requis** | Mot de passe associé à l'email |
+| **`expiryIn`** | `string` | Optionnel | Temps de validité du token (par défaut: 1 jour) |
 
-  {
-      "email": "test@test.fr",
-      "password": "password",
-      "expireIn":"365j"
-  }
+<details>
+  <summary>Requête</summary>
+  ```http
+    POST https://user.gateway.riptest/authentication
+    Cache-Control: max-age=604800
+    Content-Type: application/json
+    Origin: {{$dotenv ORIGIN}}
+    Authorization: token {{$dotenv AUTHORIZATION_TOKEN}}
 
-```
+    {
+        "email": "test@test.fr",
+        "password": "password",
+        "expireIn":"365j"
+    }
+````
 
-| Parameter  | Type     | Description                                               |
-| :--------- | :------- | :-------------------------------------------------------- |
-| `email`    | `string` | **Requis**. Adresse email du compte                       |
-| `password` | `string` | **Requis**. Mot de passe associé à l'email                |
-| `expiryIn` | `string` | optional. Temps de validité du token (par défaut: 1 jour) |
+</details>
 
+<details>
+  <summary>Réponse</summary>
 ```
   HTTP/1.1 200 OK
   X-Powered-By: Les Ripeurs server
@@ -321,7 +341,8 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
     }
   }
 
-```
+````
+</details>
 
 ## Génération d'un token de test forcé
 
@@ -336,7 +357,7 @@ L'authentification est obligatoire pour obtenir un token valide, sans un token l
     "userId":1,
     "expireIn": "1 an"
   }
-```
+````
 
 | Parameter  | Type     | Description                                               |
 | :--------- | :------- | :-------------------------------------------------------- |
